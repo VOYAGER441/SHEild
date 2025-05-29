@@ -9,24 +9,62 @@ export default function NotFoundScreen() {
     <>
       <Stack.Screen options={{ title: 'Oops!' }} />
       <ThemedView style={styles.container}>
-        <ThemedText type="title">This screen does not exist.</ThemedText>
-        <Link href="/" style={styles.link}>
-          <ThemedText type="link">Go to home screen!</ThemedText>
+        <ThemedText style={styles.emoji} type="title">
+          😕
+        </ThemedText>
+        <ThemedText style={styles.title} type="title">
+          Page Not Found
+        </ThemedText>
+        <ThemedText style={styles.subtitle}>
+          The page you are looking for doesn&apos;t exist or has been moved.
+        </ThemedText>
+        <Link href='/' style={styles.link} asChild>
+          <ThemedView style={styles.button}>
+            <ThemedText style={styles.buttonText} type="link">
+              Go to Home
+            </ThemedText>
+          </ThemedView>
         </Link>
       </ThemedView>
     </>
   );
 }
 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 20,
+    padding: 40,
+  },
+  emoji: {
+    fontSize: 58,
+    marginBottom: 12,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 8,
+  },
+  subtitle: {
+    fontSize: 16,
+    textAlign: 'center',
+    marginBottom: 24,
+  },
+  button: {
+    backgroundColor: '#007AFF',
+    paddingHorizontal: 20,
+    paddingVertical: 12,
+    borderRadius: 8,
+    marginTop: 16,
+  },
+  buttonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: '600',
   },
   link: {
-    marginTop: 15,
-    paddingVertical: 15,
+    textDecorationLine: 'none',
   },
 });
