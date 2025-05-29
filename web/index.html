@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SHEild - Women Safety App</title>
+    <link rel="icon" href="/assets/images/favicon.png" type="image/png" />
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Custom CSS -->
+    <style>
+      :root {
+        --primary-pink: #ff69b4;
+        --secondary-pink: #ffb6c1;
+        --light-pink: #fff0f5;
+      }
+
+      body {
+        font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      }
+
+      .hero-section {
+        background: linear-gradient(
+          135deg,
+          var(--light-pink),
+          var(--secondary-pink)
+        );
+        min-height: 100vh;
+        padding: 100px 0;
+      }
+
+      .app-screenshot {
+        border-radius: 30px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+      }
+
+      .app-screenshot:hover {
+        transform: translateY(-10px);
+      }
+
+      .features-section {
+        background-color: white;
+        padding: 80px 0;
+      }
+
+      .feature-card {
+        padding: 30px;
+        border-radius: 20px;
+        background: white;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        height: 100%;
+        transition: transform 0.3s ease;
+      }
+
+      .feature-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .btn-primary {
+        background-color: var(--primary-pink);
+        border: none;
+        padding: 12px 30px;
+        border-radius: 30px;
+        font-weight: 600;
+      }
+
+      .btn-primary:hover {
+        background-color: var(--secondary-pink);
+        transform: translateY(-2px);
+      }
+
+      .section-heading {
+        color: var(--primary-pink);
+        font-weight: bold;
+        margin-bottom: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav
+      class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm"
+    >
+      <div class="container">
+        <img
+          src="/assets/images/favicon.png"
+          alt="SHEild Logo"
+          class="navbar-brand"
+          style="width: 60px; height: 70px; margin-right: 10px"
+        />
+        <a
+          class="navbar-brand fw-bold"
+          href="#"
+          style="color: var(--primary-pink)"
+          >SHEild</a
+        >
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#features">Features</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#about">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#download">Download</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section d-flex align-items-center">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-6">
+            <h1 class="display-4 fw-bold mb-4">
+              Empowering women through thoughtful design and safety
+            </h1>
+            <p class="lead mb-4">
+              SHEild is your personal safety companion, designed to provide
+              confidence, safety, and peace of mind.
+            </p>
+            <a href="#download" class="btn btn-primary btn-lg">Download Now</a>
+          </div>
+          <div class="col-lg-6">
+            <img
+              src="/assets/images/appss.jpg"
+              alt="SHEild App Interface"
+              class="img-fluid app-screenshot"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+      <div class="container">
+        <h2 class="text-center section-heading">Key Features</h2>
+        <div class="row g-4">
+          <div class="col-md-4">
+            <div class="feature-card">
+              <h3 class="h5 mb-3">Emergency SOS</h3>
+              <p class="mb-0">
+                Quick access to emergency contacts and authorities with just one
+                tap.
+              </p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="feature-card">
+              <h3 class="h5 mb-3">Location Tracking</h3>
+              <p class="mb-0">
+                Real-time location sharing with trusted contacts for added
+                safety.
+              </p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="feature-card">
+              <h3 class="h5 mb-3">Safety Network</h3>
+              <p class="mb-0">
+                Build your trusted circle of friends and family for immediate
+                assistance.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-5">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-6">
+            <h2 class="section-heading">About SHEild</h2>
+            <p class="lead">
+              Designing a future where women feel empowered, supported, and
+              unstoppable.
+            </p>
+            <p>
+              Our mission is to provide women with the tools they need to feel
+              safe and confident in any situation. SHEild combines cutting-edge
+              technology with thoughtful design to create a comprehensive safety
+              solution.
+            </p>
+          </div>
+          <div class="col-lg-6">
+            <img
+              src="/assets/images/appss2.png"
+              alt="About SHEild"
+              class="img-fluid rounded-5 shadow app-screenshot"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Download Section -->
+    <section id="download" class="py-5 bg-light">
+      <div class="container text-center">
+        <h2 class="section-heading">Download SHEild Today</h2>
+        <p class="lead mb-4">Available on iOS and Android</p>
+        <div class="d-flex justify-content-center gap-3">
+          <a href="#" class="btn btn-dark btn-lg">
+            <i class="bi bi-apple"></i> App Store
+          </a>
+          <a href="#" class="btn btn-dark btn-lg">
+            <i class="bi bi-google-play"></i> Play Store
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-4">
+      <div class="container text-center">
+        <p class="mb-0">&copy; 2025 SHEild. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
