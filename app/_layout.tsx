@@ -1,16 +1,21 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import { defaultConfig } from '@tamagui/config/v4';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
 import 'react-native-reanimated';
-
+import { createTamagui, TamaguiProvider } from 'tamagui';
 import { useColorScheme } from '@/components/useColorScheme';
+import { Slot, useRouter,RelativePathString } from 'expo-router';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useEffect, useState } from 'react';
+
+
+const config = createTamagui(defaultConfig)
 
 export {
   // Catch any errors thrown by the Layout component.
-  ErrorBoundary,
+  ErrorBoundary
 } from 'expo-router';
 
 export const unstable_settings = {
@@ -42,6 +47,23 @@ export default function RootLayout() {
     return null;
   }
 
+   const [isReady, setIsReady] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const token = await AsyncStorage.getItem('sessionToken');
+      if (!token) {
+        router.replace('/login'as RelativePathString ); // if not logged in, go to login
+      }
+      setIsReady(true);
+    };
+
+    checkAuth();
+  }, []);
+
+  if (!isReady) return null;
+
   return <RootLayoutNav />;
 }
 
@@ -49,11 +71,11 @@ function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+    <TamaguiProvider config={config} >
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
       </Stack>
-    </ThemeProvider>
+    </TamaguiProvider>
   );
 }
