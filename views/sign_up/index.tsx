@@ -5,8 +5,8 @@ import { router, RelativePathString } from 'expo-router';
 
 export default class Signup extends Component {
   state = {
-    username: '',
-    password: '',
+    username: 'mainak',
+    password: 'banduri',
   };
 
   handleSignup = async () => {
@@ -33,7 +33,7 @@ export default class Signup extends Component {
           style={styles.input}
         />
         <Button title="Signup" onPress={this.handleSignup} />
-        <Button title="Go to Login" onPress={() => router.push('/login' as RelativePathString )} />
+        <Button title="Go to Login" onPress={() => router.replace("/login" as RelativePathString)} />
       </View>
     );
   }

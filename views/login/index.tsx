@@ -7,13 +7,29 @@ export default class index extends Component {
   state = {
     username: '',
     password: '',
+    isLoading: false
   };
 
   handleLogin = async () => {
     const { username, password } = this.state;
-    if (username && password) {
+    if (!username || !password) {
+      alert('Please enter both username and password');
+      return;
+    }
+
+    this.setState({ isLoading: true });
+    try {
+      // First clear any existing data
+      await AsyncStorage.clear();
+      // Set new token
       await AsyncStorage.setItem('sessionToken', 'dummy_token');
-      router.replace('/(tabs)');
+      // Navigate after successful token storage
+      router.replace('/(tabs)' as RelativePathString);
+    } catch (error) {
+      console.error('Login error:', error);
+      alert('Login failed. Please try again.');
+    } finally {
+      this.setState({ isLoading: false });
     }
   };
 
@@ -33,7 +49,7 @@ export default class index extends Component {
           style={styles.input}
         />
         <Button title="Login" onPress={this.handleLogin} />
-        <Button title="Go to Signup" onPress={() => router.push('/sign_up' as RelativePathString)} />
+        <Button title="Go to Signup" onPress={() => router.replace('/sign_up' as RelativePathString)} />
       </View>
     );
   }
