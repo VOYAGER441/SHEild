@@ -13,11 +13,9 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
-const colorScheme = useColorScheme();
-const theme = Colors[colorScheme ?? `light`];
-
 export default function TabLayout() {
- 
+  const colorScheme = useColorScheme();
+  const theme = Colors[colorScheme ?? `light`];
 
   return (
     <Tabs
@@ -25,16 +23,16 @@ export default function TabLayout() {
         tabBarActiveTintColor: theme.tabIconSelected, // use accent color, not background
         tabBarInactiveTintColor: theme.tabIconDefault,
         tabBarStyle: {
-          backgroundColor: theme.background, // Light pink/purple background
+          backgroundColor: theme.background,
           borderTopWidth: 0,
           elevation: 0,
           shadowOpacity: 0,
-          height: 80,
+          height: 75,
           paddingBottom: 10,
           paddingTop: 10,
-          borderRadius: 20,
+          borderRadius: 30,
           marginHorizontal: 10,
-          marginBottom: 30,
+          marginBottom: 50,
         },
         headerStyle: {
           backgroundColor: theme.tint,
@@ -56,10 +54,10 @@ export default function TabLayout() {
         options={{
           title: "Home",
           tabBarIcon: ({ focused }) => (
-            <AntDesign 
-              name="home" 
-              size={24} 
-              color={focused ? theme.tabIconSelected : theme.tabIconDefault} 
+            <AntDesign
+              name="home"
+              size={24}
+              color={focused ? theme.tabIconSelected : theme.tabIconDefault}
             />
           ),
           headerRight: () => (
@@ -83,10 +81,10 @@ export default function TabLayout() {
         options={{
           title: "Track",
           tabBarIcon: ({ focused }) => (
-            <Ionicons 
-              name="location-outline" 
-              size={24} 
-              color={focused ? theme.tabIconSelected : theme.tabIconDefault}  
+            <Ionicons
+              name="location-outline"
+              size={24}
+              color={focused ? theme.tabIconSelected : theme.tabIconDefault}
             />
           ),
         }}
@@ -94,15 +92,22 @@ export default function TabLayout() {
       <Tabs.Screen
         name="sos"
         options={{
-          title: "SOS",
+          title: "",
           tabBarIcon: ({ focused }) => (
-            <View style={styles.sosButton}>
+            <View
+              style={[
+                styles.sosButton,
+                { backgroundColor: theme.alert, shadowColor: theme.alert },
+              ]}
+            >
               <MaterialCommunityIcons
                 name="bell-alert"
                 size={28}
                 color="#FFFFFF"
               />
-              <Text style={styles.sosText}>SOS</Text>
+              <Text style={[styles.sosText, { color: theme.textSecondary }]}>
+                SOS
+              </Text>
             </View>
           ),
           tabBarButton: (props) => (
@@ -123,7 +128,7 @@ export default function TabLayout() {
             <MaterialCommunityIcons
               name="account-group-outline"
               size={24}
-              color={focused ? theme.tabIconSelected : theme.tabIconDefault} 
+              color={focused ? theme.tabIconSelected : theme.tabIconDefault}
             />
           ),
         }}
@@ -136,7 +141,7 @@ export default function TabLayout() {
             <MaterialCommunityIcons
               name="account-outline"
               size={24}
-              color={focused ? theme.tabIconSelected : theme.tabIconDefault} 
+              color={focused ? theme.tabIconSelected : theme.tabIconDefault}
             />
           ),
         }}
@@ -147,13 +152,11 @@ export default function TabLayout() {
 
 const styles = StyleSheet.create({
   sosButton: {
-    backgroundColor: theme.alert, // Red background
     width: 60,
     height: 60,
     borderRadius: 30,
     justifyContent: "center",
     alignItems: "center",
-    shadowColor: theme.alert,
     shadowOffset: {
       width: 0,
       height: 4,
@@ -167,7 +170,6 @@ const styles = StyleSheet.create({
     marginTop: -10,
   },
   sosText: {
-    color: theme.textSecondary,
     fontSize: 10,
     fontWeight: "bold",
     marginTop: 2,
