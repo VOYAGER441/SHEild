@@ -1,17 +1,16 @@
 'use client';
+import { useColorScheme } from '@/components/useColorScheme';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { DarkTheme, ThemeProvider } from '@react-navigation/native';
 import { defaultConfig } from '@tamagui/config/v4';
 import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
+import { RelativePathString, Stack, useRouter } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import 'react-native-reanimated';
-import { createTamagui, TamaguiProvider } from 'tamagui';
-import { useColorScheme } from '@/components/useColorScheme';
-import { useRouter, RelativePathString } from 'expo-router';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import "./global.css"
+import 'react-native-reanimated';
+import { createTamagui } from 'tamagui';
+import "./global.css";
 const config = createTamagui(defaultConfig);
 
 export { ErrorBoundary } from 'expo-router';
@@ -58,7 +57,8 @@ function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+    // TODO: change to fix the theme type
+    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DarkTheme}>
       <Stack screenOptions={{
         headerShown: false,
         animation: 'none',
