@@ -17,136 +17,139 @@ export default function TabLayout() {
   const theme = Colors[colorScheme ?? `light`];
 
   return (
-    <Tabs
-      screenOptions={{
-        
-        tabBarActiveTintColor: theme.tabIconSelected, // use accent color, not background
-        tabBarInactiveTintColor: theme.tabIconDefault,
-        tabBarStyle: {
-          backgroundColor: theme.alert,
-          borderTopWidth: 0,
-          elevation: 0,
-          shadowOpacity: 0,
-          height: 75,
-          paddingBottom: 10,
-          paddingTop: 10,
-          borderRadius: 30,
-          marginHorizontal: 10,
-          marginBottom: 50,
-        },
-        headerStyle: {
-          backgroundColor: theme.tint,
-        },
-        headerTintColor: theme.textSecondary,
-        headerShown: useClientOnlyValue(false, true),
-        tabBarLabelStyle: {
-          fontSize: 12,
-          fontWeight: "500",
-          marginTop: 4,
-        },
-        tabBarIconStyle: {
-          marginBottom: 2,
-        },
-      }}
-    >
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: "Home",
-          tabBarIcon: ({ focused }) => (
-            <AntDesign
-              name="home"
-              size={24}
-              color={focused ? theme.tabIconSelected : theme.tabIconDefault}
-            />
-          ),
-          headerRight: () => (
-            <Link href="/modal" asChild>
-              <Pressable>
-                {({ pressed }) => (
-                  <Feather
-                    name="bell"
-                    size={25}
-                    color={theme.tabIconDefault}
-                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
-          ),
+    <View style={{ flex: 1, backgroundColor: theme.tint }}>
+      <Tabs
+        screenOptions={{
+          tabBarActiveTintColor: theme.tabIconSelected,
+          tabBarInactiveTintColor: theme.tabIconDefault,
+          tabBarStyle: {
+            backgroundColor: theme.background,
+            borderTopWidth: 0,
+            elevation: 0,
+            shadowOpacity: 0,
+            height: 75,
+            paddingBottom: 10,
+            paddingTop: 10,
+            borderRadius: 30,
+            marginHorizontal: 10,
+            marginBottom: 30, // Floating effect, area below matches parent background
+          },
+          headerStyle: {
+            backgroundColor: theme.tint,
+          },
+          headerTintColor: theme.textSecondary,
+          headerShown: useClientOnlyValue(false, true),
+          tabBarLabelStyle: {
+            fontSize: 12,
+            fontWeight: "500",
+            marginTop: 4,
+          },
+          tabBarIconStyle: {
+            marginBottom: 2,
+          },
         }}
-      />
-      <Tabs.Screen
-        name="track"
-        options={{
-          title: "Track",
-          tabBarIcon: ({ focused }) => (
-            <Ionicons
-              name="location-outline"
-              size={24}
-              color={focused ? theme.tabIconSelected : theme.tabIconDefault}
-            />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="sos"
-        options={{
-          title: "",
-          tabBarIcon: ({ focused }) => (
-            <View
-              style={[
-                styles.sosButton,
-                { backgroundColor: theme.alert, shadowColor: theme.alert },
-              ]}
-            >
-              <MaterialCommunityIcons
-                name="bell-alert"
-                size={28}
-                color="#FFFFFF"
+      >
+        <Tabs.Screen
+          name="index"
+          options={{
+            title: "Home",
+            tabBarIcon: ({ focused }) => (
+              <AntDesign
+                name="home"
+                size={24}
+                color={focused ? theme.tabIconSelected : theme.tabIconDefault}
               />
-              <Text style={[styles.sosText, { color: theme.textSecondary }]}>
-                SOS
-              </Text>
-            </View>
-          ),
-          tabBarButton: (props) => (
-            <Pressable
-              onPress={props.onPress}
-              style={[props.style, styles.sosButtonContainer]}
-            >
-              {props.children}
-            </Pressable>
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="community"
-        options={{
-          title: "Community",
-          tabBarIcon: ({ focused }) => (
-            <MaterialCommunityIcons
-              name="account-group-outline"
-              size={24}
-              color={focused ? theme.tabIconSelected : theme.tabIconDefault}
-            />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="profile"
-        options={{
-          title: "Profile",
-          tabBarIcon: ({ focused }) => (
-            <MaterialCommunityIcons
-              name="account-outline"
-              size={24}
-              color={focused ? theme.tabIconSelected : theme.tabIconDefault}
-            />
-          ),
-        }}
-      />
-    </Tabs>
+            ),
+            headerRight: () => (
+              <Link href="/modal" asChild>
+                <Pressable>
+                  {({ pressed }) => (
+                    <Feather
+                      name="bell"
+                      size={25}
+                      color={theme.tabIconDefault}
+                      style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
+                    />
+                  )}
+                </Pressable>
+              </Link>
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="track"
+          options={{
+            title: "Track",
+            tabBarIcon: ({ focused }) => (
+              <Ionicons
+                name="location-outline"
+                size={24}
+                color={focused ? theme.tabIconSelected : theme.tabIconDefault}
+              />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="sos"
+          options={{
+            title: "",
+            tabBarIcon: ({ focused }) => (
+              <View
+                style={[
+                  styles.sosButton,
+                  { backgroundColor: theme.alert, shadowColor: theme.alert },
+                ]}
+              >
+                <MaterialCommunityIcons
+                  name="bell-alert"
+                  size={28}
+                  color="#FFFFFF"
+                />
+                <Text
+                  style={[styles.sosText, { color: theme.textSecondary }]}
+                >
+                  SOS
+                </Text>
+              </View>
+            ),
+            tabBarButton: (props) => (
+              <Pressable
+                onPress={props.onPress}
+                style={[props.style, styles.sosButtonContainer]}
+              >
+                {props.children}
+              </Pressable>
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="community"
+          options={{
+            title: "Community",
+            tabBarIcon: ({ focused }) => (
+              <MaterialCommunityIcons
+                name="account-group-outline"
+                size={24}
+                color={focused ? theme.tabIconSelected : theme.tabIconDefault}
+              />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="profile"
+          options={{
+            title: "Profile",
+            tabBarIcon: ({ focused }) => (
+              <MaterialCommunityIcons
+                name="account-outline"
+                size={24}
+                color={focused ? theme.tabIconSelected : theme.tabIconDefault}
+              />
+            ),
+          }}
+        />
+      </Tabs>
+    </View>
   );
 }
 
