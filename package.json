@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^14.1.0",
+    "@react-native-async-storage/async-storage": "2.1.2",
     "@react-navigation/native": "^7.1.6",
     "@tamagui/config": "^1.132.13",
     "expo": "~53.0.20",
@@ -24,15 +25,18 @@
     "expo-status-bar": "~2.2.3",
     "expo-system-ui": "~5.0.10",
     "expo-web-browser": "~14.2.0",
+    "nativewind": "^4.1.23",
+    "prettier-plugin-tailwindcss": "^0.5.14",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "react-native": "0.79.5",
+    "react-native-css-interop": "^0.1.22",
     "react-native-reanimated": "~3.17.4",
-    "react-native-safe-area-context": "5.4.0",
+    "react-native-safe-area-context": "^5.4.0",
     "react-native-screens": "~4.11.1",
     "react-native-web": "~0.20.0",
-    "tamagui": "^1.132.13",
-    "@react-native-async-storage/async-storage": "2.1.2"
+    "tailwindcss": "^3.4.17",
+    "tamagui": "^1.132.13"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

@@ -11,7 +11,7 @@ import { useRouter, RelativePathString } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-
+import "./global.css"
 const config = createTamagui(defaultConfig);
 
 export { ErrorBoundary } from 'expo-router';
