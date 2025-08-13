@@ -20,7 +20,8 @@ export default {
   dark: {
     text: '#FFFFFF',             // White text
     textSecondary: '#B0BEC5',    // Light gray text
-    background: '#0D1B2A',       // Deep navy
+    // background: '#0D1B2A',       // Deep navy
+    background: '#F4F7FB', 
     card: '#1B263B',             // Slightly lighter navy
     tint: primaryAccent,
     tintSecondary: secondaryAccent,

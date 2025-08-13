@@ -6,7 +6,6 @@ import "../global.css";
 import { useColorScheme } from "@/components/useColorScheme";
 import { useClientOnlyValue } from "@/components/useClientOnlyValue";
 import Colors from "@/constants/Colors";
-
 // icon
 import Feather from "@expo/vector-icons/Feather";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -20,10 +19,11 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
+        
         tabBarActiveTintColor: theme.tabIconSelected, // use accent color, not background
         tabBarInactiveTintColor: theme.tabIconDefault,
         tabBarStyle: {
-          backgroundColor: theme.background,
+          backgroundColor: theme.alert,
           borderTopWidth: 0,
           elevation: 0,
           shadowOpacity: 0,

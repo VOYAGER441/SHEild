@@ -2,7 +2,7 @@
 import { useColorScheme } from '@/components/useColorScheme';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { DarkTheme, ThemeProvider } from '@react-navigation/native';
+// import {  ThemeProvider } from '@react-navigation/native';
 import { defaultConfig } from '@tamagui/config/v4';
 import { useFonts } from 'expo-font';
 import { RelativePathString, Stack, useRouter } from 'expo-router';
@@ -58,7 +58,7 @@ function RootLayoutNav() {
 
   return (
     // TODO: change to fix the theme type
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DarkTheme}>
+    // <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DarkTheme}>
       <Stack screenOptions={{
         headerShown: false,
         animation: 'none',
@@ -82,6 +82,6 @@ function RootLayoutNav() {
           }}
         />
       </Stack>
-    </ThemeProvider>
+    // </ThemeProvider>
   );
 }
