@@ -3,15 +3,12 @@ import { useColorScheme } from '@/components/useColorScheme';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 // import {  ThemeProvider } from '@react-navigation/native';
-import { defaultConfig } from '@tamagui/config/v4';
 import { useFonts } from 'expo-font';
 import { RelativePathString, Stack, useRouter } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect, useState } from 'react';
 import 'react-native-reanimated';
-import { createTamagui } from 'tamagui';
 import "./global.css";
-const config = createTamagui(defaultConfig);
 
 export { ErrorBoundary } from 'expo-router';
 
