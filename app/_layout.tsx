@@ -2,6 +2,7 @@
 import { useColorScheme } from '@/components/useColorScheme';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
 // import {  ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { RelativePathString, Stack, useRouter } from 'expo-router';
@@ -54,8 +55,8 @@ function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
   return (
-    // TODO: change to fix the theme type
-    // <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DarkTheme}>
+    // TODO fix theam issues
+    <GluestackUIProvider mode={colorScheme === 'dark' ? 'dark' : 'light'}>
       <Stack screenOptions={{
         headerShown: false,
         animation: 'none',
@@ -79,6 +80,6 @@ function RootLayoutNav() {
           }}
         />
       </Stack>
-    // </ThemeProvider>
+    </GluestackUIProvider>
   );
 }
