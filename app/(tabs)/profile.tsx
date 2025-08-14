@@ -1,9 +1,6 @@
-import { View, Text } from "react-native";
+import Profile from "@/views/profile";
+import React from "react";
 
 export default function Page() {
-  return (
-    <View className="flex-1 items-center justify-center bg-black">
-      <Text className="text-red-500 text-lg">Hello NativeWind</Text>
-    </View>
-  );
+  return <Profile />;
 }

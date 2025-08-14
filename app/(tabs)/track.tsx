@@ -1,9 +1,6 @@
-import { View, Text } from "react-native";
+import Track from "@/views/track";
+import React from "react";
 
-export default function Page() {
-  return (
-    <View className="flex-1 items-center justify-center bg-white">
-      <Text className="text-red-500 text-lg">Hello NativeWind</Text>
-    </View>
-  );
+export default function index() {
+  return <Track />;
 }
