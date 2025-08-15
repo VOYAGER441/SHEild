@@ -12,6 +12,7 @@ export default {
     tint: primaryAccent,
     tintSecondary: secondaryAccent,
     alert: alertAccent,
+    
     success: successColor,
     divider: '#CFD8DC',          // Light gray divider
     tabIconDefault: '#B0BEC5',   // Muted gray for inactive icons

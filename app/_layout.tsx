@@ -53,6 +53,7 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
+  // const theme = Colors[colorScheme ?? `light`];
 
   return (
     // TODO fix theam issues
