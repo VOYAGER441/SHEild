@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, Tabs } from "expo-router";
-import { Pressable, View, Text, StyleSheet } from "react-native";
+import { Pressable, View, StyleSheet } from "react-native";
 import "../global.css";
 
 import { useColorScheme } from "@/components/useColorScheme";
@@ -12,9 +12,19 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
+import {
+  Avatar,
+  AvatarBadge,
+  AvatarFallbackText,
+  AvatarImage,
+} from "@/components/ui/avatar";
+import { Text } from "@/components/ui/text";
+
 export default function TabLayout() {
   const colorScheme = useColorScheme();
   const theme = Colors[colorScheme ?? `light`];
+
+  // call user profile api or take from localstorage
 
   return (
     <View style={{ flex: 1, backgroundColor: theme.tint }}>
@@ -52,13 +62,42 @@ export default function TabLayout() {
         <Tabs.Screen
           name="index"
           options={{
-            title: "Home",
+            // title: "Home",
+            tabBarLabel: "Home",
+            headerTitle: "",
+            headerLeft: () => (
+              <>
+                <Link href="/profile" asChild>
+                  <Pressable>
+                    {({ pressed }) => (
+                      <Avatar size="md" className="m-3">
+                        <AvatarFallbackText>Jane Doe</AvatarFallbackText>
+                        <AvatarImage
+                          source={{
+                            uri: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
+                          }}
+                        />
+                        <AvatarBadge />
+                      </Avatar>
+                    )}
+                  </Pressable>
+                </Link>
+                <Text>
+                  <Text style={{ color: theme.textSecondary, fontSize: 16, fontWeight: "500" }}>
+                    Hi, Mainak !
+                  </Text>
+                </Text>
+              </>
+            ),
             tabBarIcon: ({ focused }) => (
-              <AntDesign
-                name="home"
-                size={24}
-                color={focused ? theme.tabIconSelected : theme.tabIconDefault}
-              />
+              <>
+                <AntDesign
+                  name="home"
+                  size={24}
+                  color={focused ? theme.tabIconSelected : theme.tabIconDefault}
+                />
+                
+              </>
             ),
             headerRight: () => (
               <Link href="/modal" asChild>
@@ -105,9 +144,7 @@ export default function TabLayout() {
                   size={28}
                   color="#FFFFFF"
                 />
-                <Text
-                  style={[styles.sosText, { color: theme.textSecondary }]}
-                >
+                <Text style={[styles.sosText, { color: theme.textSecondary }]}>
                   SOS
                 </Text>
               </View>
