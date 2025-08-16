@@ -1,0 +1,7 @@
+{
+"avdmanager.executable": "/home/voyager/Android/Sdk/cmdline-tools/latest/bin/avdmanager",
+"avdmanager.sdkManager": "/home/voyager/Android/Sdk/cmdline-tools/latest/bin/sdkmanager",
+"avdmanager.sdkPath": "/home/voyager/Android/Sdk",
+"avdmanager.emulator": "/home/voyager/Android/Sdk/emulator/emulator"
+
+}
