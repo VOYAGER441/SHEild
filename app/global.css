@@ -1,5 +1,12 @@
 @tailwind base;
 @tailwind components;
-@tailwind utilities;@tailwind base;
-@tailwind components;
 @tailwind utilities;
+
+@layer base {
+  html {
+    font-family: Inter_400Regular, system-ui, sans-serif;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: Inter_600SemiBold, system-ui, sans-serif;
+  }
+}

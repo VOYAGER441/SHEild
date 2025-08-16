@@ -83,8 +83,8 @@ export default function TabLayout() {
                   </Pressable>
                 </Link>
                 <Text>
-                  <Text style={{ color: theme.textSecondary, fontSize: 16, fontWeight: "500" }}>
-                    Hi, Mainak !
+                  <Text style={{ color: theme.textSecondary, fontSize: 16, fontWeight: "700" }}>
+                    Hello, Mainak !
                   </Text>
                 </Text>
               </>

@@ -7,7 +7,7 @@ export default function Page() {
   const theme = Colors[colorScheme?? `light`];
 
   return (
-    <View className="flex-1 items-center justify-center bg-green-500" style={{ backgroundColor: theme.background }}>
+    <View className="flex-1 items-center justify-center " style={{ backgroundColor: theme.background }}>
       <Text className="text-red-500 text-lg" style={{ color: theme.text }}>Hello NativeWind</Text>
     </View>
   );

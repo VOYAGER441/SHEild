@@ -1,15 +1,20 @@
 'use client';
-import { useColorScheme } from '@/components/useColorScheme';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
-// import {  ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { RelativePathString, Stack, useRouter } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect, useState } from 'react';
 import 'react-native-reanimated';
 import "./global.css";
+import {
+  Inter_400Regular,
+  Inter_500Medium,
+  Inter_600SemiBold,
+  Inter_700Bold,
+} from '@expo-google-fonts/inter';
+import { useColorScheme } from '@/components/useColorScheme';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
 
 export { ErrorBoundary } from 'expo-router';
 
@@ -22,6 +27,10 @@ export default function RootLayout() {
 
   const [loaded, error] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+    Inter_400Regular,
+    Inter_500Medium,
+    Inter_600SemiBold,
+    Inter_700Bold,
     ...FontAwesome.font,
   });
 
@@ -77,7 +86,7 @@ function RootLayoutNav() {
           options={{ 
             presentation: 'modal',
             headerShown: true,
-            animation: 'slide_from_bottom'
+            animation: 'flip'
           }}
         />
       </Stack>
