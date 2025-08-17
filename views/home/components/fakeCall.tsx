@@ -1,65 +1,88 @@
 import { Button, ButtonText } from "@/components/ui/button";
 import { Center } from "@/components/ui/center";
 import { Heading } from "@/components/ui/heading";
-import {
-  Modal,
-  ModalBackdrop,
-  ModalContent,
-  ModalCloseButton,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-} from "@/components/ui/modal";
 import { Text } from "@/components/ui/text";
 import { Icon, CloseIcon } from "@/components/ui/icon";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useColorScheme } from "@/components/useColorScheme";
 import Colors from "@/constants/Colors";
-import { Stack } from "expo-router";
+import { Stack, useRouter } from "expo-router";
+import { Box } from "@/components/ui/box";
+import { Animated, Easing } from "react-native";
 
-export default function fakeCallModal() {
-      const colorScheme = useColorScheme();
-      const theme = Colors[colorScheme ?? `light`];
-      const [showModal, setShowModal] = React.useState(false);
+export default function FakeCallModal() {
+  const colorScheme = useColorScheme();
+  const theme = Colors[colorScheme ?? `light`];
+  const router = useRouter();
+  
+  // Animation values
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const slideAnim = useRef(new Animated.Value(50)).current;
+
+  useEffect(() => {
+    // Start the entrance animation
+    Animated.parallel([
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 500,
+        useNativeDriver: true,
+        easing: Easing.out(Easing.ease),
+      }),
+      Animated.timing(slideAnim, {
+        toValue: 0,
+        duration: 500,
+        useNativeDriver: true,
+        easing: Easing.out(Easing.ease),
+      }),
+    ]).start();
+  }, []);
+
+  const handleBack = () => {
+    // Exit animation
+    Animated.parallel([
+      Animated.timing(fadeAnim, {
+        toValue: 0,
+        duration: 300,
+        useNativeDriver: true,
+      }),
+      Animated.timing(slideAnim, {
+        toValue: 50,
+        duration: 300,
+        useNativeDriver: true,
+      }),
+    ]).start(() => {
+      router.back();
+    });
+  };
+
   return (
-     <Center >
-      <Heading style={{ color: theme.text }}>Home</Heading>
-      <Text style={{ color: theme.textSecondary }}>
-        This is the home page of the app.
-      </Text>
-      <Button
-        onPress={() => setShowModal(true)}
-        style={{ marginTop: 20, backgroundColor: theme.background }}
+    <Box
+      className="flex-1 items-center justify-center"
+      style={{ backgroundColor: theme.background }}
+    >
+      <Animated.View
+        style={{
+          opacity: fadeAnim,
+          transform: [{ translateY: slideAnim }],
+          width: "100%",
+          alignItems: "center",
+        }}
       >
-        <ButtonText style={{ color: theme.text }}>Open Modal</ButtonText>
-      </Button>
-
-      <Modal
-        isOpen={showModal}
-        onClose={() => setShowModal(false)}
-        // animationPreset="slide"
-      >
-        <ModalBackdrop />
-        <ModalContent>
-          <ModalHeader>
-            <Heading>Modal Title</Heading>
-            <ModalCloseButton onPress={() => setShowModal(false)}>
-              <Icon as={CloseIcon} />
-            </ModalCloseButton>
-          </ModalHeader>
-          <ModalBody>
-            <Text>This is a modal body.</Text>
-          </ModalBody>
-          <ModalFooter>
-            <Button onPress={() => setShowModal(false)}>
-              <ButtonText>Close</ButtonText>
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-
-      {/* Stack for navigation */}
-      <Stack screenOptions={{ headerShown: true,animation:"slide_from_bottom" }} />
-    </Center>
-  )
+        <Button
+          onPress={handleBack}
+          size="lg"
+          action="primary"
+          style={{ marginBottom: 20 }}
+        >
+          <ButtonText>Go Back</ButtonText>
+        </Button>
+        <Text 
+          className="text-red-500 text-lg" 
+          style={{ color: theme.text }}
+        >
+          Hello NativeWind
+        </Text>
+      </Animated.View>
+    </Box>
+  );
 }
