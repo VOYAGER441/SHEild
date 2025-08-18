@@ -3,6 +3,8 @@ import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
 import { Center } from "@/components/ui/center";
 import { HStack } from "@/components/ui/hstack";
 import { Image } from "@/components/ui/image";
+import { Text } from "@/components/ui/text";
+import { VStack } from "@/components/ui/vstack";
 import { useColorScheme } from "@/components/useColorScheme";
 import Colors from "@/constants/Colors";
 import { useRouter } from "expo-router";
@@ -17,32 +19,50 @@ export default function Home() {
   return (
     <ScrollView style={{ backgroundColor: theme.tint }}>
       <Center>
-        <HStack space="4xl" reversed={false} className=" gap-3">
-          <Button
-            onPress={() => router.push("/fakecall")}
-            size="lg"
-            action="negative"
-          >
-            <HStack space="md" className="border border-gray-300 rounded-lg p-4 items-center">
-              <Image
-               source={require('../../assets/images/app/phone.png')}
-                alt="phone"
-                width={100}
-                height={100}
-              />
-            
-              {/* <ButtonText>Show Fake Call Modal</ButtonText> */}
-            </HStack>
-          </Button>
-          {/* <Box >
+        <HStack reversed={false} className="gap-5 " style={{ marginTop: 10 }}>
+          <Box style={{ minHeight: 150, minWidth: 170 }} className="">
             <Button
-              onPress={() => router.push("/fakecall")}
-              size="lg"
-              action="primary"
+              className="flex-1 items-center justify-center  p-4"
+              style={{ backgroundColor: theme.background, borderRadius: 20 }}
+              onPress={() => {
+                router.push("/fakecall");
+              }}
             >
-              <ButtonText>Show Fake Call Modal</ButtonText>
+              <VStack space="md" className="   items-center">
+                <Image
+                  source={require("../../assets/images/app/phone.png")}
+                  alt="phone"
+                  width={200}
+                  height={200}
+                />
+
+                <Text>Show Fake Call Modal</Text>
+              </VStack>
             </Button>
-          </Box> */}
+          </Box>
+          <Box style={{ minHeight: 150, minWidth: 170 }} className="">
+            <Button
+              className="flex-1 items-center justify-center  p-4"
+              style={{
+                backgroundColor: theme.background,
+                borderRadius: 20,
+              }}
+              onPress={() => {
+                router.push("/fakecall");
+              }}
+            >
+              <VStack space="md" className="   items-center">
+                <Image
+                  source={require("../../assets/images/app/phone.png")}
+                  alt="phone"
+                  width={200}
+                  height={200}
+                />
+
+                <Text>Show Fake Call Modal</Text>
+              </VStack>
+            </Button>
+          </Box>
         </HStack>
       </Center>
     </ScrollView>

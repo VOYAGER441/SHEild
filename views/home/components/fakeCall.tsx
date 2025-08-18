@@ -76,10 +76,7 @@ export default function FakeCallModal() {
         >
           <ButtonText>Go Back</ButtonText>
         </Button>
-        <Text 
-          className="text-red-500 text-lg" 
-          style={{ color: theme.text }}
-        >
+        <Text className="text-red-500 text-lg" style={{ color: theme.text }}>
           Hello NativeWind
         </Text>
       </Animated.View>
