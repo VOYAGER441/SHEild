@@ -33,7 +33,7 @@ export default function TabLayout() {
           tabBarActiveTintColor: theme.tabIconSelected,
           tabBarInactiveTintColor: theme.tabIconDefault,
           tabBarStyle: {
-            backgroundColor: theme.background,
+            backgroundColor: theme.card,
             borderTopWidth: 0,
             elevation: theme.elevation,
             shadowOpacity: theme.shadowOpacity,

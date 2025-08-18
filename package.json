@@ -19,6 +19,7 @@
     "@gluestack-ui/avatar": "^0.1.18",
     "@gluestack-ui/button": "^1.0.14",
     "@gluestack-ui/config": "^1.1.20",
+    "@gluestack-ui/divider": "^0.1.10",
     "@gluestack-ui/icon": "^0.1.27",
     "@gluestack-ui/image": "^0.1.17",
     "@gluestack-ui/modal": "^0.1.41",

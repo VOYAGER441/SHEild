@@ -10,6 +10,9 @@ import Colors from "@/constants/Colors";
 import { useRouter } from "expo-router";
 import React from "react";
 import { ScrollView } from "react-native";
+import { Card } from "@/components/ui/card";
+import { Heading } from "@/components/ui/heading";
+import { Divider } from "@/components/ui/divider";
 
 export default function Home() {
   const colorScheme = useColorScheme();
@@ -18,13 +21,14 @@ export default function Home() {
 
   return (
     <ScrollView style={{ backgroundColor: theme.background }}>
+      {/* fake call and location*/}
       <Center>
         <HStack reversed={false} className="gap-5 " style={{ marginTop: 20 }}>
           <Box style={{ minHeight: 150, minWidth: 170 }} className="">
             <Button
               className="flex-1 items-center justify-center  p-4"
               style={{
-                backgroundColor: theme.background,
+                backgroundColor: theme.card,
                 borderRadius: theme.borderRadius,
                 shadowColor: theme.shadowColor,
                 shadowOffset: theme.shadowOffset,
@@ -52,7 +56,7 @@ export default function Home() {
             <Button
               className="flex-1 items-center justify-center  p-4"
               style={{
-                backgroundColor: theme.background,
+                backgroundColor: theme.card,
                 borderRadius: theme.borderRadius,
                 shadowColor: theme.shadowColor,
                 shadowOffset: theme.shadowOffset,
@@ -66,7 +70,7 @@ export default function Home() {
             >
               <VStack space="md" className="   items-center">
                 <Image
-                  source={require("../../assets/images/app/phone.png")}
+                  source={require("../../assets/images/app/map.png")}
                   alt="phone"
                   width={200}
                   height={200}
@@ -78,6 +82,63 @@ export default function Home() {
           </Box>
         </HStack>
       </Center>
+
+      {/* list items */}
+      <VStack reversed={false} style={{ marginTop: 20, padding: 4 }}>
+        <Box>
+          <Card
+            size="lg"
+            variant="elevated"
+            className="m-3"
+            style={{
+              backgroundColor: theme.card,
+              borderRadius: theme.borderRadius,
+              shadowColor: theme.shadowColor,
+              shadowOffset: theme.shadowOffset,
+              shadowOpacity: theme.shadowOpacity,
+              shadowRadius: theme.shadowRadius,
+              elevation: theme.elevation,
+            }}
+          >
+            <Heading size="lg" className="mb-1">
+              Add Close People
+            </Heading>
+            <Text size="sm">Start building your next project in minutes</Text>
+            <Button
+              className="mt-3"
+              style={{
+                backgroundColor: theme.tint,
+              }}
+              onPress={() => {
+                router.push("/");
+              }}
+              
+            >
+              <ButtonText>Add Close People</ButtonText>
+              <ButtonIcon color={theme.textSecondary} />
+            </Button>
+          </Card>
+          <Card
+            size="lg"
+            variant="elevated"
+            className="m-3"
+            style={{
+              backgroundColor: theme.card,
+              borderRadius: theme.borderRadius,
+              shadowColor: theme.shadowColor,
+              shadowOffset: theme.shadowOffset,
+              shadowOpacity: theme.shadowOpacity,
+              shadowRadius: theme.shadowRadius,
+              elevation: theme.elevation,
+            }}
+          >
+            <Heading size="lg" className="mb-1">
+              Quick Start
+            </Heading>
+            <Text size="sm">Start building your next project in minutes</Text>
+          </Card>
+        </Box>
+      </VStack>
     </ScrollView>
   );
 }
