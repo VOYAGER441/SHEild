@@ -84,8 +84,10 @@ export default function Home() {
       </Center>
 
       {/* list items */}
-      <VStack reversed={false} style={{ marginTop: 20, padding: 4 }}>
+      <VStack reversed={false} style={{ marginTop: 20, padding: 10 }}>
         <Box>
+          
+          {/* add friend or save close  */}
           <Card
             size="lg"
             variant="elevated"
@@ -100,24 +102,34 @@ export default function Home() {
               elevation: theme.elevation,
             }}
           >
-            <Heading size="lg" className="mb-1">
-              Add Close People
-            </Heading>
-            <Text size="sm">Start building your next project in minutes</Text>
-            <Button
-              className="mt-3"
-              style={{
-                backgroundColor: theme.tint,
-              }}
-              onPress={() => {
-                router.push("/");
-              }}
-              
-            >
-              <ButtonText>Add Close People</ButtonText>
-              <ButtonIcon color={theme.textSecondary} />
-            </Button>
+           <Box style={{ display: "flex",  gap: 10 }}>
+              <Box>
+                <Heading size="lg" className="mb-1">
+                  Add Close People
+                </Heading>
+                <Text size="sm">
+                  Start building your next project in minutes
+                </Text>
+              </Box>
+
+              <Box>
+                <Button
+                  className="mt-3"
+                  style={{
+                    backgroundColor: theme.tint,
+                  }}
+                  onPress={() => {
+                    router.push("/");
+                  }}
+                >
+                  <ButtonText >Add Close People</ButtonText>
+                  <ButtonIcon color={theme.textSecondary} />
+                </Button>
+              </Box>
+            </Box>
           </Card>
+          
+          
           <Card
             size="lg"
             variant="elevated"
