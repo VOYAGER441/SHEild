@@ -27,7 +27,7 @@ export default function TabLayout() {
   // call user profile api or take from localstorage
 
   return (
-    <View style={{ flex: 1, backgroundColor: theme.tint }}>
+    <View style={{ flex: 1, backgroundColor: theme.background }}>
       <Tabs
         screenOptions={{
           tabBarActiveTintColor: theme.tabIconSelected,
@@ -35,8 +35,9 @@ export default function TabLayout() {
           tabBarStyle: {
             backgroundColor: theme.background,
             borderTopWidth: 0,
-            elevation: 0,
-            shadowOpacity: 0,
+            elevation: theme.elevation,
+            shadowOpacity: theme.shadowOpacity,
+            shadowColor: theme.shadowColor,
             height: 75,
             paddingBottom: 10,
             paddingTop: 10,
@@ -83,7 +84,13 @@ export default function TabLayout() {
                   </Pressable>
                 </Link>
                 <Text>
-                  <Text style={{ color: theme.textSecondary, fontSize: 16, fontWeight: "700" }}>
+                  <Text
+                    style={{
+                      color: theme.textSecondary,
+                      fontSize: 16,
+                      fontWeight: "700",
+                    }}
+                  >
                     Hello, Mainak !
                   </Text>
                 </Text>
@@ -96,7 +103,6 @@ export default function TabLayout() {
                   size={24}
                   color={focused ? theme.tabIconSelected : theme.tabIconDefault}
                 />
-                
               </>
             ),
             headerRight: () => (
@@ -136,13 +142,20 @@ export default function TabLayout() {
               <View
                 style={[
                   styles.sosButton,
-                  { backgroundColor: theme.alert, shadowColor: theme.alert },
+                  {
+                    backgroundColor: theme.alert,
+                    shadowColor: theme.shadowColor,
+                    elevation: theme.elevation,
+                    shadowOpacity: theme.shadowOpacity,
+                    shadowOffset: theme.shadowOffset,
+                    shadowRadius:theme.shadowRadius
+                  },
                 ]}
               >
                 <MaterialCommunityIcons
                   name="bell-alert"
                   size={28}
-                  color="#FFFFFF"
+                  color={theme.background}
                 />
                 <Text style={[styles.sosText, { color: theme.textSecondary }]}>
                   SOS

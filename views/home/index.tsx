@@ -17,13 +17,21 @@ export default function Home() {
   const router = useRouter();
 
   return (
-    <ScrollView style={{ backgroundColor: theme.tint }}>
+    <ScrollView style={{ backgroundColor: theme.background }}>
       <Center>
-        <HStack reversed={false} className="gap-5 " style={{ marginTop: 10 }}>
+        <HStack reversed={false} className="gap-5 " style={{ marginTop: 20 }}>
           <Box style={{ minHeight: 150, minWidth: 170 }} className="">
             <Button
               className="flex-1 items-center justify-center  p-4"
-              style={{ backgroundColor: theme.background, borderRadius: 20 }}
+              style={{
+                backgroundColor: theme.background,
+                borderRadius: theme.borderRadius,
+                shadowColor: theme.shadowColor,
+                shadowOffset: theme.shadowOffset,
+                shadowOpacity: theme.shadowOpacity,
+                shadowRadius: theme.shadowRadius,
+                elevation: theme.elevation,
+              }}
               onPress={() => {
                 router.push("/fakecall");
               }}
@@ -32,8 +40,8 @@ export default function Home() {
                 <Image
                   source={require("../../assets/images/app/phone.png")}
                   alt="phone"
-                  width={200}
-                  height={200}
+                  width={30}
+                  height={30}
                 />
 
                 <Text>Show Fake Call Modal</Text>
@@ -45,7 +53,12 @@ export default function Home() {
               className="flex-1 items-center justify-center  p-4"
               style={{
                 backgroundColor: theme.background,
-                borderRadius: 20,
+                borderRadius: theme.borderRadius,
+                shadowColor: theme.shadowColor,
+                shadowOffset: theme.shadowOffset,
+                shadowOpacity: theme.shadowOpacity,
+                shadowRadius: theme.shadowRadius,
+                elevation: theme.elevation,
               }}
               onPress={() => {
                 router.push("/fakecall");
