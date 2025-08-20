@@ -13,6 +13,8 @@ import { ScrollView, View } from "react-native";
 import { Card } from "@/components/ui/card";
 import { Heading } from "@/components/ui/heading";
 import { Divider } from "@/components/ui/divider";
+import Svg, { G, Path } from "react-native-svg";
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 
 
 export default function ShareLocation() {
@@ -39,15 +41,17 @@ export default function ShareLocation() {
         }}
       >
         <VStack space="md" className="   items-center">
-          <Image
-            source={require("../../.././assets/images/app/map.png")}
+          {/* <Image
+            source={require("../../.././assets/images/app/map.svg")}
             alt="phone"
             width={200}
             height={200}
-          />
+          /> */}
+          <FontAwesome6 name="map-location-dot" size={50} color={theme.alert} />
+
           <Box style={{ alignItems: "center" }}>
 
-             <Heading size="lg" className="mb-1">Share Your</Heading>
+            <Heading size="lg" className="mb-1">Share Your</Heading>
             <Heading size="lg" className="mb-1">Live Location</Heading>
           </Box>
         </VStack>

@@ -14,6 +14,10 @@ import React from "react";
 import { ScrollView } from "react-native";
 import ShareLocation from "./components/ShareLocation";
 
+// Icons
+import Feather from '@expo/vector-icons/Feather';
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
+
 export default function Home() {
   const colorScheme = useColorScheme();
   const theme = Colors[colorScheme ?? `light`];
@@ -22,45 +26,41 @@ export default function Home() {
   return (
     <ScrollView style={{ backgroundColor: theme.background }}>
       {/* fake call and location*/}
-      <Center>
-        <HStack reversed={false} className="gap-5 " style={{ marginTop: 20 }}>
-          <Box style={{ minHeight: 150, minWidth: 170 }} className="">
-            <Button
-              className="flex-1 items-center justify-center  p-4"
-              style={{
-                backgroundColor: theme.card,
-                borderRadius: theme.borderRadius,
-                shadowColor: theme.shadowColor,
-                shadowOffset: theme.shadowOffset,
-                shadowOpacity: theme.shadowOpacity,
-                shadowRadius: theme.shadowRadius,
-                elevation: theme.elevation,
-              }}
-              onPress={() => {
-                router.push("/appComponent/fakecall");
-              }}
-            >
-              <VStack space="md" className="   items-center">
-                <Image
-                  source={require("../../assets/images/app/phone.png")}
-                  alt="phone"
-                  width={30}
-                  height={30}
-                />
+      {/* <Center> */}
+      <HStack className="flex-1 " style={{ marginTop: 20, justifyContent: "space-evenly" }}>
+        <Box style={{ minHeight: 150, minWidth: 170 }} className="">
+          <Button
+            className="flex-1 items-center justify-center  p-4"
+            style={{
+              backgroundColor: theme.card,
+              borderRadius: theme.borderRadius,
+              shadowColor: theme.shadowColor,
+              shadowOffset: theme.shadowOffset,
+              shadowOpacity: theme.shadowOpacity,
+              shadowRadius: theme.shadowRadius,
+              elevation: theme.elevation,
+            }}
+            onPress={() => {
+              router.push("/appComponent/fakecall");
+            }}
+          >
+            <VStack space="md" className="   items-center">
 
-                <Heading size="lg" className="mb-1">Fake Call</Heading>
-              </VStack>
-            </Button>
-          </Box>
 
-          {/* share location */}
-          <ShareLocation />
+              <Feather name="phone-call" size={50} color={theme.tintSecondary} />
+              <Heading size="lg" className="mb-1">Fake Call</Heading>
+            </VStack>
+          </Button>
+        </Box>
 
-        </HStack>
-      </Center>
+        {/* share location */}
+        <ShareLocation />
+
+      </HStack>
+      {/* </Center> */}
 
       {/* list items */}
-      <VStack reversed={false} style={{ marginTop: 20, padding: 10 }}>
+      <VStack reversed={false} style={{ marginTop: 20 }} className="gap-5">
         <Box>
 
           {/* add friend or save close  */}
@@ -127,17 +127,43 @@ export default function Home() {
               elevation: theme.elevation,
             }}
           >
-            <Box>
-              
+            <HStack className="gap-4">
 
-              <Heading size="lg" className="mb-1">
-                Quick Start
-              </Heading>
-              <Text size="sm">Start building your next project in minutes</Text>
-            </Box>
+              <Box className="justify-center">
+                <FontAwesome6 name="person-walking" size={24} color={theme.tint} />
+              </Box>
+
+              <Box className="flex-1 justify-center">
+
+                <Heading size="lg" className="mb-1">
+                  Start Your journey
+                </Heading>
+                {/* <Text size="sm">Start building your next project in minutes</Text> */}
+              </Box>
+              <Box className="justify-center">
+                <Button style={{
+                  backgroundColor: theme.background,
+                  borderRadius: theme.borderRadius,
+                  shadowColor: theme.shadowColor,
+                  shadowOffset: theme.shadowOffset,
+                  shadowOpacity: theme.shadowOpacity,
+                  shadowRadius: theme.shadowRadius,
+                  elevation: theme.elevation,
+                }}
+                  onPress={() => {
+                    router.push("/appComponent/shareLocation");
+                  }}
+                >
+                  <Feather name="arrow-right-circle" size={24} color={theme.tint} />
+                </Button>
+              </Box>
+            </HStack>
           </Card>
         </Box>
       </VStack>
-    </ScrollView>
+
+
+      
+    </ScrollView >
   );
 }
