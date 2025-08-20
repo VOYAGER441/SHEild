@@ -1,10 +1,8 @@
 import { Box } from "@/components/ui/box";
-import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
+import { Button, ButtonText } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Center } from "@/components/ui/center";
 import { Heading } from "@/components/ui/heading";
 import { HStack } from "@/components/ui/hstack";
-import { Image } from "@/components/ui/image";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
 import { useColorScheme } from "@/components/useColorScheme";
@@ -15,8 +13,12 @@ import { ScrollView } from "react-native";
 import ShareLocation from "./components/ShareLocation";
 
 // Icons
+import { Divider } from "@/components/ui/divider";
 import Feather from '@expo/vector-icons/Feather';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import EmergencyPlaces from "./components/EmergencyPlaces";
+import AntDesign from '@expo/vector-icons/AntDesign';
 
 export default function Home() {
   const colorScheme = useColorScheme();
@@ -105,8 +107,16 @@ export default function Home() {
                     router.push("/");
                   }}
                 >
-                  <ButtonText >Add Close People</ButtonText>
-                  <ButtonIcon color={theme.textSecondary} />
+                  <Box style={{ flexDirection: "row", alignItems: "center" }}>
+                    <AntDesign name="adduser" size={16}
+                      color={theme.textSecondary}
+                      style={{ marginRight: 6 }}
+                    />
+                    <ButtonText style={{ color: theme.textSecondary, fontSize: 15 }}>
+                      Add Close People
+                    </ButtonText>
+                  </Box>
+
                 </Button>
               </Box>
             </Box>
@@ -138,7 +148,7 @@ export default function Home() {
                 <Heading size="lg" className="mb-1">
                   Start Your journey
                 </Heading>
-                {/* <Text size="sm">Start building your next project in minutes</Text> */}
+                <Text size="sm">Via Maps</Text>
               </Box>
               <Box className="justify-center">
                 <Button style={{
@@ -163,7 +173,138 @@ export default function Home() {
       </VStack>
 
 
-      
+      {/* Emergency Number open a modal */}
+
+
+
+      <Box>
+        <Card
+          size="lg"
+          variant="elevated"
+          className="m-3"
+          style={{
+            backgroundColor: theme.card,
+            borderRadius: theme.borderRadius * 1.5,
+            padding: 16,
+            shadowColor: theme.shadowColor,
+            shadowOffset: theme.shadowOffset,
+            shadowOpacity: theme.shadowOpacity,
+            shadowRadius: theme.shadowRadius,
+            elevation: theme.elevation,
+          }}
+        >
+          {/* Header Row */}
+          <Box style={{ flexDirection: "row", alignItems: "center", marginBottom: 12 }}>
+            <MaterialCommunityIcons
+              name="car-emergency"
+              size={28}
+              color={theme.tint}
+              style={{ marginRight: 8 }}
+            />
+            <Heading size="lg" style={{ color: theme.text }}>
+              Emergency Numbers
+            </Heading>
+          </Box>
+
+          {/* Description */}
+          <Text size="sm" style={{ color: theme.text, marginBottom: 16 }}>
+            Quickly access and call important emergency contacts when needed.
+          </Text>
+
+          {/* Button */}
+          <Button
+            style={{
+              backgroundColor: theme.tint,
+              borderRadius: theme.borderRadius,
+              // paddingVertical: 12,
+              // paddingHorizontal: 16,
+              // justifyContent: "center",
+              // alignItems: "center",
+              shadowColor: theme.shadowColor,
+              shadowOffset: theme.shadowOffset,
+              shadowOpacity: theme.shadowOpacity,
+              shadowRadius: theme.shadowRadius,
+              elevation: theme.elevation,
+            }}
+            onPress={() => {
+              router.push("/");
+            }}
+          >
+            <Box style={{ flexDirection: "row", alignItems: "center" }}>
+              <Feather
+                name="phone-call"
+                size={16}
+                color={theme.textSecondary}
+                style={{ marginRight: 6 }} // spacing between icon and text
+              />
+              <ButtonText style={{ color: theme.textSecondary, fontSize: 15 }}>
+                Open The Dialer
+              </ButtonText>
+            </Box>
+
+          </Button>
+        </Card>
+      </Box>
+
+
+
+      {/* Emergency places */}
+      <Box>
+        <VStack>
+          <Card
+            size="lg"
+            variant="elevated"
+            className="m-3"
+            style={{
+              backgroundColor: theme.card,
+              borderRadius: theme.borderRadius,
+              shadowColor: theme.shadowColor,
+              shadowOffset: theme.shadowOffset,
+              shadowOpacity: theme.shadowOpacity,
+              shadowRadius: theme.shadowRadius,
+              elevation: theme.elevation,
+            }}
+          >
+            <Box style={{ marginBottom: 10, alignItems: "center" }}>
+              <Heading size="xl">Emergency Place</Heading>
+              {/* <Divider/> */}
+            </Box>
+
+            {/* police station */}
+            <EmergencyPlaces iconName={"police-badge-outline"} heading={"Near Police Station"} place={"/emergencyPlaces"} />
+
+            <Box style={{ alignItems: "center", }}>
+              <Divider style={{ margin: 10, backgroundColor: theme.tint, width: 250, }} />
+            </Box>
+
+            {/* hospital */}
+            <EmergencyPlaces iconName={"hospital"} heading={"Near Hospital"} place={"/emergencyPlaces"} />
+
+            <Box style={{ alignItems: "center", }}>
+              <Divider style={{ margin: 10, backgroundColor: theme.tint, width: 250, }} />
+            </Box>
+
+            {/* fire station */}
+            {/* <EmergencyPlaces iconName={"fire-truck"} heading={"Near Fire Station"} place={"/emergencyPlaces"} /> */}
+
+            {/* <Box style={{ alignItems: "center",  }}>
+              <Divider style={{ margin: 10, backgroundColor: theme.tint, width: 250, }} />
+            </Box> */}
+
+            {/* ambulance */}
+            <EmergencyPlaces iconName={"ambulance"} heading={"Near Ambulance"} place={"/emergencyPlaces"} />
+
+            <Box style={{ alignItems: "center", }}>
+              <Divider style={{ margin: 10, backgroundColor: theme.tint, width: 250, }} />
+            </Box>
+
+            {/* Public Toilet */}
+            <EmergencyPlaces iconName={"toilet"} heading={"Near Public Toilet"} place={"/emergencyPlaces"} />
+          </Card>
+
+        </VStack>
+      </Box>
+
     </ScrollView >
   );
 }

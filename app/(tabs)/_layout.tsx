@@ -92,7 +92,7 @@ export default function TabLayout() {
                   >
                     Hello, Mainak ! 
                   </Heading>
-                  <Text size="md" style={{color:theme.textSecondary,fontWeight:500}}>Welcomw to SHEild</Text>
+                  <Text size="md" style={{color:theme.textSecondary,fontWeight:500}}>Welcome to SHEild</Text>
                 </Box>
               </>
             ),
