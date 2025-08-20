@@ -10,7 +10,7 @@ import { Stack, useRouter } from "expo-router";
 import { Box } from "@/components/ui/box";
 import { Animated, Easing } from "react-native";
 
-export default function FakeCallModal() {
+export default function ShareLocationModal() {
   const colorScheme = useColorScheme();
   const theme = Colors[colorScheme ?? `light`];
   const router = useRouter();
@@ -77,7 +77,7 @@ export default function FakeCallModal() {
           <ButtonText>Go Back</ButtonText>
         </Button>
         <Text className="text-red-500 text-lg" style={{ color: theme.text }}>
-          Hello NativeWind
+          Share loaction model is not implemented yet.
         </Text>
       </Animated.View>
     </Box>

@@ -19,6 +19,8 @@ import {
   AvatarImage,
 } from "@/components/ui/avatar";
 import { Text } from "@/components/ui/text";
+import { Heading } from "@/components/ui/heading";
+import { Box } from "@/components/ui/box";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -83,17 +85,15 @@ export default function TabLayout() {
                     )}
                   </Pressable>
                 </Link>
-                <Text>
-                  <Text
-                    style={{
-                      color: theme.textSecondary,
-                      fontSize: 16,
-                      fontWeight: "700",
-                    }}
+                <Box>
+                  <Heading
+                    size="lg"
+                    style={{ color: theme.textSecondary }}
                   >
-                    Hello, Mainak !
-                  </Text>
-                </Text>
+                    Hello, Mainak ! 
+                  </Heading>
+                  <Text size="md" style={{color:theme.textSecondary,fontWeight:500}}>Welcomw to SHEild</Text>
+                </Box>
               </>
             ),
             tabBarIcon: ({ focused }) => (
