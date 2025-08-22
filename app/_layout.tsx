@@ -15,6 +15,7 @@ import { useColorScheme } from '@/components/useColorScheme';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
+import AnimatedSplash from './AnimatedSplash';
 
 export { ErrorBoundary } from 'expo-router';
 
@@ -55,9 +56,11 @@ export default function RootLayout() {
   }, [loaded, initialRoute]);
 
   if (error) return null;
-  if (!loaded || !initialRoute) return null;
+   if (!loaded || !initialRoute) {
+    return <AnimatedSplash />;
+  }
 
-  return <RootLayoutNav />;
+  // return <RootLayoutNav />;
 }
 
 function RootLayoutNav() {
