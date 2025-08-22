@@ -1,24 +1,21 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import { View, StyleSheet, StatusBar } from "react-native";
 import LottieView from "lottie-react-native";
 
 interface AnimatedSplashProps {
   onAnimationFinish?: () => void;
-  duration?: number; // in milliseconds
+  duration?: number;
 }
 
 export default function AnimatedSplash({ 
   onAnimationFinish, 
-  duration = 3000 
+  duration = 2500 
 }: AnimatedSplashProps) {
-  const animationRef = useRef<LottieView>(null);
 
   useEffect(() => {
-    // Auto-finish after duration if no onAnimationFinish callback
+    // Ensure callback is called after duration
     const timer = setTimeout(() => {
-      if (onAnimationFinish) {
-        onAnimationFinish();
-      }
+      onAnimationFinish?.();
     }, duration);
 
     return () => clearTimeout(timer);
@@ -28,10 +25,9 @@ export default function AnimatedSplash({
     <View style={styles.container}>
       <StatusBar hidden />
       <LottieView
-        ref={animationRef}
         source={require("../assets/images/app/animation.json")}
         autoPlay
-        loop={false} // Set to false for splash screen
+        loop={false}
         resizeMode="contain"
         style={styles.animation}
         onAnimationFinish={onAnimationFinish}
@@ -45,7 +41,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#ffffff", // Match your app's theme
+    // backgroundColor: "#ffffff",
   },
   animation: {
     width: "100%",
