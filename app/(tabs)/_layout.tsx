@@ -62,6 +62,8 @@ export default function TabLayout() {
           },
         }}
       >
+
+        {/* Home */}
         <Tabs.Screen
           name="index"
           options={{
@@ -121,10 +123,12 @@ export default function TabLayout() {
             ),
           }}
         />
+
+        {/* Map */}
         <Tabs.Screen
           name="track"
           options={{
-            title: "Track",
+            title: "Map",
             tabBarIcon: ({ focused }) => (
               <Ionicons
                 name="location-outline"
@@ -134,6 +138,8 @@ export default function TabLayout() {
             ),
           }}
         />
+
+        {/* SOS */}
         <Tabs.Screen
           name="sos"
           options={{
@@ -172,6 +178,8 @@ export default function TabLayout() {
             ),
           }}
         />
+
+        {/* Community */}
         <Tabs.Screen
           name="community"
           options={{
@@ -185,6 +193,8 @@ export default function TabLayout() {
             ),
           }}
         />
+
+        {/* Profile */}
         <Tabs.Screen
           name="profile"
           options={{
@@ -198,6 +208,7 @@ export default function TabLayout() {
             ),
           }}
         />
+        
       </Tabs>
     </View>
   );
