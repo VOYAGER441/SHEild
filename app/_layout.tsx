@@ -51,13 +51,13 @@ function RootLayoutNav() {
         <Stack.Screen name="login/index" />
         <Stack.Screen name="sign_up/index" />
         <Stack.Screen name="(tabs)" />
-        <Stack.Screen
+        {/* <Stack.Screen
           name="modal"
           options={{
             presentation: 'modal',
             headerShown: true,
           }}
-        />
+        /> */}
       </Stack>
     </GluestackUIProvider>
   );

@@ -1,20 +1,17 @@
-import { Button, ButtonText } from "@/components/ui/button";
-import { Center } from "@/components/ui/center";
-import { Heading } from "@/components/ui/heading";
-import { Text } from "@/components/ui/text";
-import { Icon, CloseIcon } from "@/components/ui/icon";
-import React, { useEffect, useRef } from "react";
-import { useColorScheme } from "@/components/useColorScheme";
-import Colors from "@/constants/Colors";
-import { Stack, useRouter } from "expo-router";
-import { Box } from "@/components/ui/box";
-import { Animated, Easing } from "react-native";
+import { Animated,  Easing, Text, View } from 'react-native'
+import React, { Component, useEffect, useRef } from 'react'
+import { useColorScheme } from '@/components/useColorScheme';
+import Colors from '@/constants/Colors';
+import { Box } from '@/components/ui/box';
+import { Button, ButtonText } from '@/components/ui/button';
+import { useRouter } from 'expo-router';
 
-export default function ShareLocationModal() {
+export default function NotificationModal() {
+
   const colorScheme = useColorScheme();
   const theme = Colors[colorScheme ?? `light`];
   const router = useRouter();
-  
+
   // Animation values
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(50)).current;
@@ -77,7 +74,7 @@ export default function ShareLocationModal() {
           <ButtonText>Go Back</ButtonText>
         </Button>
         <Text className="text-red-500 text-lg" style={{ color: theme.text }}>
-          Share loaction model is not implemented yet.
+          Notification model is not implemented yet.
         </Text>
       </Animated.View>
     </Box>

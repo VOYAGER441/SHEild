@@ -41,11 +41,11 @@ export default function TabLayout() {
             shadowOpacity: theme.shadowOpacity,
             shadowColor: theme.shadowColor,
             height: 75,
-            paddingBottom: 10,
+            // paddingBottom: 20,
             paddingTop: 10,
             borderRadius: 30,
             marginHorizontal: 10,
-            marginBottom: 30, // Floating effect, area below matches parent background
+            marginBottom: 10, // Floating effect, area below matches parent background
           },
           headerStyle: {
             backgroundColor: theme.tint,
@@ -92,9 +92,9 @@ export default function TabLayout() {
                     size="lg"
                     style={{ color: theme.textSecondary }}
                   >
-                    Hello, Mainak ! 
+                    Hello, Mainak !
                   </Heading>
-                  <Text size="md" style={{color:theme.textSecondary,fontWeight:500}}>Welcome to SHEild</Text>
+                  <Text size="md" style={{ color: theme.textSecondary, fontWeight: 500 }}>Welcome to SHEild</Text>
                 </Box>
               </>
             ),
@@ -108,7 +108,7 @@ export default function TabLayout() {
               </>
             ),
             headerRight: () => (
-              <Link href="/modal" asChild>
+              <Link href="/appComponent/notification" asChild>
                 <Pressable>
                   {({ pressed }) => (
                     <Feather
@@ -128,7 +128,21 @@ export default function TabLayout() {
         <Tabs.Screen
           name="track"
           options={{
-            title: "Map",
+            title: "Location",
+            headerRight: () => (
+              <Link href="/appComponent/download" asChild>
+                <Pressable>
+                  {({ pressed }) => (
+                    <Feather
+                      name="download"
+                      size={25}
+                      color={theme.tabIconDefault}
+                      style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
+                    />
+                  )}
+                </Pressable>
+              </Link>
+            ),
             tabBarIcon: ({ focused }) => (
               <Ionicons
                 name="location-outline"
@@ -154,7 +168,7 @@ export default function TabLayout() {
                     elevation: theme.elevation,
                     shadowOpacity: theme.shadowOpacity,
                     shadowOffset: theme.shadowOffset,
-                    shadowRadius:theme.shadowRadius
+                    shadowRadius: theme.shadowRadius
                   },
                 ]}
               >
@@ -208,7 +222,7 @@ export default function TabLayout() {
             ),
           }}
         />
-        
+
       </Tabs>
     </View>
   );

@@ -2,7 +2,6 @@ import { View, Text } from "react-native";
 import React from "react";
 import FakeCallModal from "@/views/home/components/FakeCall";
 import { Stack } from "expo-router";
-import ShareLocationModal from "@/views/home/components/ShareLocationModal";
 
 const index = () => {
   return (
@@ -17,7 +16,7 @@ const index = () => {
           animationDuration: 300,
         }}
       />
-      <ShareLocationModal />
+      <FakeCallModal />
     </>
   );
 };
