@@ -1,12 +1,16 @@
-import { View, Text } from 'react-native'
+import { View, Text, useColorScheme } from 'react-native'
 import React from 'react'
+import Colors from '@/constants/Colors';
 
 const OfflineMap = () => {
-  return (
-    <View>
-      <Text>OfflineMap</Text>
-    </View>
-  )
+    const colorScheme = useColorScheme();
+    const theme = Colors[colorScheme ?? "light"];
+    return (
+        <View style={{  }}>
+            <Text>Offline Map</Text>
+        </View>
+    )
+  
 }
 
 export default OfflineMap
