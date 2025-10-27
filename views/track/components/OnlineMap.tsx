@@ -1,11 +1,19 @@
-import { View, Text, StyleSheet, ActivityIndicator, TouchableOpacity } from 'react-native';
-import React, { useState, useEffect, useRef } from 'react';
-import MapView, { Marker, Circle, PROVIDER_GOOGLE } from 'react-native-maps';
-import * as Location from 'expo-location';
-import Colors from '@/constants/Colors';
-import { useColorScheme } from '@/components/useColorScheme';
-import { Button, ButtonText } from '@/components/ui/button';
-import { Box } from '@/components/ui/box';
+import Colors from "@/constants/Colors";
+import * as Location from "expo-location";
+import React, { useEffect, useRef, useState } from "react";
+import {
+  ActivityIndicator,
+  Alert,
+  StyleSheet,
+  useColorScheme,
+  View
+} from "react-native";
+import MapView, {
+  Marker,
+  Polyline,
+  PROVIDER_DEFAULT,
+  UrlTile,
+} from "react-native-maps";
 
 interface LocationState {
   latitude: number;
@@ -13,128 +21,80 @@ interface LocationState {
 }
 
 const OnlineMap = () => {
-  const colorScheme = useColorScheme();
-  const theme = Colors[colorScheme ?? "light"];
+  const [location, setLocation] = useState<LocationState | null>(null);
+  const [destination, setDestination] = useState<LocationState | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [routeCoords, setRouteCoords] = useState<any[]>([]);
   const mapRef = useRef<MapView>(null);
 
-  const [location, setLocation] = useState<LocationState | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [errorMsg, setErrorMsg] = useState<string | null>(null);
-  const [mapType, setMapType] = useState<'standard' | 'satellite' | 'hybrid'>('standard');
+  const colorScheme = useColorScheme();
+  const theme = Colors[colorScheme ?? "light"];
 
-  const [markers, setMarkers] = useState<Array<{
-    id: string;
-    coordinate: LocationState;
-    title: string;
-    description: string;
-    type: 'sos' | 'safe' | 'police';
-  }>>([]);
-
+  // Get current location
   useEffect(() => {
-    let locationSubscription: Location.LocationSubscription | null = null;
-
-    const setupLocation = async () => {
-      await getCurrentLocation();
-      locationSubscription = await watchLocation();
-    };
-
-    setupLocation();
-
-    // Cleanup function
-    return () => {
-      if (locationSubscription) {
-        locationSubscription.remove();
-      }
-    };
-  }, []);
-
-  const getCurrentLocation = async () => {
-    try {
+    (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied');
-        setLoading(false);
+      if (status !== "granted") {
+        Alert.alert("Permission denied", "Location access is required.");
         return;
       }
-
-      let currentLocation = await Location.getCurrentPositionAsync({
-        accuracy: Location.Accuracy.High,
-      });
-
+      let loc = await Location.getCurrentPositionAsync({});
       setLocation({
-        latitude: currentLocation.coords.latitude,
-        longitude: currentLocation.coords.longitude,
+        latitude: loc.coords.latitude,
+        longitude: loc.coords.longitude,
       });
       setLoading(false);
-    } catch (error) {
-      setErrorMsg('Error getting location');
-      setLoading(false);
+    })();
+  }, []);
+
+  // Fetch route from current location → destination
+  const fetchRoute = async () => {
+    if (!location || !destination) return;
+    try {
+      const res = await fetch(
+        `https://router.project-osrm.org/route/v1/driving/${location.longitude},${location.latitude};${destination.longitude},${destination.latitude}?overview=full&geometries=geojson`
+      );
+      const data = await res.json();
+      const coords = data.routes[0].geometry.coordinates.map(([lon, lat]: [number, number]) => ({
+        latitude: lat,
+        longitude: lon,
+      }));
+      setRouteCoords(coords);
+    } catch (err) {
+      Alert.alert("Routing Error", "Failed to fetch route");
     }
   };
 
-  const watchLocation = async () => {
-    return await Location.watchPositionAsync(
-      {
-        accuracy: Location.Accuracy.High,
-        timeInterval: 5000,
-        distanceInterval: 10,
-      },
-      (newLocation) => {
-        setLocation({
-          latitude: newLocation.coords.latitude,
-          longitude: newLocation.coords.longitude,
-        });
-      }
-    );
+  // SOS alert function (send to server or trigger alert)
+  const handleSOS = async () => {
+    if (!location) return;
+    Alert.alert("🚨 SOS Triggered", `Location: ${location.latitude}, ${location.longitude}`);
+    // Example POST (replace with your endpoint)
+    // await fetch('https://your-api/sos', { method: 'POST', body: JSON.stringify(location) })
   };
 
-  const centerOnUser = () => {
-    if (location && mapRef.current) {
-      mapRef.current.animateToRegion({
+  const handleLongPress = (e: any) => {
+    const coord = e.nativeEvent.coordinate;
+    setDestination(coord);
+    fetchRoute();
+  };
+
+
+  const recenter = () => {
+    if (location) {
+      mapRef.current?.animateToRegion({
         latitude: location.latitude,
         longitude: location.longitude,
         latitudeDelta: 0.01,
         longitudeDelta: 0.01,
-      }, 1000);
+      });
     }
   };
 
-  const toggleMapType = () => {
-    setMapType((prev) => {
-      if (prev === 'standard') return 'satellite';
-      if (prev === 'satellite') return 'hybrid';
-      return 'standard';
-    });
-  };
-
-  const handleMapPress = (event: any) => {
-    const { coordinate } = event.nativeEvent;
-    const newMarker = {
-      id: Date.now().toString(),
-      coordinate: coordinate,
-      title: 'SOS Alert',
-      description: 'Emergency location',
-      type: 'sos' as const,
-    };
-    setMarkers([...markers, newMarker]);
-  };
-
-  if (loading) {
+  if (loading || !location) {
     return (
-      <View style={[styles.container, styles.centered, { backgroundColor: theme.background }]}>
-        <ActivityIndicator size="large" color={theme.tint} />
-        <Text style={{ color: theme.text, marginTop: 10 }}>Loading map...</Text>
-      </View>
-    );
-  }
-
-  if (errorMsg) {
-    return (
-      <View style={[styles.container, styles.centered, { backgroundColor: theme.background }]}>
-        <Text style={{ color: theme.text, fontSize: 16 }}>{errorMsg}</Text>
-        <Button onPress={getCurrentLocation} style={{ marginTop: 20 }}>
-          <ButtonText>Retry</ButtonText>
-        </Button>
+      <View style={[styles.container, styles.centered]}>
+        <ActivityIndicator size="large" color="#000" />
       </View>
     );
   }
@@ -143,111 +103,52 @@ const OnlineMap = () => {
     <View style={styles.container}>
       <MapView
         ref={mapRef}
-        provider={PROVIDER_GOOGLE}
         style={styles.map}
-        mapType={mapType}
+        provider={PROVIDER_DEFAULT}
         initialRegion={{
-          latitude: location?.latitude ?? 37.78825,
-          longitude: location?.longitude ?? -122.4324,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
+          latitude: location.latitude,
+          longitude: location.longitude,
+          latitudeDelta: 0.01,
+          longitudeDelta: 0.01,
         }}
-        showsUserLocation={true}
-        showsMyLocationButton={false}
-        showsCompass={true}
-        showsScale={true}
-        showsTraffic={true}
-        onPress={handleMapPress}
+        showsUserLocation
+        onLongPress={handleLongPress}
       >
-        {location && (
-          <Circle
-            center={location}
-            radius={500}
-            strokeColor="rgba(0, 150, 255, 0.5)"
-            fillColor="rgba(0, 150, 255, 0.1)"
-          />
+        <UrlTile
+          // urlTemplate="https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=jDgfJYvIrKEVpUffNXOZ"
+          urlTemplate="https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png"
+          maximumZ={19}
+        />
+        {destination && <Marker coordinate={destination} title="Destination" />}
+        {routeCoords.length > 0 && (
+          <Polyline coordinates={routeCoords} strokeWidth={5} strokeColor="blue" />
         )}
-
-        {markers.map((marker) => (
-          <Marker
-            key={marker.id}
-            coordinate={marker.coordinate}
-            title={marker.title}
-            description={marker.description}
-            pinColor={marker.type === 'sos' ? 'red' : 'green'}
-          />
-        ))}
       </MapView>
 
-      <Box style={styles.controls}>
-        <TouchableOpacity
-          onPress={centerOnUser}
-          style={[styles.controlButton, { backgroundColor: theme.tint }]}
-        >
-          <Text style={{ color: theme.textSecondary, fontSize: 20 }}>📍</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={toggleMapType}
-          style={[styles.controlButton, { backgroundColor: theme.tint, marginTop: 10 }]}
-        >
-          <Text style={{ color: theme.textSecondary, fontSize: 20 }}>🗺️</Text>
-        </TouchableOpacity>
-      </Box>
-
-      {location && (
-        <Box style={[styles.locationInfo, { backgroundColor: theme.background }]}>
-          <Text style={{ color: theme.text, fontSize: 12 }}>
-            📍 {location.latitude.toFixed(6)}, {location.longitude.toFixed(6)}
-          </Text>
-        </Box>
-      )}
+      {/* Floating Controls */}
+     
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  centered: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  map: {
-    width: '100%',
-    height: '100%',
-  },
+  container: { flex: 1 },
+  centered: { justifyContent: "center", alignItems: "center" },
+  map: { width: "100%", height: "100%" },
   controls: {
-    position: 'absolute',
+    position: "absolute",
     right: 20,
     bottom: 100,
-    gap: 10,
+    gap: 15,
   },
   controlButton: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    justifyContent: 'center',
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  locationInfo: {
-    position: 'absolute',
-    bottom: 20,
-    left: 20,
-    right: 20,
-    padding: 10,
-    borderRadius: 8,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    backgroundColor: "#2196F3",
+    width: 55,
+    height: 55,
+    borderRadius: 30,
+    justifyContent: "center",
+    alignItems: "center",
+    elevation: 6,
   },
 });
 

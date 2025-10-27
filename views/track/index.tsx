@@ -31,32 +31,23 @@ export default function Track() {
   };
 
   return (
-    <ScrollView
-      // className="flex-1 px-4 pt-8"
-      style={{ backgroundColor: theme.background }}
-      contentContainerStyle={{ flexGrow: 1 }}
-    >
-      {/* === Toggle Map Mode Button === */}
-      <Box style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        zIndex: 999,
-        position: "relative"
-      }}>
-        <Box style={{
-          backgroundColor: theme.background,
-          borderRadius: theme.borderRadius,
-          shadowColor: theme.shadowColor,
-          shadowOffset: theme.shadowOffset,
-          shadowOpacity: theme.shadowOpacity,
-          shadowRadius: theme.shadowRadius,
-          elevation: theme.elevation,
-          marginTop: 60,
-          position: "absolute"
-        }} >
+    <View style={{ flex: 1, backgroundColor: theme.background }}>
 
 
+
+      {/* === Floating Map Mode Button === */}
+      <View
+        pointerEvents="box-none" // 👈 allows map below to stay interactive
+        style={{
+          position: 'absolute',
+          top: 11,
+          left: 0,
+          right: 0,
+          alignItems: 'center',
+          zIndex: 999,
+        }}
+      >
+        <View pointerEvents="auto">
           <Button
             size="md"
             variant="outline"
@@ -69,48 +60,47 @@ export default function Track() {
               shadowOpacity: theme.shadowOpacity,
               shadowRadius: theme.shadowRadius,
               elevation: theme.elevation,
+             
             }}
           >
             <ButtonText
               style={{
                 color: theme.textSecondary,
                 fontSize: 15,
+                fontWeight: '600',
               }}
             >
               {isOnlineMode ? "Online Map" : "Offline Map"}
             </ButtonText>
           </Button>
+        </View>
+      </View>
 
-          {/* === Action Sheet === */}
-          <Actionsheet isOpen={showActionsheet} onClose={handleClose}>
-            <ActionsheetBackdrop />
-            <ActionsheetContent>
-              <ActionsheetDragIndicatorWrapper>
-                <ActionsheetDragIndicator />
-              </ActionsheetDragIndicatorWrapper>
-
-              <ActionsheetItem onPress={() => handleSelectMapMode("offline")} >
-                <ActionsheetItemText>
-                  Offline Map (Downloaded Map)
-                </ActionsheetItemText>
-              </ActionsheetItem>
-              <ActionsheetItem onPress={() => handleSelectMapMode("online")}>
-                <ActionsheetItemText>
-                  Online Map (Google Map)
-                </ActionsheetItemText>
-              </ActionsheetItem>
-              <ActionsheetItem onPress={handleClose}>
-                <ActionsheetItemText>Cancel</ActionsheetItemText>
-              </ActionsheetItem>
-            </ActionsheetContent>
-          </Actionsheet>
-        </Box>
-      </Box>
-
-      {/* === Map View === */}
-      <Box >
+      {/* Map view */}
+      <View style={{ flex: 1 }}>
         {isOnlineMode ? <OnlineMap /> : <OfflineMap />}
-      </Box>
-    </ScrollView>
+      </View>
+
+      {/* Action sheet */}
+      <Actionsheet isOpen={showActionsheet} onClose={handleClose}>
+        <ActionsheetBackdrop />
+        <ActionsheetContent>
+          <ActionsheetDragIndicatorWrapper>
+            <ActionsheetDragIndicator />
+          </ActionsheetDragIndicatorWrapper>
+
+          <ActionsheetItem onPress={() => handleSelectMapMode('offline')}>
+            <ActionsheetItemText>Offline Map (Downloaded Map)</ActionsheetItemText>
+          </ActionsheetItem>
+          <ActionsheetItem onPress={() => handleSelectMapMode('online')}>
+            <ActionsheetItemText>Online Map (MapTiler)</ActionsheetItemText>
+          </ActionsheetItem>
+          <ActionsheetItem onPress={handleClose}>
+            <ActionsheetItemText>Cancel</ActionsheetItemText>
+          </ActionsheetItem>
+        </ActionsheetContent>
+      </Actionsheet>
+    </View>
+
   );
 }
