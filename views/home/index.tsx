@@ -249,7 +249,7 @@ export default function Home() {
 
 
       {/* Emergency places */}
-      <Box>
+      <Box style={{ marginBottom: 100 }}>
         <VStack>
           <Card
             size="lg"

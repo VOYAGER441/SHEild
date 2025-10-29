@@ -1,34 +1,150 @@
-import { View, Text } from "react-native";
-import Colors from "@/constants/Colors";
 import { useColorScheme } from "@/components/useColorScheme";
-import { Box } from "@/components/ui/box"
-import { HStack } from "@/components/ui/hstack"
-import { Skeleton, SkeletonText } from '@/components/ui/skeleton';
+import Colors from "@/constants/Colors";
+import { ScrollView } from "react-native";
+import Card from "./components/Card";
+import Skeleton from "./components/Skeleton";
+import PostSkeleton from "./components/Skeleton";
+import { Box } from "@/components/ui/box";
+import { Avatar, AvatarBadge, AvatarImage } from "@/components/ui/avatar";
+import { Text } from "@/components/ui/text";
+import { HStack } from "@/components/ui/hstack";
+// require local image at runtime so TypeScript doesn't need a module declaration
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import { Button } from "@/components/ui/button";
+
 
 export default function Community() {
   const colorScheme = useColorScheme();
-  const theme = Colors[colorScheme ?? `light`];
-  // return (
-  //   <View className="flex-1 items-center justify-center " style={{ backgroundColor: theme.background }}>
-  //     <Box className="w-[325px] gap-4 p-3 rounded-md bg-background-100">
-  //       <Skeleton variant="sharp" className="h-[150px]" />
-  //       <SkeletonText _lines={3} className="h-3" />
-  //       <HStack className="gap-2 align-middle">
-  //         <Skeleton variant="circular" className="h-[24px] w-[24px] mr-2" />
-  //         <SkeletonText _lines={2} gap={1} className="h-2 w-2/5" />
-  //       </HStack>
-  //     </Box>
-  //   </View>
-  // );
+  const theme = Colors[colorScheme ?? "light"];
 
-    return (
-    <Box className="w-[325px] gap-4 p-3 rounded-md bg-background-100">
-      <Skeleton variant="sharp" className="h-[150px]" />
-      <SkeletonText _lines={3} className="h-3" />
-      <HStack className="gap-2 align-middle">
-        <Skeleton variant="circular" className="h-[24px] w-[24px] mr-2" />
-        <SkeletonText _lines={2} gap={1} className="h-2 w-2/5" />
-      </HStack>
-    </Box>
-  )
+  type Tweet = {
+    username: string;
+    avatar: string;
+    handle: string;
+    date: string;
+    content?: string;
+    media?: {
+      type: 'image' | 'video';
+      // can be a remote uri (string) or a local module import
+      url: any;
+    };
+  };
+
+  const tweets: Tweet[] = [
+    {
+      username: "Alice",
+      handle: "alice_dev",
+      date: "28 Oct 2025",
+      content: "Just launched a new React Native app! #Expo #ReactNative",
+      avatar: "https://images.unsplash.com/photo-1506863530036-1efeddceb993"
+    },
+    {
+      username: "Bob",
+      handle: "bobux",
+      date: "28 Oct 2025",
+      content: "Beautiful sunset today 🌇",
+      media: { type: "image", url: "https://images.unsplash.com/photo-1761578571404-f7e0fa2ff634" },
+      avatar: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61"
+    },
+    {
+      username: "Alice",
+      handle: "alice_dev",
+      date: "28 Oct 2025",
+      content: "Just launched a new React Native app! #Expo #ReactNative",
+      avatar: "https://images.unsplash.com/photo-1506863530036-1efeddceb993"
+    },
+    {
+      username: "Bob",
+      handle: "bobux",
+      date: "28 Oct 2025",
+      content: "Beautiful sunset today 🌇",
+      media: { type: "image", url: "https://images.unsplash.com/photo-1761578571404-f7e0fa2ff634" },
+      avatar: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61"
+    },
+    {
+      username: "Alice",
+      handle: "alice_dev",
+      date: "28 Oct 2025",
+      content: "Just launched a new React Native app! #Expo #ReactNative",
+      avatar: "https://images.unsplash.com/photo-1506863530036-1efeddceb993"
+    },
+    {
+      username: "Bob",
+      handle: "bobux",
+      date: "28 Oct 2025",
+      content: "Beautiful sunset today 🌇",
+      media: { type: "image", url: "https://images.unsplash.com/photo-1761578571404-f7e0fa2ff634" },
+      avatar: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61"
+    },
+    {
+      username: "Alice",
+      handle: "alice_dev",
+      date: "28 Oct 2025",
+      content: "Just launched a new React Native app! #Expo #ReactNative",
+      avatar: "https://images.unsplash.com/photo-1506863530036-1efeddceb993"
+    },
+    {
+      username: "Bob",
+      handle: "bobux",
+      date: "28 Oct 2025",
+      content: "Beautiful sunset today 🌇",
+      media: { type: "image", url: "https://images.unsplash.com/photo-1761578571404-f7e0fa2ff634" },
+      avatar: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61"
+    }
+
+  ];
+
+  return (
+    <ScrollView
+      className="flex-1 p-4"
+      style={{ backgroundColor: theme.background, marginBottom: 90 }}
+    >
+      <Box
+        style={{
+          backgroundColor: theme.card,
+          borderRadius: theme.borderRadius,
+          shadowColor: theme.shadowColor,
+          shadowOffset: theme.shadowOffset,
+          shadowOpacity: theme.shadowOpacity,
+          shadowRadius: theme.shadowRadius,
+          elevation: theme.elevation,
+          marginBottom: 20,
+          padding: 10,
+        }}
+      >
+        <HStack>
+
+          <Avatar size="md" >
+            <AvatarImage
+              source={{
+                uri: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80",
+              }}
+            />
+            <AvatarBadge />
+          </Avatar>
+          <Box className="flex-1 flex-row items-center justify-between" 
+          
+          >
+
+            <Box style={{
+              backgroundColor: theme.background,
+              marginLeft: 10,
+              borderRadius: theme.borderRadius,
+            }}
+              className="p-3 text-center flex-1 justify-center"
+            >
+              <Text>post your thoughts !!!</Text>
+            </Box>
+            <MaterialCommunityIcons name="comment-text-outline" size={24} color="black" style={{ margin: 10 }} />
+          </Box>
+        </HStack>
+
+      </Box>
+      {tweets.length === 0 ? (
+        <PostSkeleton />
+      ) : (
+        tweets.map((tweet, idx) => <Card key={idx} {...tweet} />)
+      )}
+    </ScrollView>
+  );
 }

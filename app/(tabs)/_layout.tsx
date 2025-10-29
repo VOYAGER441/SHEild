@@ -61,8 +61,8 @@ export default function TabLayout() {
             position: "absolute",
             left: 10,
             right: 10,
-            marginLeft:10 ,
-            marginRight:10 ,
+            marginLeft: 10,
+            marginRight: 10,
             // margin:10,
             bottom: insets.bottom + 10, // ✅ floating correctly
             backgroundColor: theme.card,
@@ -77,190 +77,197 @@ export default function TabLayout() {
             transform: [{ translateY: 0 }], // ✅ ensures reset transform after resume
           },
           headerStyle: {
-        backgroundColor: theme.tint,
+            backgroundColor: theme.tint,
           },
-      headerTintColor: theme.textSecondary,
-      headerShown: useClientOnlyValue(false, true),
-      tabBarLabelStyle: {
-        fontSize: 12,
-      fontWeight: "500",
-      marginTop: 4,
+          headerTintColor: theme.textSecondary,
+          headerShown: useClientOnlyValue(false, true),
+          tabBarLabelStyle: {
+            fontSize: 12,
+            fontWeight: "500",
+            marginTop: 4,
           },
-      tabBarIconStyle: {
-        marginBottom: 2,
+          tabBarIconStyle: {
+            marginBottom: 2,
           },
         }}
       >
 
-      {/* Home */}
-      <Tabs.Screen
-        name="index"
-        options={{
-          tabBarLabel: "Home",
-          headerTitle: "",
-          headerLeft: () => (
-            <>
-              <Link href="/profile" asChild>
+        {/* Home */}
+        <Tabs.Screen
+          name="index"
+          options={{
+            tabBarLabel: "Home",
+            headerTitle: "",
+            headerLeft: () => (
+              <>
+                <Link href="/profile" asChild>
+                  <Pressable>
+                    {({ pressed }) => (
+                      <Avatar size="md" className="m-3">
+                        <AvatarFallbackText>Jane Doe</AvatarFallbackText>
+                        <AvatarImage
+                          source={{
+                            uri: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80",
+                          }}
+                        />
+                        <AvatarBadge />
+                      </Avatar>
+                    )}
+                  </Pressable>
+                </Link>
+                <Box>
+                  <Heading size="lg" style={{ color: theme.textSecondary }}>
+                    Hello, Mainak !
+                  </Heading>
+                  <Text
+                    size="md"
+                    style={{ color: theme.textSecondary, fontWeight: 500 }}
+                  >
+                    Welcome to SHEild
+                  </Text>
+                </Box>
+              </>
+            ),
+            tabBarIcon: ({ focused }) => (
+              <AntDesign
+                name="home"
+                size={24}
+                color={
+                  focused ? theme.tabIconSelected : theme.tabIconDefault
+                }
+              />
+            ),
+            headerRight: () => (
+              <Link href="/appComponent/notification" asChild>
                 <Pressable>
                   {({ pressed }) => (
-                    <Avatar size="md" className="m-3">
-                      <AvatarFallbackText>Jane Doe</AvatarFallbackText>
-                      <AvatarImage
-                        source={{
-                          uri: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80",
-                        }}
-                      />
-                      <AvatarBadge />
-                    </Avatar>
+                    <Feather
+                      name="bell"
+                      size={25}
+                      color={theme.tabIconDefault}
+                      style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
+                    />
                   )}
                 </Pressable>
               </Link>
-              <Box>
-                <Heading size="lg" style={{ color: theme.textSecondary }}>
-                  Hello, Mainak !
-                </Heading>
-                <Text
-                  size="md"
-                  style={{ color: theme.textSecondary, fontWeight: 500 }}
-                >
-                  Welcome to SHEild
-                </Text>
-              </Box>
-            </>
-          ),
-          tabBarIcon: ({ focused }) => (
-            <AntDesign
-              name="home"
-              size={24}
-              color={
-                focused ? theme.tabIconSelected : theme.tabIconDefault
-              }
-            />
-          ),
-          headerRight: () => (
-            <Link href="/appComponent/notification" asChild>
-              <Pressable>
-                {({ pressed }) => (
-                  <Feather
-                    name="bell"
-                    size={25}
-                    color={theme.tabIconDefault}
-                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
-          ),
-        }}
-      />
+            ),
+          }}
+        />
 
-      {/* Map */}
-      <Tabs.Screen
-        name="track"
-        options={{
-          title: "Location",
-          headerRight: () => (
-            <Link href="/appComponent/download" asChild>
-              <Pressable>
-                {({ pressed }) => (
-                  <Feather
-                    name="download"
-                    size={25}
-                    color={theme.tabIconDefault}
-                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
-          ),
-          tabBarIcon: ({ focused }) => (
-            <Ionicons
-              name="location-outline"
-              size={24}
-              color={
-                focused ? theme.tabIconSelected : theme.tabIconDefault
-              }
-            />
-          ),
-        }}
-      />
-
-      {/* SOS */}
-      <Tabs.Screen
-        name="sos"
-        options={{
-          title: "",
-          tabBarIcon: ({ focused }) => (
-            <View
-              style={[
-                styles.sosButton,
-                {
-                  backgroundColor: theme.alert,
-                  shadowColor: theme.shadowColor,
-                  elevation: theme.elevation,
-                  shadowOpacity: theme.shadowOpacity,
-                  shadowOffset: theme.shadowOffset,
-                  shadowRadius: theme.shadowRadius,
-                },
-              ]}
-            >
-              <MaterialCommunityIcons
-                name="bell-alert"
-                size={28}
-                color={theme.background}
+        {/* Map */}
+        <Tabs.Screen
+          name="track"
+          options={{
+            title: "Location",
+            headerRight: () => (
+              <Link href="/appComponent/download" asChild>
+                <Pressable>
+                  {({ pressed }) => (
+                    <Feather
+                      name="download"
+                      size={25}
+                      color={theme.tabIconDefault}
+                      style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
+                    />
+                  )}
+                </Pressable>
+              </Link>
+            ),
+            tabBarIcon: ({ focused }) => (
+              <Ionicons
+                name="location-outline"
+                size={24}
+                color={
+                  focused ? theme.tabIconSelected : theme.tabIconDefault
+                }
               />
-              <Text
-                style={[styles.sosText, { color: theme.textSecondary }]}
+            ),
+          }}
+        />
+
+        {/* SOS */}
+        <Tabs.Screen
+          name="sos"
+          options={{
+            title: "",
+            tabBarIcon: ({ focused }) => (
+              <View
+                style={[
+                  styles.sosButton,
+                  {
+                    backgroundColor: theme.alert,
+                    shadowColor: theme.shadowColor,
+                    elevation: theme.elevation,
+                    shadowOpacity: theme.shadowOpacity,
+                    shadowOffset: theme.shadowOffset,
+                    shadowRadius: theme.shadowRadius,
+                  },
+                ]}
               >
-                SOS
-              </Text>
-            </View>
-          ),
-          tabBarButton: (props) => (
-            <Pressable
-              onPress={props.onPress}
-              style={[props.style, styles.sosButtonContainer]}
-            >
-              {props.children}
-            </Pressable>
-          ),
-        }}
-      />
+                <MaterialCommunityIcons
+                  name="bell-alert"
+                  size={28}
+                  color={theme.background}
+                />
+                <Text
+                  style={[styles.sosText, { color: theme.textSecondary }]}
+                >
+                  SOS
+                </Text>
+              </View>
+            ),
+            tabBarButton: (props) => (
+              <Pressable
+                onPress={props.onPress}
+                style={[props.style, styles.sosButtonContainer]}
+              >
+                {props.children}
+              </Pressable>
+            ),
+          }}
+        />
 
-      {/* Community */}
-      <Tabs.Screen
-        name="community"
-        options={{
-          title: "Community",
-          tabBarIcon: ({ focused }) => (
-            <MaterialCommunityIcons
-              name="account-group-outline"
-              size={24}
-              color={
-                focused ? theme.tabIconSelected : theme.tabIconDefault
-              }
-            />
-          ),
-        }}
-      />
+        {/* Community */}
+        <Tabs.Screen
+          name="community"
+          options={{
+            title: "Community",
+            tabBarIcon: ({ focused }) => (
+              <MaterialCommunityIcons
+                name="account-group-outline"
+                size={24}
+                color={
+                  focused ? theme.tabIconSelected : theme.tabIconDefault
+                }
+              />
+            ),
+            headerRight: () => (
+              <Link href="/appComponent/sheildAi" asChild>
+                <Text style={{ marginRight: 15, fontSize: 20, fontWeight: '600', color: theme.textSecondary }}>
+                  SHEild Ai
+                </Text>
+              </Link>
+            )
+          }}
+        />
 
-      {/* Profile */}
-      <Tabs.Screen
-        name="profile"
-        options={{
-          title: "Profile",
-          tabBarIcon: ({ focused }) => (
-            <MaterialCommunityIcons
-              name="account-outline"
-              size={24}
-              color={
-                focused ? theme.tabIconSelected : theme.tabIconDefault
-              }
-            />
-          ),
-        }}
-      />
-    </Tabs>
+        {/* Profile */}
+        <Tabs.Screen
+          name="profile"
+          options={{
+            title: "Profile",
+            tabBarIcon: ({ focused }) => (
+              <MaterialCommunityIcons
+                name="account-outline"
+                size={24}
+                color={
+                  focused ? theme.tabIconSelected : theme.tabIconDefault
+                }
+              />
+            ),
+          }}
+        />
+      </Tabs>
     </View >
   );
 }

@@ -31,7 +31,7 @@ export default function Track() {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: theme.background }}>
+    <View style={{ flex: 1, backgroundColor: theme.background, marginBottom: 100 }}>
 
 
 
@@ -60,7 +60,7 @@ export default function Track() {
               shadowOpacity: theme.shadowOpacity,
               shadowRadius: theme.shadowRadius,
               elevation: theme.elevation,
-             
+
             }}
           >
             <ButtonText

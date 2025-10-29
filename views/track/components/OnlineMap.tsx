@@ -121,7 +121,7 @@ const OnlineMap = () => {
         />
         {destination && <Marker coordinate={destination} title="Destination" />}
         {routeCoords.length > 0 && (
-          <Polyline coordinates={routeCoords} strokeWidth={5} strokeColor="blue" />
+          <Polyline coordinates={routeCoords} strokeWidth={5} strokeColor={`${theme.alert}`} />
         )}
       </MapView>
 
