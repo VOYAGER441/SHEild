@@ -1,16 +1,14 @@
+import { Avatar, AvatarBadge, AvatarImage } from "@/components/ui/avatar";
+import { Box } from "@/components/ui/box";
+import { HStack } from "@/components/ui/hstack";
+import { Text } from "@/components/ui/text";
 import { useColorScheme } from "@/components/useColorScheme";
 import Colors from "@/constants/Colors";
 import { ScrollView } from "react-native";
 import Card from "./components/Card";
-import Skeleton from "./components/Skeleton";
 import PostSkeleton from "./components/Skeleton";
-import { Box } from "@/components/ui/box";
-import { Avatar, AvatarBadge, AvatarImage } from "@/components/ui/avatar";
-import { Text } from "@/components/ui/text";
-import { HStack } from "@/components/ui/hstack";
 // require local image at runtime so TypeScript doesn't need a module declaration
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import { Button } from "@/components/ui/button";
 
 
 export default function Community() {
@@ -43,8 +41,8 @@ export default function Community() {
       handle: "bobux",
       date: "28 Oct 2025",
       content: "Beautiful sunset today 🌇",
-      media: { type: "image", url: "https://images.unsplash.com/photo-1761578571404-f7e0fa2ff634" },
-      avatar: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61"
+      media: { type: "image", url: "https://images.unsplash.com/photo-1761872936161-9c2075a7ca11?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxM3x8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=60&w=500" },
+      avatar: "https://images.unsplash.com/photo-1576280314550-773c50583407?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NTF8fGRwfGVufDB8fDB8fHww&auto=format&fit=crop&q=60&w=500"
     },
     {
       username: "Alice",
@@ -58,8 +56,8 @@ export default function Community() {
       handle: "bobux",
       date: "28 Oct 2025",
       content: "Beautiful sunset today 🌇",
-      media: { type: "image", url: "https://images.unsplash.com/photo-1761578571404-f7e0fa2ff634" },
-      avatar: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61"
+      media: { type: "image", url: "https://images.unsplash.com/photo-1761872936161-9c2075a7ca11?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxM3x8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=60&w=500" },
+      avatar: "https://images.unsplash.com/photo-1576280314550-773c50583407?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NTF8fGRwfGVufDB8fDB8fHww&auto=format&fit=crop&q=60&w=500"
     },
     {
       username: "Alice",
@@ -73,8 +71,8 @@ export default function Community() {
       handle: "bobux",
       date: "28 Oct 2025",
       content: "Beautiful sunset today 🌇",
-      media: { type: "image", url: "https://images.unsplash.com/photo-1761578571404-f7e0fa2ff634" },
-      avatar: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61"
+      media: { type: "image", url: "https://images.unsplash.com/photo-1761872936161-9c2075a7ca11?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxM3x8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=60&w=500" },
+      avatar: "https://images.unsplash.com/photo-1576280314550-773c50583407?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NTF8fGRwfGVufDB8fDB8fHww&auto=format&fit=crop&q=60&w=500"
     },
     {
       username: "Alice",
@@ -88,8 +86,8 @@ export default function Community() {
       handle: "bobux",
       date: "28 Oct 2025",
       content: "Beautiful sunset today 🌇",
-      media: { type: "image", url: "https://images.unsplash.com/photo-1761578571404-f7e0fa2ff634" },
-      avatar: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61"
+      media: { type: "image", url: "https://images.unsplash.com/photo-1761872936161-9c2075a7ca11?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxM3x8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=60&w=500" },
+      avatar: "https://images.unsplash.com/photo-1576280314550-773c50583407?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NTF8fGRwfGVufDB8fDB8fHww&auto=format&fit=crop&q=60&w=500"
     }
 
   ];
@@ -122,8 +120,8 @@ export default function Community() {
             />
             <AvatarBadge />
           </Avatar>
-          <Box className="flex-1 flex-row items-center justify-between" 
-          
+          <Box className="flex-1 flex-row items-center justify-between"
+
           >
 
             <Box style={{
