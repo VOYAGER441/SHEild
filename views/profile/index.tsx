@@ -7,12 +7,10 @@ import ProfileHeader from './components/ProfileHeader';
 import ProfileInventories from './components/ProfileInventories';
 import ProfilePreferences from './components/ProfilePreferences';
 import ProfileActions from './components/ProfileActions';
+import System from './components/System';
+import DeleteAccount from './components/DeleteAccount';
 
-// Import your custom components
-// import ProfileHeader from '@/components/ProfileHeader';
-// import ProfileInventories from '@/components/ProfileInventories';
-// import ProfilePreferences from '@/components/ProfilePreferences';
-// import ProfileActions from '@/components/ProfileActions';
+
 
 export default function ProfileScreen() {
   const colorScheme = useColorScheme();
@@ -20,7 +18,7 @@ export default function ProfileScreen() {
 
   return (
     <ScrollView className="flex-1 " style={{ backgroundColor: theme.background }}>
-      <View style={{ marginTop: 20, paddingHorizontal: 10, paddingVertical: 5, gap: 5 }}>
+      <View style={{  paddingHorizontal: 10, paddingVertical: 5, gap: 5,marginBottom:100 }}>
         {/* Header Section */}
         <ProfileHeader />
 
@@ -30,8 +28,14 @@ export default function ProfileScreen() {
         {/* Preferences Section */}
         <ProfilePreferences />
 
+        {/* more Section */}
+        <System />
+
         {/* Actions Section (Logout) */}
         <ProfileActions />
+
+        {/* Delete Account Section */}
+        <DeleteAccount />
       </View>
     </ScrollView>
   );

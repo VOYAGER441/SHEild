@@ -40,7 +40,7 @@ export default function ProfileHeader() {
                 </Avatar>
 
                 {/* Stats */}
-                <HStack className="flex-1 justify-center gap-5">
+                <HStack className="flex-1 justify-center gap-8">
                     <VStack className="items-center">
                         <Text className="text-clip" style={{ color: theme.text }}>Total Posts</Text>
                         <Text className="text-clip font-semibold" style={{ color: theme.text }}>480</Text>
@@ -49,17 +49,18 @@ export default function ProfileHeader() {
                         <Text className="text-clip" style={{ color: theme.text }}>SOS Triggered</Text>
                         <Text className="text-clip font-semibold" style={{ color: theme.text }}>4</Text>
                     </VStack>
-
                 </HStack>
             </HStack>
 
             <Text className="text-2xl font-semibold mb-1" style={{ color: theme.text }}>
                 Coffeestories
             </Text>
-            <HStack> <Text className="text-clip" style={{ color: theme.text }}>Email: </Text>
+            <HStack className="items-center"> 
+                <Text className="text-clip" style={{ color: theme.text }}>Email: </Text>
                 <Text style={{ color: theme.text, marginBottom: 5 }} >mark.brock@icloud.com</Text>
             </HStack>
-            <HStack> <Text className="text-clip" style={{ color: theme.text }}>Phone: </Text>
+            <HStack className="items-center"> 
+                <Text className="text-clip" style={{ color: theme.text }}>Phone: </Text>
                 <Text style={{ color: theme.text, marginBottom: 5 }} >9876543210</Text>
             </HStack>
 

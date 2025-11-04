@@ -8,13 +8,15 @@ type IVStackProps = React.ComponentProps<typeof View> &
   VariantProps<typeof vstackStyle>;
 
 const VStack = React.forwardRef<React.ComponentRef<typeof View>, IVStackProps>(
-  function VStack({ className, space, reversed, ...props }, ref) {
+  function VStack({ className, space, reversed, children, ...props }, ref) {
     return (
       <View
         className={vstackStyle({ space, reversed, class: className })}
         {...props}
         ref={ref}
-      />
+      >
+        {children}
+      </View>
     );
   }
 );

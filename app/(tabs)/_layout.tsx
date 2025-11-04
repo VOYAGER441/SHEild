@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, Tabs } from "expo-router";
-import { Pressable, View, StyleSheet, AppState } from "react-native";
+import { Pressable, View, StyleSheet, AppState, TouchableOpacity } from "react-native";
 import "../global.css";
 
 import { useColorScheme } from "@/components/useColorScheme";
@@ -23,6 +23,7 @@ import {
 import { Text } from "@/components/ui/text";
 import { Heading } from "@/components/ui/heading";
 import { Box } from "@/components/ui/box";
+import { Image } from "@/components/ui/image";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -243,9 +244,25 @@ export default function TabLayout() {
             ),
             headerRight: () => (
               <Link href="/appComponent/sheildAi" asChild>
-                <Text style={{ marginRight: 15, fontSize: 20, fontWeight: '600', color: theme.textSecondary }}>
-                  SHEild Ai
-                </Text>
+                <TouchableOpacity activeOpacity={0.7}>
+                  <Box className="flex-row items-center">
+                    <Text
+                      style={{
+                        color: theme.textSecondary,
+                        fontSize: 20,
+                        fontWeight: '600',
+                      }}
+                      className="text-clip"
+                    >
+                      SHEild Ai
+                    </Text>
+                    <Image
+                      source={require('../../assets/images/SHEild-Ai.png')}
+                      alt="logo"
+                      className="w-16 h-16"
+                    />
+                  </Box>
+                </TouchableOpacity>
               </Link>
             )
           }}
@@ -265,6 +282,16 @@ export default function TabLayout() {
                 }
               />
             ),
+            headerRight: () => (
+              <Box className="flex-row items-center">
+                <Text style={{ color: theme.textSecondary, fontSize: 20, fontWeight: '600' }} className="text-clip">SHEild</Text>
+                <Image
+                  source={require("../../assets/images/favicon.png")}
+                  alt="logo"
+                  className="w-16 h-16"
+                />
+              </Box>
+            )
           }}
         />
       </Tabs>

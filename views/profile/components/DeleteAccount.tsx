@@ -1,18 +1,18 @@
 // components/ProfileActions.tsx
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useColorScheme } from '@/components/useColorScheme';
 import Colors from '@/constants/Colors';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
-export default function ProfileActions() {
+export default function DeleteAccount() {
     const colorScheme = useColorScheme();
     const theme = Colors[colorScheme ?? 'light'];
 
     return (
         <View
             style={{
-                marginBottom: 5,
+                // marginBottom: 20,
                 backgroundColor: theme.alert,
                 borderRadius: theme.borderRadius,
                 shadowColor: theme.shadowColor,
@@ -29,8 +29,9 @@ export default function ProfileActions() {
                 className="flex-row items-center justify-center py-5 px-4 "
                 style={{ backgroundColor: theme.card, height: 50, borderRadius: theme.borderRadius }}
             >
-                <MaterialCommunityIcons name="logout" size={24} color="red" style={{ marginRight: 5 }} />
-                <Text style={{ color: theme.text, fontSize: 16 }} >Logout</Text>
+                <MaterialCommunityIcons name="account-cancel-outline" size={24} color="red" style={{ marginRight: 5 }} />
+                {/* <AntDesign name="user-delete" size={24} color="red" style={{ marginRight: 5 }} /> */}
+                <Text style={{ color: theme.text, fontSize: 16 }} >Delete Account</Text>
             </TouchableOpacity>
         </View>
     );

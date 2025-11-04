@@ -22,11 +22,11 @@ const InventoryItem: React.FC<InventoryItemProps> = ({ iconName, title, count, o
         <TouchableOpacity
             onPress={onPress}
             className="flex-row items-center justify-between rounded-xl mb-2"
-            style={{ backgroundColor: theme.card,paddingVertical:5 }}
+            style={{ backgroundColor: theme.card, paddingVertical: 5 }}
         >
             <View className="flex-row items-center">
-                <MaterialCommunityIcons name={iconName} size={24} color={theme.text} style={{marginRight:5}}/>
-               
+                <MaterialCommunityIcons name={iconName} size={24} color={theme.text} style={{ marginRight: 5 }} />
+
                 <Text className="text-base" style={{ color: theme.text }}>
                     {title}
                 </Text>
@@ -43,12 +43,12 @@ const InventoryItem: React.FC<InventoryItemProps> = ({ iconName, title, count, o
     );
 };
 
-export default function ProfileInventories() {
+export default function System() {
     const colorScheme = useColorScheme();
     const theme = Colors[colorScheme ?? 'light'];
 
     return (
-        <View 
+        <View
             style={{
                 marginBottom: 10,
                 backgroundColor: theme.card,
@@ -61,20 +61,39 @@ export default function ProfileInventories() {
                 padding: 20,
             }}
         >
-            <Text className="uppercase text-clip font-medium" style={{ color: theme.text, marginBottom: 5 }}>Inventories</Text>
-            
+            <Text className="uppercase text-clip font-medium" style={{ color: theme.text, marginBottom: 5 }}>More</Text>
+
             <InventoryItem
-                iconName="post-outline"
-                title="My Posts"
-                count={2}
-                onPress={() => console.log('Go to My Posts')}
+                iconName="shield-account-outline"
+                title="Privacy & Policy"
+                onPress={() => console.log('Go to Privacy & Policy')}
             />
+
             <InventoryItem
-                iconName="record-rec"
-                title="My Recordings"
-                onPress={() => console.log('Go to My Recordings')}
-                count={10}
+                iconName="file-document-outline"
+                title="Terms & Conditions"
+                onPress={() => console.log('Go to Terms & Conditions')}
             />
+
+            <InventoryItem
+                iconName="information-outline"
+                title="About Us"
+                onPress={() => console.log('Go to About Us')}
+            />
+
+            <InventoryItem
+                iconName="email-outline"
+                title="Contact Us"
+                onPress={() => console.log('Go to Contact Us')}
+            />
+
+            <InventoryItem
+                iconName="star-outline"
+                title="Rate Us"
+                onPress={() => console.log('Go to Rate Us')}
+            />
+
+
         </View>
     );
 }

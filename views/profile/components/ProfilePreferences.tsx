@@ -36,11 +36,11 @@ const PreferenceItem: React.FC<PreferenceItemProps> = ({
         <TouchableOpacity
             onPress={type === 'link' ? onPress : undefined}
             activeOpacity={type === 'link' ? 0.7 : 1}
-            className="flex-row items-center justify-between py-3 px-4 rounded-xl mb-2"
-            style={{ backgroundColor: theme.card }}
+            className="flex-row items-center justify-between rounded-xl "
+            style={{ backgroundColor: theme.card, paddingVertical: 5 }}
         >
             <View className="flex-row items-center">
-                <MaterialCommunityIcons name={iconName} size={24} color={theme.text} className="mr-3" />
+                <MaterialCommunityIcons name={iconName} size={24} color={theme.text} style={{ marginRight: 5 }} />
                 <Text className="text-base" style={{ color: theme.text }}>
                     {title}
                 </Text>
@@ -64,7 +64,7 @@ export default function ProfilePreferences() {
     const theme = Colors[colorScheme ?? 'light'];
 
     return (
-        <View className="mb-8"
+        <View className=""
             style={{
                 marginBottom: 10,
                 backgroundColor: theme.card,
@@ -77,7 +77,7 @@ export default function ProfilePreferences() {
                 padding: 20,
             }}
         >
-            <Text className="text-gray-500 uppercase text-xs font-medium mb-3 ml-1">Preferences</Text>
+            <Text className="uppercase text-clip font-medium">Preferences</Text>
             <PreferenceItem
                 iconName="bell-outline"
                 title="Push notifications"
@@ -86,15 +86,16 @@ export default function ProfilePreferences() {
                 onValueChange={(val) => console.log('Push notifications:', val)}
             />
             <PreferenceItem
-                iconName="face-recognition"
-                title="Face ID"
-                type="toggle"
-                initialValue={true}
-                onValueChange={(val) => console.log('Face ID:', val)}
+                iconName="form-textbox-password"
+                title="Change Password"
+                type="link"
+                // initialValue={true}
+                // onValueChange={(val) => console.log('Face ID:', val)}
+                onPress={() => console.log("Change Password")}
             />
             <PreferenceItem
-                iconName="lock-outline"
-                title="PIN Code"
+                iconName="cached"
+                title="Clear Cache"
                 type="link"
                 onPress={() => console.log('Go to PIN Code settings')}
             />
