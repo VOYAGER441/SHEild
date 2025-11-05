@@ -25,6 +25,9 @@ import { Heading } from "@/components/ui/heading";
 import { Box } from "@/components/ui/box";
 import { Image } from "@/components/ui/image";
 
+// Global components
+import SOSFloatingButton from "@/views/global.Components/SOSFloatingButton";
+
 export default function TabLayout() {
   const colorScheme = useColorScheme();
   const theme = Colors[colorScheme ?? `light`];
@@ -190,7 +193,8 @@ export default function TabLayout() {
         <Tabs.Screen
           name="sos"
           options={{
-            title: "",
+            headerTitle:"SOS Control Center",
+            headerTitleAlign: "center",
             tabBarIcon: ({ focused }) => (
               <View
                 style={[
@@ -295,6 +299,7 @@ export default function TabLayout() {
           }}
         />
       </Tabs>
+      <SOSFloatingButton />
     </View >
   );
 }

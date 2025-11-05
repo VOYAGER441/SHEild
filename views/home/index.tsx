@@ -14,11 +14,13 @@ import ShareLocation from "./components/ShareLocation";
 
 // Icons
 import { Divider } from "@/components/ui/divider";
+import AntDesign from '@expo/vector-icons/AntDesign';
 import Feather from '@expo/vector-icons/Feather';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import DownloadedMapsModal from "./components/DownloadedMapsModal";
 import EmergencyPlaces from "./components/EmergencyPlaces";
-import AntDesign from '@expo/vector-icons/AntDesign';
+import SheildAiModal from "./components/SheildAiModal";
 
 export default function Home() {
   const colorScheme = useColorScheme();
@@ -29,36 +31,42 @@ export default function Home() {
     <ScrollView style={{ backgroundColor: theme.background }}>
       {/* fake call and location*/}
       {/* <Center> */}
-      <HStack className="flex-1 " style={{ marginTop: 20, justifyContent: "space-evenly" }}>
-        <Box style={{ minHeight: 150, minWidth: 170 }} className="">
-          <Button
-            className="flex-1 items-center justify-center  p-4"
-            style={{
-              backgroundColor: theme.card,
-              borderRadius: theme.borderRadius,
-              shadowColor: theme.shadowColor,
-              shadowOffset: theme.shadowOffset,
-              shadowOpacity: theme.shadowOpacity,
-              shadowRadius: theme.shadowRadius,
-              elevation: theme.elevation,
-            }}
-            onPress={() => {
-              router.push("/appComponent/fakecall");
-            }}
-          >
-            <VStack space="md" className="   items-center">
+      <VStack>
+        <HStack className="flex-1 " style={{ marginTop: 20, justifyContent: "space-around" }}>
+          <Box style={{ minHeight: 150, minWidth: 180 }} className="">
+            <Button
+              className="flex-1 items-center justify-center  p-4"
+              style={{
+                backgroundColor: theme.card,
+                borderRadius: theme.borderRadius,
+                shadowColor: theme.shadowColor,
+                shadowOffset: theme.shadowOffset,
+                shadowOpacity: theme.shadowOpacity,
+                shadowRadius: theme.shadowRadius,
+                elevation: theme.elevation,
+              }}
+              onPress={() => {
+                router.push("/appComponent/fakecall");
+              }}
+            >
+              <VStack space="md" className="   items-center">
 
 
-              <Feather name="phone-call" size={50} color={theme.tintSecondary} />
-              <Heading size="lg" className="mb-1">Fake Call</Heading>
-            </VStack>
-          </Button>
+                <Feather name="phone-call" size={50} color={theme.tintSecondary} />
+                <Heading size="lg" className="mb-1">Fake Call</Heading>
+              </VStack>
+            </Button>
+          </Box>
+
+          {/* share location */}
+          <ShareLocation />
+        </HStack>
+        <Box style={{ marginTop: 20, flexDirection: "row", justifyContent: "space-around" }} >
+
+          <SheildAiModal />
+          <DownloadedMapsModal />
         </Box>
-
-        {/* share location */}
-        <ShareLocation />
-
-      </HStack>
+      </VStack>
       {/* </Center> */}
 
       {/* list items */}

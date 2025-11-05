@@ -71,10 +71,12 @@ export default function ProfileHeader() {
                 style={{
                     borderRadius: theme.borderRadius,
                     borderColor: theme.tint,
+                    backgroundColor: theme.tint,
+                    marginTop:3
                 }}
             >
-                <ButtonText >Edit profile</ButtonText>
-                <FontAwesome6 name="edit" size={16} color="black" />
+                <ButtonText style={{color:theme.textSecondary}} >Edit profile</ButtonText>
+                <FontAwesome6 name="edit" size={16} color={theme.background} />
             </Button>
         </View>
     );

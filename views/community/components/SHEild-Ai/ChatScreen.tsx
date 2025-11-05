@@ -52,7 +52,7 @@ export default function ChatScreen() {
                     headerBackVisible: false,
                     headerLeft: () => (
                         <TouchableOpacity onPress={() => router.back()}>
-                            <Feather name="arrow-left" size={24} color={theme.textSecondary} />
+                            <Feather name="arrow-left-circle" size={24} color={theme.textSecondary} />
                         </TouchableOpacity>
                     ),
                 }}
