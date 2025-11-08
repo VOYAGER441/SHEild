@@ -2,7 +2,7 @@
 import { TouchableOpacity } from "react-native";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import React from "react";
-import Colors from "@/constants/Colors";
+import Colors from "@/utils/constants/Colors";
 import { useColorScheme } from "@/components/useColorScheme";
 
 interface RecordEvidenceButtonProps {

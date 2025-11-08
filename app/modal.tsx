@@ -1,6 +1,6 @@
 import { View, Text } from "react-native";
 import { useColorScheme } from '@/components/useColorScheme';
-import Colors from '@/constants/Colors';
+import Colors from '@/utils/constants/Colors';
 
 export default function Page() {
   const colorScheme = useColorScheme();

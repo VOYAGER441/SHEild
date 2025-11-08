@@ -2,7 +2,7 @@
 import React from 'react';
 import { View, Text, Image } from 'react-native';
 import { useColorScheme } from '@/components/useColorScheme';
-import Colors from '@/constants/Colors';
+import Colors from '@/utils/constants/Colors';
 import { Button, ButtonText } from '@/components/ui/button';
 import { Avatar, AvatarBadge, AvatarImage } from '@/components/ui/avatar';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';

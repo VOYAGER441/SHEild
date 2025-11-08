@@ -1,7 +1,7 @@
 import { Box } from "@/components/ui/box";
 import { HStack } from "@/components/ui/hstack";
 import { Input, InputField } from "@/components/ui/input";
-import Colors from "@/constants/Colors";
+import Colors from "@/utils/constants/Colors";
 import { Feather } from "@expo/vector-icons";
 import React, { useState } from "react";
 import { TouchableOpacity, View, Text } from "react-native";

@@ -1,7 +1,7 @@
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
 import { useColorScheme } from "@/components/useColorScheme";
-import Colors from "@/constants/Colors";
+import Colors from "@/utils/constants/Colors";
 import { useRouter } from "expo-router";
 import React from "react";
 import { StyleSheet } from "react-native";

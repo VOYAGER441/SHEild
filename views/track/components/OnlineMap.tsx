@@ -1,4 +1,4 @@
-import Colors from "@/constants/Colors";
+import Colors from "@/utils/constants/Colors";
 import * as Location from "expo-location";
 import React, { useEffect, useRef, useState } from "react";
 import {

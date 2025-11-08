@@ -1,6 +1,6 @@
 import { View, Text, ScrollView, Alert, StyleSheet } from "react-native"; // Import StyleSheet
 import React, { useState } from "react";
-import Colors from "@/constants/Colors";
+import Colors from "@/utils/constants/Colors";
 import { useColorScheme } from "@/components/useColorScheme";
 
 // Import your new components
@@ -81,43 +81,41 @@ export default function SOS() {
     >
       <View className="items-center justify-start pt-8 pb-4">
         {/* Main SOS Button Container */}
-        <View className="relative w-40 h-40 items-center justify-center">
+        <View className="relative items-center justify-center">
           <EmergencyButton onPress={handleSOSPress} />
-          {/* Record Evidence Button positioned relative to SOS button */}
-          <View className="absolute bottom-[-10px]"> {/* Adjust position as needed */}
+          Record Evidence Button positioned relative to SOS button
+          <View className="relative "> 
             <RecordEvidenceButton onPress={handleRecordEvidence} isRecording={isRecording} />
           </View>
         </View>
 
-        {/* Emergency Contacts List */}
-        <View className="w-full px-4 mt-12"> {/* Increased top margin */}
+        
+        {/* <View className="w-full px-4 mt-12"> 
           <Text className="text-lg font-bold mb-3" style={{ color: theme.text }}>
             Emergency Contacts
           </Text>
           <EmergencyContactsList contacts={dummyContacts} onCallContact={handleCallContact} />
         </View>
 
-        {/* Location Sharing Status */}
-        <View className="w-full px-4 mt-6"> {/* Added top margin */}
+        
+        <View className="w-full px-4 mt-6"> 
           <LocationSharingStatus isActive={isLocationActive} contactsCount={dummyContacts.length} />
         </View>
 
-        {/* Action Buttons (I'm Safe, Alarm) */}
-        <View className="w-full flex-row justify-between px-4 mt-6"> {/* Added top margin, justify-between */}
-          <View className="flex-1 mr-2"> {/* Added margin-right to space buttons */}
+        
+        <View className="w-full flex-row justify-between px-4 mt-6"> 
+          <View className="flex-1 mr-2"> 
             <SafetyCheckInButton onPress={handleCheckInSafe} />
           </View>
-          <View className="flex-1 ml-2"> {/* Added margin-left to space buttons */}
+          <View className="flex-1 ml-2"> 
             <AlarmToggle onToggle={handleAlarmToggle} initialState={alarmActive} />
           </View>
         </View>
 
-        {/* Safety Tips Section */}
-        <SafetyTipsSection />
+        
+        <SafetyTipsSection /> */}
 
-        <Text className="text-xs mt-8" style={{ color: theme.textSecondary }}>
-          Free for personal use
-        </Text>
+        
       </View>
     </ScrollView>
   );

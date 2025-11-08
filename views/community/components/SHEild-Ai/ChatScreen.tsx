@@ -12,7 +12,7 @@ import { SuggestChat } from "./ChatButtons";
 import { ChatInput } from "./ChatInput";
 import { Stack } from "expo-router";
 import { IMessage } from "@/interface/request/shield/sheild.interface";
-import Colors from "@/constants/Colors";
+import Colors from "@/utils/constants/Colors";
 import { useColorScheme } from "@/components/useColorScheme";
 import { Feather } from "@expo/vector-icons";
 import { useRouter } from "expo-router";

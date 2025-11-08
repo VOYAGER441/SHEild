@@ -3,7 +3,7 @@ import { Animated, Easing, View, StyleSheet } from "react-native";
 import { Text } from "@/components/ui/text";
 import { IMessage } from "@/interface/request/shield/sheild.interface";
 import { useColorScheme } from "@/components/useColorScheme";
-import Colors from "@/constants/Colors";
+import Colors from "@/utils/constants/Colors";
 
 interface MessageBubbleProps extends IMessage {
     isLoading: boolean;

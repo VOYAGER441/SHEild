@@ -3,7 +3,7 @@ import { Box } from "@/components/ui/box";
 import { HStack } from "@/components/ui/hstack";
 import { Text } from "@/components/ui/text";
 import { useColorScheme } from "@/components/useColorScheme";
-import Colors from "@/constants/Colors";
+import Colors from "@/utils/constants/Colors";
 import { ScrollView } from "react-native";
 import Card from "./components/Card";
 import PostSkeleton from "./components/Skeleton";

@@ -1,7 +1,7 @@
 import { View, Text } from "react-native";
 import { Box } from "@/components/ui/box";
 import { useColorScheme } from "@/components/useColorScheme";
-import Colors from "@/constants/Colors";
+import Colors from "@/utils/constants/Colors";
 import Header from "./Header";
 import Media from "./Media";
 import Footer from "./Footer";

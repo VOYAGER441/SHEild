@@ -1,7 +1,7 @@
 import { Animated,  Easing, Text, View } from 'react-native'
 import React, { Component, useEffect, useRef } from 'react'
 import { useColorScheme } from '@/components/useColorScheme';
-import Colors from '@/constants/Colors';
+import Colors from '@/utils/constants/Colors';
 import { Box } from '@/components/ui/box';
 import { Button, ButtonText } from '@/components/ui/button';
 import { useRouter } from 'expo-router';

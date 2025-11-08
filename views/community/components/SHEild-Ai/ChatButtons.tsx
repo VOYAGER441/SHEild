@@ -4,7 +4,7 @@ import { Button, ButtonText } from "@/components/ui/button";
 import { Box } from "@/components/ui/box";
 import { Image, View } from "react-native";
 import { Text } from "@/components/ui/text";
-import Colors from "@/constants/Colors";
+import Colors from "@/utils/constants/Colors";
 import { useColorScheme } from "@/components/useColorScheme";
 import Feather from '@expo/vector-icons/Feather';
 import { VStack } from "@/components/ui/vstack";

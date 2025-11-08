@@ -2,7 +2,7 @@
 import React from 'react';
 import { ScrollView, View } from 'react-native';
 import { useColorScheme } from '@/components/useColorScheme'; // Assuming this provides 'light' or 'dark'
-import Colors from '@/constants/Colors';
+import Colors from '@/utils/constants/Colors';
 import ProfileHeader from './components/ProfileHeader';
 import ProfileInventories from './components/ProfileInventories';
 import ProfilePreferences from './components/ProfilePreferences';

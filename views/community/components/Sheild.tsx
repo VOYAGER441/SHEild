@@ -5,7 +5,7 @@ import { Text } from "@/components/ui/text";
 import { Icon, CloseIcon } from "@/components/ui/icon";
 import React, { useEffect, useRef } from "react";
 import { useColorScheme } from "@/components/useColorScheme";
-import Colors from "@/constants/Colors";
+import Colors from "@/utils/constants/Colors";
 import { Stack, useRouter } from "expo-router";
 import { Box } from "@/components/ui/box";
 import { Animated, Easing } from "react-native";

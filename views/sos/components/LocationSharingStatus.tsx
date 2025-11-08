@@ -1,7 +1,7 @@
 // components/sos/LocationSharingStatus.tsx
 import { View, Text } from "react-native";
 import React from "react";
-import Colors from "@/constants/Colors";
+import Colors from "@/utils/constants/Colors";
 import { useColorScheme } from "@/components/useColorScheme";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 

@@ -5,7 +5,7 @@ import "../global.css";
 
 import { useColorScheme } from "@/components/useColorScheme";
 import { useClientOnlyValue } from "@/components/useClientOnlyValue";
-import Colors from "@/constants/Colors";
+import Colors from "@/utils/constants/Colors";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 // icons

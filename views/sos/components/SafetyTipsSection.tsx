@@ -1,7 +1,7 @@
 // components/sos/SafetyTipsSection.tsx
 import { View, Text, TouchableOpacity, LayoutAnimation, Platform, UIManager } from "react-native";
 import React, { useState } from "react";
-import Colors from "@/constants/Colors";
+import Colors from "@/utils/constants/Colors";
 import { useColorScheme } from "@/components/useColorScheme";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 

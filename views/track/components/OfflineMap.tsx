@@ -1,6 +1,6 @@
 import { View, Text, useColorScheme } from 'react-native'
 import React from 'react'
-import Colors from '@/constants/Colors';
+import Colors from '@/utils/constants/Colors';
 
 const OfflineMap = () => {
     const colorScheme = useColorScheme();

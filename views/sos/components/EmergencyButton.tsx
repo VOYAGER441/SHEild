@@ -1,8 +1,9 @@
 // components/sos/EmergencyButton.tsx
-import { TouchableOpacity, Text } from "react-native";
+import { TouchableOpacity, Text, View } from "react-native";
 import React from "react";
-import Colors from "@/constants/Colors";
+import Colors from "@/utils/constants/Colors";
 import { useColorScheme } from "@/components/useColorScheme";
+import utils from "@/utils";
 
 interface EmergencyButtonProps {
   onPress: () => void;
@@ -15,10 +16,39 @@ export default function EmergencyButton({ onPress }: EmergencyButtonProps) {
   return (
     <TouchableOpacity
       onPress={onPress}
-      className="w-40 h-40 rounded-full items-center justify-center shadow-lg"
-      style={{ backgroundColor: theme.tint, borderColor: theme.text, borderWidth: 2 }} // Using tint for SOS color
-    >
-      <Text className="text-white text-4xl font-bold">SOS</Text>
+      className="rounded-full  items-center justify-center"
+      style={{
+        backgroundColor:"transparent",
+        borderColor: utils.commonFunction.default.hexToRgba(theme.alert, 0.3),
+        borderWidth: 20,
+        width: 230,
+        height: 230,
+        marginTop: 10
+
+      }}>
+      <View
+        className="rounded-full  items-center justify-center"
+        style={{
+          borderColor: utils.commonFunction.default.hexToRgba(theme.alert, 0.5),
+          borderWidth: 20,
+          width: 190,
+          height: 190,
+        }}>
+        <View
+
+          className="rounded-full items-center justify-center "
+          style={{
+            backgroundColor: theme.alert,
+            borderColor: utils.commonFunction.default.hexToRgba(theme.alert, 0.7),
+            borderWidth: 20,
+            width: 150,
+            height: 150,
+          }}
+        >
+
+          <Text className="text-5xl font-bold" style={{ color: theme.background }}>SOS</Text>
+        </View>
+      </View>
     </TouchableOpacity>
   );
 }
