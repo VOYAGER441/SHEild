@@ -22,19 +22,32 @@ export default function AlarmToggle({ onToggle, initialState = false }: AlarmTog
   };
 
   return (
-    <TouchableOpacity
-      onPress={handleToggle}
-      className="flex-row items-center justify-center p-3 rounded-lg"
-      style={{ backgroundColor: isAlarmActive ? theme.alert : theme.tabIconDefault }}
+    <View
+      style={{
+        padding: 10,
+        backgroundColor: theme.card,
+        borderRadius: theme.borderRadius,
+        shadowColor: theme.shadowColor,
+        shadowOffset: theme.shadowOffset,
+        shadowOpacity: theme.shadowOpacity,
+        shadowRadius: theme.shadowRadius,
+        elevation: theme.elevation,
+      }}
     >
-      <MaterialCommunityIcons 
-        name={isAlarmActive ? "bell-off" : "bell"} 
-        size={24} 
-        color={isAlarmActive ? theme.background : theme.text} 
-      />
-      <Text className="ml-2 text-base font-semibold" style={{ color: isAlarmActive ? theme.background : theme.text }}>
-        {isAlarmActive ? "Deactivate Alarm" : "Activate Alarm"}
-      </Text>
-    </TouchableOpacity>
+      <TouchableOpacity
+        onPress={handleToggle}
+        className="flex-row items-center justify-center p-3 rounded-lg"
+        style={{ backgroundColor: isAlarmActive ? theme.alert : theme.tabIconDefault, borderRadius: theme.borderRadius }}
+      >
+        <MaterialCommunityIcons
+          name={isAlarmActive ? "bell-off" : "bell"}
+          size={24}
+          color={isAlarmActive ? theme.background : theme.text}
+        />
+        <Text className="ml-2 text-base font-semibold" style={{ color: isAlarmActive ? theme.background : theme.text }}>
+          {isAlarmActive ? "Deactivate Alarm" : "Activate Alarm"}
+        </Text>
+      </TouchableOpacity>
+    </View>
   );
 }

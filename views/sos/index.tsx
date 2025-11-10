@@ -22,9 +22,9 @@ export default function SOS() {
 
   // Dummy data for contacts
   const dummyContacts = [
-    { id: "1", name: "Mom", avatar: "https://randomuser.me/api/portraits/women/1.jpg" },
+    { id: "1", name: "Mom", avatar: "https://randomuser.me/api/portraits/women/1.jpg", isGuardian: true },
     { id: "2", name: "Best Friend", avatar: "https://randomuser.me/api/portraits/women/2.jpg" },
-    { id: "3", name: "Guardian John", avatar: "https://randomuser.me/api/portraits/men/3.jpg", isGuardian: true },
+    { id: "3", name: "John", avatar: "https://randomuser.me/api/portraits/men/3.jpg" },
   ];
 
   const handleSOSPress = () => {
@@ -77,53 +77,45 @@ export default function SOS() {
     <ScrollView
       className="flex-1"
       style={{ backgroundColor: theme.background }}
-      contentContainerStyle={styles.scrollViewContent} // Use StyleSheet for contentContainerStyle
+    // contentContainerStyle={styles.scrollViewContent} // Use StyleSheet for contentContainerStyle
     >
-      <View className="items-center justify-start pt-8 pb-4">
+      <View style={{ paddingHorizontal: 2, paddingVertical: 5, gap: 5, marginBottom: 150 }}>
         {/* Main SOS Button Container */}
         <View className="relative items-center justify-center">
           <EmergencyButton onPress={handleSOSPress} />
-          Record Evidence Button positioned relative to SOS button
-          <View className="relative "> 
-            <RecordEvidenceButton onPress={handleRecordEvidence} isRecording={isRecording} />
-          </View>
-        </View>
 
-        
-        {/* <View className="w-full px-4 mt-12"> 
-          <Text className="text-lg font-bold mb-3" style={{ color: theme.text }}>
-            Emergency Contacts
-          </Text>
-          <EmergencyContactsList contacts={dummyContacts} onCallContact={handleCallContact} />
-        </View>
-
-        
-        <View className="w-full px-4 mt-6"> 
-          <LocationSharingStatus isActive={isLocationActive} contactsCount={dummyContacts.length} />
-        </View>
-
-        
-        <View className="w-full flex-row justify-between px-4 mt-6"> 
-          <View className="flex-1 mr-2"> 
-            <SafetyCheckInButton onPress={handleCheckInSafe} />
-          </View>
-          <View className="flex-1 ml-2"> 
+          <View  style={{ marginTop: 15 }}>
             <AlarmToggle onToggle={handleAlarmToggle} initialState={alarmActive} />
           </View>
         </View>
 
-        
-        <SafetyTipsSection /> */}
+        {/* don't need this components it automatically trigger */}
+        {/* Record Evidence Button positioned relative to SOS button
+          <View className="relative "> 
+            <RecordEvidenceButton onPress={handleRecordEvidence} isRecording={isRecording} />
+          </View> */}
 
-        
+        <View className="w-full" style={{ marginTop: 15 }}>
+          <EmergencyContactsList contacts={dummyContacts} onCallContact={handleCallContact} />
+        </View>
+
+        <View className="w-full px-3 mt-6">
+          <LocationSharingStatus isActive={isLocationActive} contactsCount={dummyContacts.length} />
+        </View>
+
+        <View className="w-full px-3 " style={{ marginTop: 10 }}>
+          <SafetyCheckInButton onPress={handleCheckInSafe} />
+        </View>
+
+
+        <View className="w-full px-3 " style={{ marginTop: 10 }}>
+          <SafetyTipsSection />
+        </View>
+
+
+
       </View>
     </ScrollView>
   );
 }
 
-// StyleSheet for scrollViewContent to properly manage padding
-const styles = StyleSheet.create({
-  scrollViewContent: {
-    paddingBottom: 20, // Ensures there's space at the bottom when scrolling
-  },
-});

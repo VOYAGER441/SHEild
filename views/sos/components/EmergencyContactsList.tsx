@@ -4,6 +4,8 @@ import React from "react";
 import Colors from "@/utils/constants/Colors";
 import { useColorScheme } from "@/components/useColorScheme";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import utils from "@/utils";
 
 interface Contact {
   id: string;
@@ -24,18 +26,28 @@ export default function EmergencyContactsList({ contacts, onCallContact }: Emerg
   const renderContactItem = ({ item }: { item: Contact }) => (
     <View
       className="flex-row items-center p-3 mb-2 rounded-lg"
-      style={{ backgroundColor: theme.card }}
+      style={{
+        backgroundColor: theme.background,
+        borderRadius: theme.borderRadius,
+        shadowColor: theme.shadowColor,
+        shadowOffset: theme.shadowOffset,
+        shadowOpacity: theme.shadowOpacity,
+        shadowRadius: theme.shadowRadius,
+        elevation: theme.elevation,
+        margin:5
+      }}
     >
-      <Image
-        source={{ uri: item.avatar }}
+      <Avatar
         className="w-10 h-10 rounded-full mr-3"
-      />
+      >
+        <AvatarImage source={{ uri: item.avatar }} />
+      </Avatar>
       <View className="flex-1">
-        <Text className="text-base font-semibold" style={{ color: theme.text }}>
+        <Text className="text-base font-semibold px-3" style={{ color: theme.text }}>
           {item.name}
         </Text>
         {item.isGuardian && (
-          <Text className="text-sm" style={{ color: theme.textSecondary }}>
+          <Text className="text-sm px-3" style={{ color: utils.commonFunction.default.adjustColorBrightness(theme.text, 0.2) }}>
             Guardian
           </Text>
         )}
@@ -49,18 +61,31 @@ export default function EmergencyContactsList({ contacts, onCallContact }: Emerg
   );
 
   return (
-    <View className="w-full px-4 mt-4">
-      <Text className="text-lg font-bold mb-3" style={{ color: theme.text }}>
+    <View className="w-full px-4">
+      <Text className="text-xl font-bold" style={{ color: theme.text, textAlign: "center", marginBottom: 5 }}>
         Emergency Contacts
       </Text>
-      <FlatList
-        data={contacts}
-        renderItem={renderContactItem}
-        keyExtractor={(item) => item.id}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{ paddingVertical: 5 }}
-      />
+      <View
+        style={{
+          padding:10,
+          backgroundColor: theme.card,
+          borderRadius: theme.borderRadius,
+          shadowColor: theme.shadowColor,
+          shadowOffset: theme.shadowOffset,
+          shadowOpacity: theme.shadowOpacity,
+          shadowRadius: theme.shadowRadius,
+          elevation: theme.elevation,
+        }}>
+
+        <FlatList
+          data={contacts}
+          renderItem={renderContactItem}
+          keyExtractor={(item) => item.id}
+          // horizontal
+          // showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{ paddingVertical: 5 }}
+        />
+      </View>
     </View>
   );
 }

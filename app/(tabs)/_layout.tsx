@@ -214,11 +214,7 @@ export default function TabLayout() {
                   size={28}
                   color={theme.background}
                 />
-                <Text
-                  style={[styles.sosText, { color: theme.textSecondary }]}
-                >
-                  SOS
-                </Text>
+               
               </View>
             ),
             tabBarButton: (props) => (

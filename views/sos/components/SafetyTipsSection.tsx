@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Colors from "@/utils/constants/Colors";
 import { useColorScheme } from "@/components/useColorScheme";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import utils from "@/utils";
 
 if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -29,22 +30,36 @@ export default function SafetyTipsSection() {
   };
 
   return (
-    <View className="w-full px-4 mt-4">
-      <TouchableOpacity onPress={toggleExpand} className="flex-row items-center justify-between p-3 rounded-lg" style={{ backgroundColor: theme.card }}>
-        <Text className="text-lg font-bold" style={{ color: theme.text }}>Safety Tips</Text>
-        <MaterialCommunityIcons 
-          name={isExpanded ? "chevron-up" : "chevron-down"} 
-          size={24} 
-          color={theme.text} 
+    <View className="w-full "
+      style={{
+        borderRadius: theme.borderRadius,
+        shadowColor: theme.shadowColor,
+        shadowOffset: theme.shadowOffset,
+        shadowOpacity: theme.shadowOpacity,
+        shadowRadius: theme.shadowRadius,
+        elevation: theme.elevation,
+      }}
+    >
+      <TouchableOpacity onPress={toggleExpand} className="flex-row items-center justify-center p-3 "
+        style={{
+          backgroundColor: theme.card, 
+          borderRadius: theme.borderRadius,
+          
+        }}>
+        <Text className="text-lg font-bold" style={{ color: theme.text, textAlign: "center" }}>Safety Tips</Text>
+        <MaterialCommunityIcons
+          name={isExpanded ? "chevron-up" : "chevron-down"}
+          size={24}
+          color={theme.text}
         />
       </TouchableOpacity>
 
       {isExpanded && (
-        <View className="mt-2 p-3 rounded-lg" style={{ backgroundColor: theme.card }}>
+        <View className="mt-2 p-3 " style={{ backgroundColor: theme.card, borderRadius: theme.borderRadius }}>
           {safetyTips.map((tip, index) => (
             <View key={index} className="flex-row items-start mb-2">
-              <Text className="text-base mr-2" style={{ color: theme.text }}>•</Text>
-              <Text className="flex-1 text-base" style={{ color: theme.textSecondary }}>{tip}</Text>
+              <Text className="text-base " style={{ color: theme.text,marginRight:10 }}>•</Text>
+              <Text className="flex-1 text-base" style={{ color: utils.commonFunction.default.adjustColorBrightness(theme.text, 0.2) }}>{tip}</Text>
             </View>
           ))}
         </View>
