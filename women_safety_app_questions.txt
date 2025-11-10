@@ -1,0 +1,141 @@
+1. How frequently do you use women's safety apps?
+   a) Daily
+   b) Weekly
+   c) Monthly
+   d) Rarely
+   e) Never
+
+2. Which feature do you consider most important in a women's safety app?
+   a) SOS/emergency alert
+   b) Location sharing
+   c) AI-powered safety advice
+   d) Community support
+   e) Educational content
+   f) Other (please specify)
+
+3. Have you ever used the SOS/emergency alert feature in a safety app?
+   a) Yes, frequently
+   b) Yes, occasionally
+   c) Yes, once
+   d) No, but I would consider it
+   e) No, and I don't plan to use it
+
+4. How satisfied are you with the location sharing capabilities in current safety apps?
+   a) Very satisfied
+   b) Satisfied
+   c) Neutral
+   d) Dissatisfied
+   e) Very dissatisfied
+
+5. Would you prefer real-time location sharing with trusted contacts or anonymous location reporting?
+   a) Real-time with trusted contacts
+   b) Anonymous reporting
+   c) Both options
+   d) Neither option
+
+6. How important is it for a safety app to have offline functionality?
+   a) Extremely important
+   b) Very important
+   c) Moderately important
+   d) Slightly important
+   e) Not important
+
+7. What type of emergency contacts do you typically add to safety apps?
+   a) Family members
+   b) Close friends
+   c) Colleagues
+   d) Neighbors
+   e) Local emergency services
+
+8. How likely are you to use an AI-powered chatbot for safety advice?
+   a) Very likely
+   b) Likely
+   c) Neutral
+   d) Unlikely
+   e) Very unlikely
+
+9. Would you use a feature that allows you to record evidence during emergencies?
+   a) Yes, definitely
+   b) Yes, sometimes
+   c) Only if it's easy to use
+   d) No, I don't think I would use it
+   e) No, I have privacy concerns
+
+10. How important is community support/forum features in a women's safety app?
+    a) Extremely important
+    b) Very important
+    c) Moderately important
+    d) Slightly important
+    e) Not important
+
+11. Would you pay for premium safety app features?
+    a) Yes, I would pay monthly
+    b) Yes, I would pay annually
+    c) Yes, I would pay a one-time fee
+    d) No, I prefer free apps
+    e) It depends on the features offered
+
+12. What additional features would you like to see in women's safety apps?
+    a) Safe route identification
+    b) Integration with smart devices (wearables)
+    c) Legal assistance
+    d) Mental health support
+    e) Self-defense tutorials
+    f) Other (please specify)
+
+13. How concerned are you about privacy and data security in safety apps?
+    a) Extremely concerned
+    b) Very concerned
+    c) Moderately concerned
+    d) Slightly concerned
+    e) Not concerned
+
+14. Would you use a feature that identifies safe routes for walking?
+    a) Yes, definitely
+    b) Yes, sometimes
+    c) Only in unfamiliar areas
+    d) No, I don't think I would use it
+    e) No, I prefer to use my own judgment
+
+15. How would you prefer to receive emergency alerts?
+    a) Push notification
+    b) SMS
+    c) Phone call
+    d) Email
+    e) Multiple methods
+
+16. Would you use a panic button that's accessible from your phone's lock screen?
+    a) Yes, definitely
+    b) Yes, if it's reliable
+    c) Maybe, if it's easy to activate
+    d) No, I'm worried about accidental activation
+    e) No, I prefer other methods
+
+17. How important is it for a safety app to integrate with local emergency services?
+    a) Extremely important
+    b) Very important
+    c) Moderately important
+    d) Slightly important
+    e) Not important
+
+18. Would you use a feature that allows you to quickly contact nearby volunteers or community helpers?
+    a) Yes, definitely
+    b) Yes, if verified and trustworthy
+    c) Maybe, depending on the situation
+    d) No, I prefer contacting official authorities
+    e) No, I have privacy concerns
+
+19. How important is it for safety apps to provide educational content about personal safety?
+    a) Extremely important
+    b) Very important
+    c) Moderately important
+    d) Slightly important
+    e) Not important
+
+20. What improvements would you most like to see in existing women's safety apps?
+    a) Better accuracy of location services
+    b) Faster emergency response times
+    c) Improved user interface/design
+    d) More customization options
+    e) Better integration with other apps
+    f) Other (please specify)
