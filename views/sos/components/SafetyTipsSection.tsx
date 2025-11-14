@@ -30,7 +30,7 @@ export default function SafetyTipsSection() {
   };
 
   return (
-    <View className="w-full "
+    <View className="w-full"
       style={{
         borderRadius: theme.borderRadius,
         shadowColor: theme.shadowColor,
