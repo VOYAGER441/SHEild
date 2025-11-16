@@ -1,0 +1,33 @@
+name: Sync to GitLab
+
+on:
+  # This workflow runs on any push to any branch
+  push:
+    branches:
+      - "**" 
+  # This workflow also runs when a branch is deleted
+  delete:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      # Step 1: Check out the code from the GitHub repository
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          # Fetch all history for all branches and tags, which is necessary for a full mirror
+          fetch-depth: 0
+
+      # Step 2: Push the code to the corresponding GitLab repository
+      - name: Push to GitLab
+        env:
+          # Use the new GitLab PAT you created and stored in GitHub secrets
+          GITLAB_PAT: ${{ secrets.GITLAB_PAT }}
+          # The URL of your GitLab repository
+          GITLAB_REPO_URL: "https://gitlab.com/sheild2/SHEild.git"
+        run: |
+          # Push all branches to GitLab. The --prune option removes branches in GitLab that no longer exist in GitHub.
+          git push --prune "https://oauth2:${GITLAB_PAT}@${GITLAB_REPO_URL#https://}" --all
+          # Push all tags to GitLab
+          git push --prune "https://oauth2:${GITLAB_PAT}@${GITLAB_REPO_URL#https://}" --tags
