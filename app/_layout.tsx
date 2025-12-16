@@ -4,7 +4,12 @@ import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
+import { LogBox } from 'react-native';
 import "./global.css";
+
+LogBox.ignoreLogs([
+  "SafeAreaView has been deprecated",
+]);
 import {
   Inter_400Regular,
   Inter_500Medium,

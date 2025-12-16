@@ -116,7 +116,7 @@ export default function Home() {
                   }}
                 >
                   <Box style={{ flexDirection: "row", alignItems: "center" }}>
-                    <AntDesign name="adduser" size={16}
+                    <AntDesign name="user-add" size={16}
                       color={theme.textSecondary}
                       style={{ marginRight: 6 }}
                     />

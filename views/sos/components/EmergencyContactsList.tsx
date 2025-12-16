@@ -34,7 +34,7 @@ export default function EmergencyContactsList({ contacts, onCallContact }: Emerg
         shadowOpacity: theme.shadowOpacity,
         shadowRadius: theme.shadowRadius,
         elevation: theme.elevation,
-        margin:5
+        margin: 5
       }}
     >
       <Avatar
@@ -67,7 +67,7 @@ export default function EmergencyContactsList({ contacts, onCallContact }: Emerg
       </Text>
       <View
         style={{
-          padding:10,
+          padding: 10,
           backgroundColor: theme.card,
           borderRadius: theme.borderRadius,
           shadowColor: theme.shadowColor,
@@ -77,14 +77,11 @@ export default function EmergencyContactsList({ contacts, onCallContact }: Emerg
           elevation: theme.elevation,
         }}>
 
-        <FlatList
-          data={contacts}
-          renderItem={renderContactItem}
-          keyExtractor={(item) => item.id}
-          // horizontal
-          // showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{ paddingVertical: 5 }}
-        />
+        {contacts.map((item) => (
+          <View key={item.id}>
+            {renderContactItem({ item })}
+          </View>
+        ))}
       </View>
     </View>
   );

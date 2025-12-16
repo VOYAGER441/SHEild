@@ -38,12 +38,20 @@ const OnlineMap = () => {
         Alert.alert("Permission denied", "Location access is required.");
         return;
       }
-      let loc = await Location.getCurrentPositionAsync({});
-      setLocation({
-        latitude: loc.coords.latitude,
-        longitude: loc.coords.longitude,
-      });
-      setLoading(false);
+      try {
+        let loc = await Location.getLastKnownPositionAsync({});
+        if (!loc) {
+          loc = await Location.getCurrentPositionAsync({});
+        }
+        setLocation({
+          latitude: loc.coords.latitude,
+          longitude: loc.coords.longitude,
+        });
+      } catch (error) {
+        Alert.alert("Location Error", "Could not fetch location. Please ensure location services are enabled.");
+      } finally {
+        setLoading(false);
+      }
     })();
   }, []);
 
@@ -126,7 +134,7 @@ const OnlineMap = () => {
       </MapView>
 
       {/* Floating Controls */}
-     
+
     </View>
   );
 };

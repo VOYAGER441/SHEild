@@ -6,9 +6,7 @@ import { useColorScheme } from "@/components/useColorScheme";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import utils from "@/utils";
 
-if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
-  UIManager.setLayoutAnimationEnabledExperimental(true);
-}
+
 
 const safetyTips = [
   "Stay calm and assess the situation.",
@@ -42,9 +40,9 @@ export default function SafetyTipsSection() {
     >
       <TouchableOpacity onPress={toggleExpand} className="flex-row items-center justify-center p-3 "
         style={{
-          backgroundColor: theme.card, 
+          backgroundColor: theme.card,
           borderRadius: theme.borderRadius,
-          
+
         }}>
         <Text className="text-lg font-bold" style={{ color: theme.text, textAlign: "center" }}>Safety Tips</Text>
         <MaterialCommunityIcons
@@ -58,7 +56,7 @@ export default function SafetyTipsSection() {
         <View className="mt-2 p-3 " style={{ backgroundColor: theme.card, borderRadius: theme.borderRadius }}>
           {safetyTips.map((tip, index) => (
             <View key={index} className="flex-row items-start mb-2">
-              <Text className="text-base " style={{ color: theme.text,marginRight:10 }}>•</Text>
+              <Text className="text-base " style={{ color: theme.text, marginRight: 10 }}>•</Text>
               <Text className="flex-1 text-base" style={{ color: utils.commonFunction.default.adjustColorBrightness(theme.text, 0.2) }}>{tip}</Text>
             </View>
           ))}
