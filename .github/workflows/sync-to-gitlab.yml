@@ -3,10 +3,8 @@ name: Sync to GitLab
 on:
   # This workflow runs on any push to any branch
   push:
-    branches:
-      - "**" 
-  # This workflow also runs when a branch is deleted
-  delete:
+    tags:
+      - "*-add-gitlab-*"
 
 jobs:
   sync:
@@ -20,14 +18,20 @@ jobs:
           fetch-depth: 0
 
       # Step 2: Push the code to the corresponding GitLab repository
-      - name: Push to GitLab
+      - name: Sync tagged commit to GitLab master SHEild react-native app
         env:
           # Use the new GitLab PAT you created and stored in GitHub secrets
           GITLAB_PAT: ${{ secrets.GITLAB_PAT }}
           # The URL of your GitLab repository
           GITLAB_REPO_URL: "https://gitlab.com/sheild2/SHEild.git"
         run: |
-          # Push all branches to GitLab. The --prune option removes branches in GitLab that no longer exist in GitHub.
-          git push --prune "https://oauth2:${GITLAB_PAT}@${GITLAB_REPO_URL#https://}" --all
-          # Push all tags to GitLab
-          git push --prune "https://oauth2:${GITLAB_PAT}@${GITLAB_REPO_URL#https://}" --tags
+          TAG_NAME="${GITHUB_REF#refs/tags/}"
+
+          echo "Syncing tag $TAG_NAME to GitLab master"
+
+          # Push the tag
+          git push "https://oauth2:${GITLAB_PAT}@${GITLAB_REPO_URL#https://}" "$TAG_NAME"
+
+          # Force-update GitLab master to the tagged commit
+          git push "https://oauth2:${GITLAB_PAT}@${GITLAB_REPO_URL#https://}" \
+            "$TAG_NAME:refs/heads/master"
