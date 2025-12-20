@@ -3,7 +3,8 @@ import React from 'react';
 import { router, RelativePathString } from 'expo-router';
 import { useColorScheme } from '@/components/useColorScheme';
 import Colors from '@/utils/constants/Colors';
-import { AntDesign, FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
+import { AntDesign, FontAwesome5, Ionicons } from '@expo/vector-icons';
+import utils from '@/utils';
 
 export default function LoginScreen() {
   const colorScheme = useColorScheme();
@@ -58,7 +59,8 @@ export default function LoginScreen() {
           </View>
           <Text style={[styles.title, { color: theme.textSecondary }]}>SHEild</Text>
           <Text style={[styles.subtitle, { color: theme.textSecondary }]}>
-            Women Safety & Empowerment
+            {/* Women Safety & Empowerment */}
+            Login to your account with
           </Text>
         </View>
 
@@ -66,41 +68,33 @@ export default function LoginScreen() {
 
         {/* Actions Section */}
         <View style={styles.actions}>
-          <Text style={[styles.actionLabel, { color: theme.textSecondary }]}>
-            Get started by creating your account
-          </Text>
 
           <View style={styles.buttonStack}>
             <SocialButton
               title="Sign In with Google"
               icon={<AntDesign name="google" size={24} color={theme.tint} />}
-              onPress={() => handleSocialLogin('Google')}
+              onPress={() => handleSocialLogin(utils.appConstant.authProvider.GOOGLE)}
             />
 
             <SocialButton
               title="Sign In with Facebook"
               icon={<FontAwesome5 name="facebook" size={24} color={theme.tint} />}
-              onPress={() => handleSocialLogin('Facebook')}
+              onPress={() => handleSocialLogin(utils.appConstant.authProvider.FACEBOOK)}
             />
 
             <SocialButton
-              title="Sign In with Apple"
-              icon={<AntDesign name="apple" size={24} color={theme.tint} />}
-              onPress={() => handleSocialLogin('Apple')}
+              title="Sign In with LinkedIn"
+              icon={<Ionicons name="logo-linkedin" size={24} color={theme.tint} />}
+              onPress={() => handleSocialLogin(utils.appConstant.authProvider.LINKEDIN)}
             />
 
-            <SocialButton
-              title="Sign In with Email"
-              icon={<MaterialCommunityIcons name="email" size={24} color={theme.tint} />}
-              onPress={() => handleSocialLogin('Email')}
-            />
           </View>
         </View>
 
         <View style={styles.footer}>
           <TouchableOpacity onPress={() => router.replace('/sign_up' as RelativePathString)}>
             <Text style={{ color: theme.textSecondary, fontSize: 14 }}>
-              Already have an account? <Text style={{ fontWeight: 'bold', color: theme.card }}>Sign up</Text>
+              Don't have an account? <Text style={{ fontWeight: 'bold', color: theme.card }}>Sign up</Text>
             </Text>
           </TouchableOpacity>
         </View>
@@ -150,7 +144,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   spacer: {
-    height: 40,
+    height: 20,
   },
   actions: {
     width: '100%',

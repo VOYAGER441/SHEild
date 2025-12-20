@@ -3,7 +3,8 @@ import React from 'react';
 import { router, RelativePathString } from 'expo-router';
 import { useColorScheme } from '@/components/useColorScheme';
 import Colors from '@/utils/constants/Colors';
-import { AntDesign, FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
+import { AntDesign, FontAwesome5, Ionicons } from '@expo/vector-icons';
+import utils from '@/utils';
 
 export default function SignupScreen() {
   const colorScheme = useColorScheme();
@@ -11,8 +12,20 @@ export default function SignupScreen() {
 
   const handleSocialSignup = (provider: string) => {
     console.log(`Signup with ${provider}`);
-    if (provider === 'Email') {
-      // Handle email signup flow
+    if (provider === utils.appConstant.authProvider.GOOGLE) {
+
+    }
+    else if (provider === utils.appConstant.authProvider.FACEBOOK) {
+
+    }
+    else if (provider === utils.appConstant.authProvider.LINKEDIN) {
+
+    }
+    else if (provider === utils.appConstant.authProvider.APPLE) {
+
+    }
+    else {
+
     }
   };
 
@@ -56,7 +69,7 @@ export default function SignupScreen() {
           </View>
           <Text style={[styles.title, { color: theme.textSecondary }]}>Create Account</Text>
           <Text style={[styles.subtitle, { color: theme.textSecondary }]}>
-            Join SHEild today
+            Join SHEild today with
           </Text>
         </View>
 
@@ -64,34 +77,29 @@ export default function SignupScreen() {
 
         {/* Actions Section */}
         <View style={styles.actions}>
-          <Text style={[styles.actionLabel, { color: theme.textSecondary }]}>
+          {/* <Text style={[styles.actionLabel, { color: theme.textSecondary }]}>
             Sign up with
-          </Text>
+          </Text> */}
 
           <View style={styles.buttonStack}>
             <SocialButton
               title="Sign Up with Google"
               icon={<AntDesign name="google" size={24} color={theme.tint} />}
-              onPress={() => handleSocialSignup('Google')}
+              onPress={() => handleSocialSignup(utils.appConstant.authProvider.GOOGLE)}
             />
 
             <SocialButton
               title="Sign Up with Facebook"
               icon={<FontAwesome5 name="facebook" size={24} color={theme.tint} />}
-              onPress={() => handleSocialSignup('Facebook')}
+              onPress={() => handleSocialSignup(utils.appConstant.authProvider.FACEBOOK)}
             />
 
             <SocialButton
-              title="Sign Up with Apple"
-              icon={<AntDesign name="apple" size={24} color={theme.tint} />}
-              onPress={() => handleSocialSignup('Apple')}
+              title="Sign Up with LinkedIn"
+              icon={<Ionicons name="logo-linkedin" size={24} color={theme.tint} />}
+              onPress={() => handleSocialSignup(utils.appConstant.authProvider.LINKEDIN)}
             />
 
-            <SocialButton
-              title="Sign Up with Email"
-              icon={<MaterialCommunityIcons name="email" size={24} color={theme.tint} />}
-              onPress={() => handleSocialSignup('Email')}
-            />
           </View>
         </View>
 
@@ -148,7 +156,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   spacer: {
-    height: 40,
+    height: 20,
   },
   actions: {
     width: '100%',
