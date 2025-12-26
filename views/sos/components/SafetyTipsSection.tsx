@@ -57,7 +57,7 @@ export default function SafetyTipsSection() {
           {safetyTips.map((tip, index) => (
             <View key={index} className="flex-row items-start mb-2">
               <Text className="text-base " style={{ color: theme.text, marginRight: 10 }}>•</Text>
-              <Text className="flex-1 text-base" style={{ color: utils.commonFunction.default.adjustColorBrightness(theme.text, 0.2) }}>{tip}</Text>
+              <Text className="flex-1 text-base" style={{ color: utils.commonFunction.adjustColorBrightness(theme.text, 0.2) }}>{tip}</Text>
             </View>
           ))}
         </View>

@@ -64,8 +64,36 @@ const adjustColorBrightness = (hex: string, amount: number): string => {
 };
 
 
+/**
+ * Encodes a value to a Base64 string.
+ * @param value - The value to encode.
+ */
+const encodeBase64 = (value: any): string => {
+    try {
+        const str = typeof value === 'string' ? value : JSON.stringify(value);
+        return btoa(str);
+    } catch (error) {
+        return '';
+    }
+};
 
-export default{
+/**
+ * Decodes a Base64 string.
+ * @param base64 - The Base64 string to decode.
+ */
+const decodeBase64 = (base64: string): string => {
+    try {
+        return atob(base64);
+    } catch (error) {
+        return '';
+    }
+};
+
+
+
+export {
     hexToRgba,
-    adjustColorBrightness
+    adjustColorBrightness,
+    encodeBase64,
+    decodeBase64
 }

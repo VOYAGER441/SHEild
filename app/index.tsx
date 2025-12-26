@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
 import AnimatedSplash from './AnimatedSplash';
+import utils from '@/utils';
 
 export default function IndexPage() {
   const [isReady, setIsReady] = useState(false);
@@ -15,14 +16,14 @@ export default function IndexPage() {
   const initializeApp = async () => {
     try {
       // Check authentication
-      const token = await AsyncStorage.getItem('sessionToken');
-    //   const token = ''
-    //   console.log('Token check:', !!token);
-      
+      const token = await AsyncStorage.getItem(utils.appConstant.SESSION_DATA_KEY_FOR_LOCAL_STORAGE);
+      //   const token = ''
+      //   console.log('Token check:', !!token);
+
       setIsAuthenticated(!!token);
       setIsReady(true);
     } catch (error) {
-    //   console.error('Auth error:', error);
+      //   console.error('Auth error:', error);
       setIsAuthenticated(false);
       setIsReady(true);
     }
@@ -33,16 +34,16 @@ export default function IndexPage() {
 
     // Navigate based on auth status
     if (isAuthenticated) {
-    //   console.log('Navigating to main app');
+      //   console.log('Navigating to main app');
       router.replace('/(tabs)');
     } else {
-    //   console.log('Navigating to login');
+      //   console.log('Navigating to login');
       router.replace('/login');
     }
   };
 
   return (
-    <AnimatedSplash 
+    <AnimatedSplash
       onAnimationFinish={handleAnimationComplete}
       duration={2500}
     />

@@ -60,7 +60,7 @@ export default function LoginScreen() {
           <Text style={[styles.title, { color: theme.textSecondary }]}>SHEild</Text>
           <Text style={[styles.subtitle, { color: theme.textSecondary }]}>
             {/* Women Safety & Empowerment */}
-            Login to your account with
+            Welcome to SHEild community
           </Text>
         </View>
 
@@ -71,19 +71,19 @@ export default function LoginScreen() {
 
           <View style={styles.buttonStack}>
             <SocialButton
-              title="Sign In with Google"
+              title="Continue with Google"
               icon={<AntDesign name="google" size={24} color={theme.tint} />}
               onPress={() => handleSocialLogin(utils.appConstant.authProvider.GOOGLE)}
             />
 
             <SocialButton
-              title="Sign In with Facebook"
+              title="Continue with Facebook"
               icon={<FontAwesome5 name="facebook" size={24} color={theme.tint} />}
               onPress={() => handleSocialLogin(utils.appConstant.authProvider.FACEBOOK)}
             />
 
             <SocialButton
-              title="Sign In with LinkedIn"
+              title="Continue with LinkedIn"
               icon={<Ionicons name="logo-linkedin" size={24} color={theme.tint} />}
               onPress={() => handleSocialLogin(utils.appConstant.authProvider.LINKEDIN)}
             />

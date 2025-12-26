@@ -47,7 +47,7 @@ export default function EmergencyContactsList({ contacts, onCallContact }: Emerg
           {item.name}
         </Text>
         {item.isGuardian && (
-          <Text className="text-sm px-3" style={{ color: utils.commonFunction.default.adjustColorBrightness(theme.text, 0.2) }}>
+          <Text className="text-sm px-3" style={{ color: utils.commonFunction.adjustColorBrightness(theme.text, 0.2) }}>
             Guardian
           </Text>
         )}
