@@ -5,6 +5,7 @@ import { useColorScheme } from '@/components/useColorScheme';
 import Colors from '@/utils/constants/Colors';
 import { AntDesign, FontAwesome5, Ionicons } from '@expo/vector-icons';
 import utils from '@/utils';
+import ErrorToast from '@/views/global.Components/ErrorToast';
 
 export default function LoginScreen() {
   const colorScheme = useColorScheme();
@@ -14,8 +15,23 @@ export default function LoginScreen() {
     // Placeholder for auth logic
     console.log(`Login with ${provider}`);
     // For demo purposes, navigate to tabs on "Email" or others if desired
-    if (provider === 'Email') {
-      // router.replace('/(tabs)' as RelativePathString);
+
+    if (provider === utils.appConstant.authProvider.GOOGLE) {
+
+    }
+    else if (provider === utils.appConstant.authProvider.FACEBOOK) {
+
+    }
+    else if (provider === utils.appConstant.authProvider.LINKEDIN) {
+
+    }
+    else if (provider === utils.appConstant.authProvider.APPLE) {
+
+    }
+    else {
+      return (
+        <ErrorToast message="Something went wrong" />
+      )
     }
   };
 
@@ -76,7 +92,8 @@ export default function LoginScreen() {
               onPress={() => handleSocialLogin(utils.appConstant.authProvider.GOOGLE)}
             />
 
-            <SocialButton
+            {/* TODO: Add Facebook and LinkedIn login */}
+            {/* <SocialButton
               title="Continue with Facebook"
               icon={<FontAwesome5 name="facebook" size={24} color={theme.tint} />}
               onPress={() => handleSocialLogin(utils.appConstant.authProvider.FACEBOOK)}
@@ -86,18 +103,18 @@ export default function LoginScreen() {
               title="Continue with LinkedIn"
               icon={<Ionicons name="logo-linkedin" size={24} color={theme.tint} />}
               onPress={() => handleSocialLogin(utils.appConstant.authProvider.LINKEDIN)}
-            />
+            /> */}
 
           </View>
         </View>
 
-        <View style={styles.footer}>
+        {/* <View style={styles.footer}>
           <TouchableOpacity onPress={() => router.replace('/sign_up' as RelativePathString)}>
             <Text style={{ color: theme.textSecondary, fontSize: 14 }}>
               Don't have an account? <Text style={{ fontWeight: 'bold', color: theme.card }}>Sign up</Text>
             </Text>
           </TouchableOpacity>
-        </View>
+        </View> */}
 
       </ScrollView>
     </View>
