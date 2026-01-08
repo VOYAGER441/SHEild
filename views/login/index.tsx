@@ -5,7 +5,7 @@ import { useColorScheme } from '@/components/useColorScheme';
 import Colors from '@/utils/constants/Colors';
 import { AntDesign, FontAwesome5, Ionicons } from '@expo/vector-icons';
 import utils from '@/utils';
-import ErrorToast from '@/views/global.Components/ErrorToast';
+// import ErrorToast from '@/views/global.Components/ErrorToast';
 
 export default function LoginScreen() {
   const colorScheme = useColorScheme();
@@ -29,9 +29,9 @@ export default function LoginScreen() {
 
     }
     else {
-      return (
-        <ErrorToast message="Something went wrong" />
-      )
+      // return (
+      //   <ErrorToast message="Something went wrong" />
+      // )
     }
   };
 
