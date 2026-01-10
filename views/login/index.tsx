@@ -1,3 +1,4 @@
+'use client';
 import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView } from 'react-native';
 import React from 'react';
 import { router, RelativePathString } from 'expo-router';
@@ -5,33 +6,44 @@ import { useColorScheme } from '@/components/useColorScheme';
 import Colors from '@/utils/constants/Colors';
 import { AntDesign, FontAwesome5, Ionicons } from '@expo/vector-icons';
 import utils from '@/utils';
+import authService from '@/services/auth.service';
+import { useShowToast } from '../global.Components/ErrorToast';
 // import ErrorToast from '@/views/global.Components/ErrorToast';
 
 export default function LoginScreen() {
   const colorScheme = useColorScheme();
+  const showToast = useShowToast();
   const theme = Colors[colorScheme ?? 'light'];
 
-  const handleSocialLogin = (provider: string) => {
-    // Placeholder for auth logic
-    console.log(`Login with ${provider}`);
-    // For demo purposes, navigate to tabs on "Email" or others if desired
+  const handleSocialLogin = async (provider: string) => {
+    try {
+      // Placeholder for auth logic
+      console.log(`Login with ${provider}`);
+      // For demo purposes, navigate to tabs on "Email" or others if desired
 
-    if (provider === utils.appConstant.authProvider.GOOGLE) {
-
-    }
-    else if (provider === utils.appConstant.authProvider.FACEBOOK) {
-
-    }
-    else if (provider === utils.appConstant.authProvider.LINKEDIN) {
-
-    }
-    else if (provider === utils.appConstant.authProvider.APPLE) {
-
-    }
-    else {
-      // return (
-      //   <ErrorToast message="Something went wrong" />
-      // )
+      if (provider === utils.appConstant.authProvider.GOOGLE) {
+        // call auth service to add google login
+        await authService.login(provider);
+        // Navigate to main app after successful login
+        router.replace('/(tabs)' as RelativePathString);
+      }
+      else if (provider === utils.appConstant.authProvider.FACEBOOK) {
+        // TODO: Implement Facebook login
+        showToast.error("Facebook login not yet implemented");
+      }
+      else if (provider === utils.appConstant.authProvider.LINKEDIN) {
+        // TODO: Implement LinkedIn login
+        showToast.error("LinkedIn login not yet implemented");
+      }
+      // else if (provider === utils.appConstant.authProvider.APPLE) {
+      //   // TODO: Implement Apple login
+      // }
+      else {
+        showToast.error("Invalid provider");
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      showToast.error(error instanceof Error ? error.message : "Login failed. Please try again.");
     }
   };
 

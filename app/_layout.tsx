@@ -6,6 +6,10 @@ import { useEffect } from 'react';
 import 'react-native-reanimated';
 import { LogBox } from 'react-native';
 import "./global.css";
+import * as WebBrowser from 'expo-web-browser';
+
+// This is needed for OAuth to work properly with expo-web-browser
+WebBrowser.maybeCompleteAuthSession();
 
 LogBox.ignoreLogs([
   "SafeAreaView has been deprecated",

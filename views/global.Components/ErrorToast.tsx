@@ -1,3 +1,4 @@
+"use client";
 import React from 'react';
 import { useToast, Toast, ToastTitle, ToastDescription } from "@/components/ui/toast";
 import { HStack } from "@/components/ui/hstack";
