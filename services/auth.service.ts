@@ -14,6 +14,7 @@ class AuthService {
 
     // login function
     async login(provider: authProvider) {
+        // login with auth provider
         const jwtFromAppwrite = await this._login(provider);
 
         if (!jwtFromAppwrite) {
@@ -26,8 +27,10 @@ class AuthService {
             throw new Error("Failed to get JWT from Backend");
         }
 
+        // encode the jwt
         const encodeData = utils.commonFunction.encodeBase64(jwtFromBackend);
 
+        // save the jwt in local storage
         AsyncStorage.setItem(utils.appConstant.SESSION_DATA_KEY_FOR_LOCAL_STORAGE, encodeData);
     }
 
@@ -47,16 +50,17 @@ class AuthService {
     // login with auth provider
     private async _login(provider: authProvider) {
         if (provider === authProvider.GOOGLE) {
-            return await this._OauthWithGoogle();
+            const jwtFromAppwrite = await this._OauthWithGoogle();
+            return jwtFromAppwrite;
         }
         else if (provider === authProvider.FACEBOOK) {
-
+            // FIXIT : need to implement
         }
         else if (provider === authProvider.APPLE) {
-
+            // FIXIT : need to implement
         }
         else if (provider === authProvider.LINKEDIN) {
-
+            // FIXIT : need to implement
         }
         else {
             throw new Error("Invalid provider");
@@ -69,7 +73,7 @@ class AuthService {
         // Use makeRedirectUri for proper redirect URL generation
         const redirectUri = makeRedirectUri({
             scheme: 'sheild',
-            path: 'auth/callback'
+            path: '/(tabs)'
         });
         console.log("Generated Redirect URI:", redirectUri);
 
@@ -108,6 +112,7 @@ class AuthService {
 
             // Now create and return the JWT token
             const jwt = await account.createJWT();
+            console.log("JWT:", jwt);
             return jwt.jwt;
         } catch (error) {
             console.error("Google OAuth Error:", error);
