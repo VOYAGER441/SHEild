@@ -15,23 +15,29 @@ class AuthService {
     // login function
     async login(provider: authProvider) {
         // login with auth provider
-        const jwtFromAppwrite = await this._login(provider);
+        // const jwtFromAppwrite = await this._login(provider);
 
-        if (!jwtFromAppwrite) {
-            throw new Error("Failed to get JWT from Appwrite");
-        }
-        // send the jwt to backend
-        const jwtFromBackend = await this._verifyJWTAndGetNewJWT(jwtFromAppwrite);
+        // if (!jwtFromAppwrite) {
+        //     throw new Error("Failed to get JWT from Appwrite");
+        // }
+        
+        // // send the jwt to backend
+        // const jwtFromBackend = await this._verifyJWTAndGetNewJWT(jwtFromAppwrite);
 
-        if (!jwtFromBackend) {
-            throw new Error("Failed to get JWT from Backend");
-        }
+        // if (!jwtFromBackend) {
+        //     throw new Error("Failed to get JWT from Backend");
+        // }
 
-        // encode the jwt
-        const encodeData = utils.commonFunction.encodeBase64(jwtFromBackend);
+        // // encode the jwt
+        // const encodeData = utils.commonFunction.encodeBase64(jwtFromBackend);
 
-        // save the jwt in local storage
-        AsyncStorage.setItem(utils.appConstant.SESSION_DATA_KEY_FOR_LOCAL_STORAGE, encodeData);
+        // // save the jwt in local storage
+        // await AsyncStorage.setItem(utils.appConstant.SESSION_DATA_KEY_FOR_LOCAL_STORAGE, encodeData);
+        
+        // return jwtFromBackend;
+        const url =await this._getGoogleLoginURL();
+        // console.log(url);
+        
     }
 
 
@@ -123,6 +129,19 @@ class AuthService {
     private async _verifyJWTAndGetNewJWT(jwtFromAppwrite: string): Promise<IJWTResponse> {
         const result = await axios.post<IJWTResponse>(`${utils.env.BACKEND_BASE_URL}/v1/auth/jwtVerify/${jwtFromAppwrite}`);
         return result.data;
+    }
+
+    private async _getGoogleLoginURL(): Promise<string> {
+        try {
+            const url = `${utils.env.BACKEND_BASE_URL}/v1/auth/googleLogin`;
+            console.log(url);
+            
+            const result = await axios.get(url);
+            return result.data;
+        } catch (error) {
+            console.error("Google Login URL Error:", error);
+            throw error;
+        }
     }
 }
 
