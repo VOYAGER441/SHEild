@@ -261,3 +261,5 @@ buck-out/
 
 expo-env.d.ts
 # @end expo-cli
+# Added by code-review-graph
+.code-review-graph/

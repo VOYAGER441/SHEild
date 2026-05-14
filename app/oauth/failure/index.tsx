@@ -5,14 +5,14 @@ import { RelativePathString, useRouter } from "expo-router";
 
 export default function OAuthFailureScreen() {
     const router = useRouter();
+    const url = Linking.useURL();
 
     const errorMessage = useMemo(() => {
-        const url = Linking.useURL();
         if (!url) return "Authentication failed.";
 
         const { queryParams } = Linking.parse(url);
         return (queryParams?.error as string) || "Authentication failed.";
-    }, []);
+    }, [url]);
 
     return (
         <View className="flex-1 items-center justify-center bg-white px-6">
