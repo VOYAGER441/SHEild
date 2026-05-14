@@ -3,6 +3,9 @@ import { useEffect } from "react";
 import * as Linking from "expo-linking";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { RelativePathString, useRouter } from "expo-router";
+import { ElegantLoadingScreen } from "@/views/global.Components/Loadingscreens";
+
+const LOADING_DELAY_MS = 1500;
 
 export default function OAuthSuccessScreen() {
     const router = useRouter();
@@ -18,6 +21,12 @@ export default function OAuthSuccessScreen() {
             const refreshToken = queryParams?.refreshToken as string | undefined;
 
             if (!accessToken || !refreshToken) {
+                // <ElegantLoadingScreen
+                //     message="Authenticating..."
+                //     submessage="One moment"
+                // />
+                await new Promise((resolve) => setTimeout(resolve, LOADING_DELAY_MS));
+
                 router.replace("/oauth/failure" as RelativePathString);
                 return;
             }
