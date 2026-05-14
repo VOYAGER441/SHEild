@@ -19,7 +19,7 @@ export default function EmergencyButton({ onPress }: EmergencyButtonProps) {
       className="rounded-full  items-center justify-center"
       style={{
         backgroundColor:"transparent",
-        borderColor: utils.commonFunction.default.hexToRgba(theme.alert, 0.3),
+        borderColor: utils.commonFunction.hexToRgba(theme.alert, 0.3),
         borderWidth: 20,
         width: 230,
         height: 230,
@@ -29,7 +29,7 @@ export default function EmergencyButton({ onPress }: EmergencyButtonProps) {
       <View
         className="rounded-full  items-center justify-center"
         style={{
-          borderColor: utils.commonFunction.default.hexToRgba(theme.alert, 0.5),
+          borderColor: utils.commonFunction.hexToRgba(theme.alert, 0.5),
           borderWidth: 20,
           width: 190,
           height: 190,
@@ -39,7 +39,7 @@ export default function EmergencyButton({ onPress }: EmergencyButtonProps) {
           className="rounded-full items-center justify-center "
           style={{
             backgroundColor: theme.alert,
-            borderColor: utils.commonFunction.default.hexToRgba(theme.alert, 0.7),
+            borderColor: utils.commonFunction.hexToRgba(theme.alert, 0.7),
             borderWidth: 20,
             width: 150,
             height: 150,
