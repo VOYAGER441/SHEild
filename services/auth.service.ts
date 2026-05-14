@@ -7,6 +7,7 @@ import { IJWTResponse } from "@/interface/response/auth.response";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { makeRedirectUri } from "expo-auth-session";
 import * as WebBrowser from "expo-web-browser";
+import { Platform } from "react-native";
 
 class AuthService {
     // public methods
@@ -14,115 +15,142 @@ class AuthService {
 
     // login function
     async login(provider: authProvider) {
-        // login with auth provider
-        const jwtFromAppwrite = await this._login(provider);
-
-        if (!jwtFromAppwrite) {
-            throw new Error("Failed to get JWT from Appwrite");
-        }
-        // send the jwt to backend
-        const jwtFromBackend = await this._verifyJWTAndGetNewJWT(jwtFromAppwrite);
-
-        if (!jwtFromBackend) {
-            throw new Error("Failed to get JWT from Backend");
-        }
-
-        // encode the jwt
-        const encodeData = utils.commonFunction.encodeBase64(jwtFromBackend);
-
-        // save the jwt in local storage
-        AsyncStorage.setItem(utils.appConstant.SESSION_DATA_KEY_FOR_LOCAL_STORAGE, encodeData);
-    }
-
-
-    // logout function
-    async logout() {
         try {
-            await account.deleteSession('current');
+            if (provider === authProvider.GOOGLE) {
+                // Generate the redirect URI dynamically (handles Expo Go vs Prod)
+                const redirectUri = makeRedirectUri({
+                    scheme: 'sheild',
+                    path: 'oauth/success'
+                });
+                console.log("AuthService:::login:::: Generated Redirect URI:", redirectUri);
+
+                // Get the login URL from backend, PASSING the redirect URI
+                const { url } = await this._getGoogleLoginURL(redirectUri);
+
+                // Open the browser session
+                const result = await WebBrowser.openAuthSessionAsync(url, redirectUri);
+
+                if (result.type !== 'success' || !result.url) {
+                    throw new Error('OAuth was cancelled or failed');
+                }
+
+                // ... (rest of parsing logic remains same)
+
+                // Parse the URL to get secret and userId
+                // URL format: sheild://oauth/success?secret=...&userId=...
+                const matchSecret = result.url.match(/secret=([^&]+)/);
+                const matchUserId = result.url.match(/userId=([^&]+)/);
+
+                const secret = matchSecret ? matchSecret[1] : null;
+                const userId = matchUserId ? matchUserId[1] : null;
+
+                if (!secret || !userId) {
+                    throw new Error('Failed to parse secret or userId from callback URL');
+                }
+
+                // Create the session in Appwrite (Client side)
+                await this._createSession(userId, secret);
+
+                // Now get the JWT
+                const jwt = await account.createJWT();
+
+                // Verify with backend
+                const jwtFromBackend = await this._verifyJWTAndGetNewJWT(jwt.jwt, redirectUri);
+
+                if (!jwtFromBackend) {
+                    throw new Error("Failed to get JWT from Backend");
+                }
+
+                // encode the jwt
+                const encodeData = utils.commonFunction.encodeBase64(jwtFromBackend);
+
+                // save the jwt in local storage
+                await AsyncStorage.setItem(utils.appConstant.SESSION_DATA_KEY_FOR_LOCAL_STORAGE, encodeData);
+
+                return jwtFromBackend;
+            }
         } catch (error) {
-            console.error("Logout Error:", error);
+            console.error("Login Error:", error);
             throw error;
         }
     }
 
-    // private methods
-    // ###############################################################
-    // login with auth provider
-    private async _login(provider: authProvider) {
-        if (provider === authProvider.GOOGLE) {
-            const jwtFromAppwrite = await this._OauthWithGoogle();
-            return jwtFromAppwrite;
-        }
-        else if (provider === authProvider.FACEBOOK) {
-            // FIXIT : need to implement
-        }
-        else if (provider === authProvider.APPLE) {
-            // FIXIT : need to implement
-        }
-        else if (provider === authProvider.LINKEDIN) {
-            // FIXIT : need to implement
-        }
-        else {
-            throw new Error("Invalid provider");
+    // ... private methods ...
+
+    private async _getGoogleLoginURL(redirectUri: string): Promise<{ url: string }> {
+        try {
+            const baseUrl = this._getBackendBaseUrl(redirectUri);
+            const url = `${baseUrl}/v1/auth/googleLogin`;
+            console.log("Fetching Google Login URL from:", url);
+
+            // Send redirectUri to backend
+            const result = await axios.get(url, {
+                params: {
+                    redirectUri: redirectUri
+                }
+            });
+            return result.data;
+        } catch (error) {
+            console.error("Google Login URL Error:", error);
+            throw error;
         }
     }
 
-    // send the id to back
-
-    private async _OauthWithGoogle(): Promise<string> {
-        // Use makeRedirectUri for proper redirect URL generation
-        const redirectUri = makeRedirectUri({
-            scheme: 'sheild',
-            path: '/(tabs)'
-        });
-        console.log("Generated Redirect URI:", redirectUri);
-
+    private async _verifyJWTAndGetNewJWT(jwtFromAppwrite: string, redirectUri?: string): Promise<IJWTResponse> {
         try {
+            const baseUrl = this._getBackendBaseUrl(redirectUri);
+            const encodedJWT = encodeURIComponent(jwtFromAppwrite);
+            const url = `${baseUrl}/v1/auth/jwtVerify/${encodedJWT}`;
+            const result = await axios.post(url);
+            const jwtResponse = result.data as IJWTResponse;
 
-            // Build the OAuth URL manually using Appwrite endpoint
-            const endpoint = utils.env.EXPO_PUBLIC_APPWRITE_ENDPOINT;
-            const projectId = utils.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID;
-
-            // Construct the OAuth URL
-            const oauthUrl = `${endpoint}/account/sessions/oauth2/${OAuthProvider.Google}`
-                + `?project=${projectId}`
-                + `&success=${encodeURIComponent(redirectUri)}`
-                + `&failure=${encodeURIComponent(redirectUri)}`;
-
-            console.log("Opening OAuth URL:", oauthUrl);
-
-            // Open the OAuth URL in browser and wait for callback
-            const result = await WebBrowser.openAuthSessionAsync(
-                oauthUrl,
-                redirectUri
-            );
-
-            console.log("OAuth result:", result);
-
-
-
-            // Check if the OAuth was successful
-            if (result.type !== 'success') {
-                throw new Error('OAuth was cancelled or failed');
+            if (!jwtResponse?.accessToken || !jwtResponse?.refreshToken) {
+                throw new Error("Invalid JWT response from backend");
             }
 
-            // The session should now be established in Appwrite
-            // Wait a moment for the session to be fully established
-            await new Promise(resolve => setTimeout(resolve, 1000));
-
-            // Now create and return the JWT token
-            const jwt = await account.createJWT();
-            console.log("JWT:", jwt);
-            return jwt.jwt;
+            return jwtResponse;
         } catch (error) {
-            console.error("Google OAuth Error:", error);
+            console.error("JWT Verify Error:", error);
             throw error;
         }
     }
 
-    private async _verifyJWTAndGetNewJWT(jwtFromAppwrite: string): Promise<IJWTResponse> {
-        const result = await axios.post<IJWTResponse>(`${utils.env.BACKEND_BASE_URL}/v1/auth/jwtVerify/${jwtFromAppwrite}`);
-        return result.data;
+    private async _createSession(userId: string, secret: string): Promise<void> {
+        try {
+            await account.createSession(userId, secret);
+        } catch (error: any) {
+            const message = error?.message || "";
+            if (typeof message === "string" && message.includes("session is active")) {
+                await account.deleteSession("current");
+                await account.createSession(userId, secret);
+                return;
+            }
+            throw error;
+        }
+    }
+
+    private _getBackendBaseUrl(redirectUri?: string): string {
+        let baseUrl = utils.env.BACKEND_BASE_URL || "";
+
+        if (!baseUrl && redirectUri?.startsWith("exp://")) {
+            const hostFromExpoUri = redirectUri.replace("exp://", "").split("/")[0]?.split(":")[0];
+            if (hostFromExpoUri) {
+                baseUrl = `http://${hostFromExpoUri}:5000`;
+            }
+        }
+
+        if (!baseUrl) {
+            throw new Error(
+                "Missing backend URL. Set EXPO_PUBLIC_BACKEND_BASE_URL in .env (for example: http://192.168.x.x:5000)."
+            );
+        }
+
+        if (Platform.OS === "android" && baseUrl.includes("localhost")) {
+            console.log("Replacing localhost with 10.0.2.2 for Android Emulator");
+            baseUrl = baseUrl.replace("localhost", "10.0.2.2");
+        }
+
+        return baseUrl.endsWith("/") ? baseUrl.slice(0, -1) : baseUrl;
     }
 }
 

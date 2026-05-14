@@ -57,7 +57,7 @@ cp .env.example .env
 Open the `.env` file and configure the necessary variables:
 
 ```env
-BACKEND_BASE_URL=http://your-backend-ip:5000
+EXPO_PUBLIC_BACKEND_BASE_URL=http://your-backend-ip:5000
 
 # Appwrite Configuration
 EXPO_PUBLIC_APPWRITE_PROJECT_ID=your_appwrite_project_id
