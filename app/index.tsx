@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
 import AnimatedSplash from './AnimatedSplash';
-import utils from '@/utils';
+import authService from '@/services/auth.service';
 
 export default function IndexPage() {
   const [isReady, setIsReady] = useState(false);
@@ -15,15 +14,12 @@ export default function IndexPage() {
 
   const initializeApp = async () => {
     try {
-      // Check authentication
-      const token = await AsyncStorage.getItem(utils.appConstant.SESSION_DATA_KEY_FOR_LOCAL_STORAGE);
-      //   const token = ''
-      //   console.log('Token check:', !!token);
+      // Check authentication via the secure token store
+      const session = await authService.getSession();
 
-      setIsAuthenticated(!!token);
+      setIsAuthenticated(!!session?.accessToken);
       setIsReady(true);
     } catch (error) {
-      //   console.error('Auth error:', error);
       setIsAuthenticated(false);
       setIsReady(true);
     }

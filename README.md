@@ -6,7 +6,7 @@ SHEild is a comprehensive women's safety application built with React Native and
 
 - **Emergency SOS**: Quickly trigger alerts to emergency contacts and services.
 - **Location Tracking**: Real-time location sharing with trusted contacts.
-- **Authentication**: Secure user login and registration using Appwrite and Google Sign-In.
+- **Authentication**: Secure user login via native Google Sign-In, verified by our Node.js backend.
 - **Community Support**: Connect with a supportive community.
 - **Safety Resources**: Access to educational content and safety advice.
 
@@ -17,7 +17,7 @@ SHEild is a comprehensive women's safety application built with React Native and
 - **UI Components**: [Gluestack UI](https://gluestack.io/)
 - **Styling**: [NativeWind](https://www.nativewind.dev/) (Tailwind CSS), `react-native-css-interop`
 - **Navigation**: [Expo Router](https://docs.expo.dev/router/introduction/)
-- **Backend & Auth**: [Appwrite](https://appwrite.io/)
+- **Backend & Auth**: Node.js API (`sheild_api_server`) + native [Google Sign-In](https://github.com/react-native-google-signin/google-signin)
 - **Maps**: `react-native-maps`
 - **Animations**: `lottie-react-native`, `@legendapp/motion`
 
@@ -27,7 +27,7 @@ Before you begin, ensure you have the following installed:
 
 - [Node.js](https://nodejs.org/) (LTS version recommended)
 - [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
-- [Expo Go](https://expo.dev/client) app on your mobile device (iOS/Android) for testing.
+- A development build (`npx expo prebuild` or EAS) — native Google Sign-In does not run in Expo Go.
 
 ## Installation
 
@@ -59,14 +59,10 @@ Open the `.env` file and configure the necessary variables:
 ```env
 EXPO_PUBLIC_BACKEND_BASE_URL=http://your-backend-ip:5000
 
-# Appwrite Configuration
-EXPO_PUBLIC_APPWRITE_PROJECT_ID=your_appwrite_project_id
-EXPO_PUBLIC_APPWRITE_PROJECT_NAME="SHEild"
-EXPO_PUBLIC_APPWRITE_ENDPOINT=your_appwrite_endpoint
-
-# Google OAuth "Web application" client ID (NOT the Android client ID)
+# Google OAuth "Web application" client ID (NOT the Android client ID).
+# Must match GOOGLE_CLIENT_ID_WEB on the backend.
 EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID=your_web_client_id.apps.googleusercontent.com
-# Optional: iOS client ID. Leave empty to use the browser flow on iOS.
+# Optional: iOS client ID (reversed client ID). Required for native sign-in on iOS.
 EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID=
 ```
 
@@ -74,62 +70,43 @@ EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID=
 
 ## Google Sign-In
 
-Login is completed by the backend. The app only collects a Google **ID token** with
-the native account picker and POSTs it to `POST /v1/auth/google/native`; Appwrite
-verifies the token (signature, audience, expiry) and the backend issues the session
-JWTs. The app never creates an Appwrite session itself.
+Login uses the **native** Google account picker (`@react-native-google-signin/google-signin`).
+The app collects a Google **ID token** and POSTs it to `POST /api/v1/auth/google`; the
+Node.js backend verifies the token with `google-auth-library` (signature, audience,
+expiry), upserts the user and returns its own access/refresh JWTs. Tokens are stored in
+**expo-secure-store** (Keychain/Keystore) and attached as `Authorization: Bearer …` by
+the shared axios client (`services/api.client.ts`).
 
-If native sign-in cannot run (Expo Go, no Google Play Services, missing
-`EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID`, iOS without a client ID), the app automatically
-falls back to the browser OAuth flow, which is also completed by the backend.
-Dismissing the Google account picker cancels the login instead of falling back.
+There is **no browser fallback**: if the native module is missing (Expo Go), sign-in
+fails with a clear error — use a development build. Dismissing the account picker
+cancels the login.
 
 ### Required configuration
 
 1. **Google Cloud** ([Clients](https://console.cloud.google.com/auth/clients)) — create two clients in the same project:
    - **Web application** client. Leave origins/redirect URIs empty. This is the ID that
-     goes into `EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID` and into Appwrite.
+     goes into `EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID` **and** `GOOGLE_CLIENT_ID_WEB` on the backend.
    - **Android** client with package name `com.sheild.app` and the SHA-1 of your signing
      certificate (`./gradlew signingReport`, or the Play App Signing key from Play Console).
-     Google refuses to show the account picker without it. Its ID is never used in code.
-2. **Appwrite Console** → **Auth** → **Social providers** → **Google** → enable
-   **Native sign-in** and add the **Web client ID** under *Web client IDs*, then **Update**.
-   Native sign-in is a separate switch from browser sign-in.
-3. **Native module**: `@react-native-google-signin/google-signin` ships native code, so
+     Google refuses to show the account picker without it. Its ID can optionally be added
+     as an extra audience (`GOOGLE_CLIENT_ID_ANDROID`) on the backend.
+2. **Native module**: `@react-native-google-signin/google-signin` ships native code, so
    it needs a development build (`eas build --profile development`) or `npx expo prebuild`
-   + a dev client. It does **not** run in Expo Go (the app then uses the browser flow).
-4. **iOS (optional)**: add the Expo config plugin with your reversed client ID so the
-   Google redirect can return to the app:
+   + a dev client. It does **not** run in Expo Go.
+3. **iOS (optional)**: the config plugin is registered in `app.json`; add your reversed
+   client ID as `iosUrlScheme` so the Google redirect can return to the app:
    ```json
    ["@react-native-google-signin/google-signin", { "iosUrlScheme": "com.googleusercontent.apps.YOUR_IOS_CLIENT_ID" }]
    ```
    and set `EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID`.
 
-### Browser fallback callback host
-
-Appwrite puts the callback URL into the Google consent screen, so the hostname has
-to be reachable **from the phone's own browser**:
-
-- The backend treats a loopback `APP_URL` (`localhost`, `127.x`, `[::1]`) as a
-  server-side convenience only. When the app reaches it from another host, the
-  OAuth callback is rewritten to that host so the device browser can load it.
-  The warning `... is a loopback address but the app called this server at ...`
-  in the API logs tells you which host was used.
-- Register every host you actually use in Appwrite Console → **Platforms** →
-  **Web** (`localhost:5000`, `192.168.1.43:5000`, `10.0.2.2:5000`, your LAN IP…).
-  Appwrite rejects the flow with a hostname-not-registered message otherwise, and
-  your IP can change between networks.
-- Alternative with a single stable host (Android): set
-  `EXPO_PUBLIC_BACKEND_BASE_URL=http://localhost:5000` and run
-  `adb reverse tcp:5000 tcp:5000`.
-
 ### Verify
 
-- Wrong/missing web client ID → backend responds `user_oauth2_token_invalid`
-  ("Audience mismatch…"), the app logs `native Google sign-in unavailable` and retries
-  through the browser flow.
-- Native sign-in disabled in Appwrite → backend logs
-  `Native sign-in is disabled or no web client ID is configured`.
+- Wrong/missing web client ID → backend responds `401 Google sign-in could not be verified`
+  (audience mismatch in the API logs).
+- No `GOOGLE_CLIENT_ID_*` on the backend → `500 Google sign-in is not configured on the server`.
+- Expo Go → the app logs `RNGoogleSignin native module is not in this build` and the
+  login button surfaces that error.
 
 ## Running the Application
 

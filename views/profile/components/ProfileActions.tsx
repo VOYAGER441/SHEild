@@ -5,7 +5,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useColorScheme } from '@/components/useColorScheme';
 import Colors from '@/utils/constants/Colors';
 import { RelativePathString, useRouter } from 'expo-router';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import authService from '@/services/auth.service';
 
 export default function ProfileActions() {
     const colorScheme = useColorScheme();
@@ -14,7 +14,12 @@ export default function ProfileActions() {
     const router = useRouter();
 
     const handleLogout = async () => {
-        await AsyncStorage.clear();
+        try {
+            // Sign out of Google on the device and clear the secure token store
+            await authService.logout();
+        } catch (error) {
+            console.warn('Logout error:', error);
+        }
         router.replace('/login' as RelativePathString);
     };
 

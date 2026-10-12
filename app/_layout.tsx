@@ -6,10 +6,12 @@ import { useEffect } from 'react';
 import 'react-native-reanimated';
 import { LogBox } from 'react-native';
 import "./global.css";
-import * as WebBrowser from 'expo-web-browser';
+import { configureGoogleSignIn } from '@/services/googleSignin';
 
-// This is needed for OAuth to work properly with expo-web-browser
-WebBrowser.maybeCompleteAuthSession();
+// Native Google Sign-In is configured once at app startup. webClientId here
+// must match GOOGLE_CLIENT_ID_WEB on the backend so the ID token audience
+// verifies server-side.
+configureGoogleSignIn();
 
 // These still print in the Metro terminal (LogBox.ignoreLogs only affects the
 // on-screen LogBox); keeping the on-screen notification quiet is intentional.
