@@ -11,8 +11,11 @@ import * as WebBrowser from 'expo-web-browser';
 // This is needed for OAuth to work properly with expo-web-browser
 WebBrowser.maybeCompleteAuthSession();
 
+// These still print in the Metro terminal (LogBox.ignoreLogs only affects the
+// on-screen LogBox); keeping the on-screen notification quiet is intentional.
 LogBox.ignoreLogs([
   "SafeAreaView has been deprecated",
+  "Reduced motion setting is enabled on this device",
 ]);
 import {
   Inter_400Regular,

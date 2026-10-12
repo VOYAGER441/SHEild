@@ -1,6 +1,6 @@
 'use client';
-import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView } from 'react-native';
-import React from 'react';
+import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView, ActivityIndicator } from 'react-native';
+import React, { useState } from 'react';
 import { router, RelativePathString } from 'expo-router';
 import { useColorScheme } from '@/components/useColorScheme';
 import Colors from '@/utils/constants/Colors';
@@ -14,8 +14,10 @@ export default function LoginScreen() {
   const colorScheme = useColorScheme();
   const showToast = useShowToast();
   const theme = Colors[colorScheme ?? 'light'];
+  const [busy, setBusy] = useState(false);
 
   const handleSocialLogin = async (provider: string) => {
+    setBusy(true);
     try {
       // Placeholder for auth logic
       console.log(`Login with ${provider}`);
@@ -42,19 +44,39 @@ export default function LoginScreen() {
         showToast.error("Invalid provider");
       }
     } catch (error) {
+      // Dismissing the Google account picker is an expected outcome, not a failure.
+      if (error instanceof Error && error.name === 'SignInCancelledError') {
+        return;
+      }
       console.error("Login error:", error);
       showToast.error(error instanceof Error ? error.message : "Login failed. Please try again.");
+    } finally {
+      setBusy(false);
     }
   };
 
-  const SocialButton = ({ icon, title, onPress }: { icon: any, title: string, onPress: () => void }) => (
+  const SocialButton = ({
+    icon,
+    title,
+    onPress,
+    disabled = false,
+    loading = false,
+  }: {
+    icon: any,
+    title: string,
+    onPress: () => void,
+    disabled?: boolean,
+    loading?: boolean,
+  }) => (
     <TouchableOpacity
       activeOpacity={0.8}
       onPress={onPress}
+      disabled={disabled}
       style={[
         styles.socialButton,
         {
           backgroundColor: theme.card,
+          opacity: disabled ? 0.6 : 1,
           shadowColor: theme.shadowColor,
           shadowOffset: theme.shadowOffset,
           shadowOpacity: theme.shadowOpacity,
@@ -64,7 +86,7 @@ export default function LoginScreen() {
       ]}
     >
       <View style={styles.iconContainer}>
-        {icon}
+        {loading ? <ActivityIndicator size="small" color={theme.tint} /> : icon}
       </View>
       <Text style={[styles.socialButtonText, { color: theme.tint }]}>
         {title}
@@ -102,6 +124,8 @@ export default function LoginScreen() {
               title="Continue with Google"
               icon={<AntDesign name="google" size={24} color={theme.tint} />}
               onPress={() => handleSocialLogin(utils.appConstant.authProvider.GOOGLE)}
+              disabled={busy}
+              loading={busy}
             />
 
             {/* TODO: Add Facebook and LinkedIn login */}

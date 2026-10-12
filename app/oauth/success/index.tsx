@@ -1,47 +1,82 @@
 import { View, Text, ActivityIndicator } from "react-native";
 import { useEffect } from "react";
-import * as Linking from "expo-linking";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { RelativePathString, useRouter } from "expo-router";
-import { ElegantLoadingScreen } from "@/views/global.Components/Loadingscreens";
+import { RelativePathString, useLocalSearchParams, useRouter } from "expo-router";
+import utils from "@/utils";
+import { exchangeOAuthCodeOnce } from "@/services/auth.service";
 
-const LOADING_DELAY_MS = 1500;
+// The exchange code is single-use. Once this screen has attempted it - or
+// services/auth.service.ts already consumed it - there is nothing left to do.
+let claimed = false;
 
 export default function OAuthSuccessScreen() {
     const router = useRouter();
+    const { code, error } = useLocalSearchParams<{ code?: string; error?: string }>();
 
     useEffect(() => {
-        const handleOAuthSuccess = async () => {
-            const url = await Linking.getInitialURL();
-            if (!url) return;
+        let active = true;
+        let pendingTimeout: ReturnType<typeof setTimeout> | undefined;
 
-            const { queryParams } = Linking.parse(url);
-
-            const accessToken = queryParams?.accessToken as string | undefined;
-            const refreshToken = queryParams?.refreshToken as string | undefined;
-
-            if (!accessToken || !refreshToken) {
-                // <ElegantLoadingScreen
-                //     message="Authenticating..."
-                //     submessage="One moment"
-                // />
-                await new Promise((resolve) => setTimeout(resolve, LOADING_DELAY_MS));
-
-                router.replace("/oauth/failure" as RelativePathString);
+        const handleOAuthCallback = async () => {
+            if (error) {
+                if (active) router.replace("/oauth/failure" as RelativePathString);
                 return;
             }
 
-            await AsyncStorage.multiSet([
-                ["accessToken", accessToken],
-                ["refreshToken", refreshToken],
-            ]);
+            if (!code) {
+                // Benign loading screen: no timer, no automatic redirect.
+                return;
+            }
 
-            // Navigate to main app
-            router.replace("/(tabs)" as RelativePathString);
+            if (claimed) return;
+            claimed = true;
+
+            try {
+                const nonce = await AsyncStorage.getItem(
+                    utils.appConstant.OAUTH_NONCE_KEY_FOR_LOCAL_STORAGE
+                );
+
+                // No nonce left means the in-app browser flow already finished
+                // the exchange, so this screen must do nothing.
+                if (!nonce) return;
+
+                // Shares the single request with the browser flow: the one-time
+                // code can only be spent once, so a second POST here would be
+                // rejected as "Sign-in code is invalid or has expired".
+                const jwtFromBackend = await exchangeOAuthCodeOnce(code, nonce);
+
+                if (!jwtFromBackend?.accessToken || !jwtFromBackend?.refreshToken) {
+                    throw new Error("Invalid JWT response from backend");
+                }
+
+                await AsyncStorage.removeItem(
+                    utils.appConstant.OAUTH_NONCE_KEY_FOR_LOCAL_STORAGE
+                );
+
+                // Persist under the same key/shape the auth gate in app/index.tsx reads.
+                await AsyncStorage.setItem(
+                    utils.appConstant.SESSION_DATA_KEY_FOR_LOCAL_STORAGE,
+                    utils.commonFunction.encodeBase64(jwtFromBackend)
+                );
+
+                if (active) router.replace("/(tabs)" as RelativePathString);
+            } catch (exchangeError) {
+                // The code may already have been consumed by the in-app browser
+                // flow. Swallow it and stay on the loading screen so a successful
+                // login is never yanked back to the failure screen.
+                console.warn("OAuth exchange skipped:", exchangeError);
+            }
         };
 
-        handleOAuthSuccess();
-    }, []);
+        handleOAuthCallback();
+
+        return () => {
+            active = false;
+            if (pendingTimeout !== undefined) {
+                clearTimeout(pendingTimeout);
+            }
+        };
+    }, [code, error, router]);
 
     return (
         <View className="flex-1 items-center justify-center bg-white px-6">

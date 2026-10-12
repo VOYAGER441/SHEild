@@ -7,7 +7,6 @@
     "icon": "./assets/images/favicon.png",
     "scheme": "sheild",
     "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.sheild.app"
@@ -55,7 +54,9 @@
             "usesCleartextTraffic": true
           }
         }
-      ]
+      ],
+      "expo-splash-screen",
+      "expo-status-bar"
     ],
     "experiments": {
       "typedRoutes": true
