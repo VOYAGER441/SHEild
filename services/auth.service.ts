@@ -3,6 +3,7 @@ import { IJWTResponse } from "@/interface/response/auth.response";
 import { apiPost } from "./api.client";
 import { saveSession, loadSession, clearSession } from "./token.storage";
 import { getGoogleSignin } from "./googleSignin";
+import { signInWithGoogleBrowser } from "./googleAuthBrowser";
 
 // Backend endpoint that verifies the Google ID token server-side.
 const GOOGLE_LOGIN_PATH = "/api/v1/auth/google";
@@ -11,12 +12,29 @@ class AuthService {
     // public methods
     // ###############################################################
 
-    // login function - native Google account picker only, no browser fallback
+    // login function - native Google account picker first; when the native
+    // module is missing (Expo Go), falls back to the browser OAuth flow. Both
+    // paths end with our backend verifying the Google ID token.
     async login(provider: authProvider): Promise<IJWTResponse> {
         try {
             if (provider === authProvider.GOOGLE) {
-                const idToken = await this._signInWithGoogle();
-                return await this.loginWithGoogleIdToken(idToken);
+                const native = await this._tryNativeGoogleSignIn();
+
+                if (native.ok) {
+                    return await this.loginWithGoogleIdToken(native.idToken);
+                }
+
+                if (native.cancelled) {
+                    const cancelled = new Error("Google sign-in was cancelled");
+                    cancelled.name = "SignInCancelledError";
+                    throw cancelled;
+                }
+
+                console.warn(
+                    `AuthService:::login:::: native Google sign-in unavailable - ${native.reason}. Falling back to the browser flow.`
+                );
+                const idToken = await signInWithGoogleBrowser();
+                return await this.completeBrowserLogin(idToken);
             }
 
             throw new Error(`Login is not implemented for provider: ${provider}`);
@@ -49,6 +67,35 @@ class AuthService {
         }
     }
 
+    // The browser-flow deep link can be seen twice (openAuthSessionAsync and
+    // the /oauth/callback screen on a cold start). Whoever asks first starts
+    // the exchange; everyone else awaits the same in-flight promise so the
+    // backend is only called once per id_token.
+    private _inFlightBrowserLogin: { idToken: string; startedAt: number; promise: Promise<IJWTResponse> } | null = null;
+
+    async completeBrowserLogin(idToken: string): Promise<IJWTResponse> {
+        const now = Date.now();
+        if (
+            this._inFlightBrowserLogin &&
+            this._inFlightBrowserLogin.idToken === idToken &&
+            now - this._inFlightBrowserLogin.startedAt < 60000
+        ) {
+            return this._inFlightBrowserLogin.promise;
+        }
+
+        const promise = this.loginWithGoogleIdToken(idToken);
+        this._inFlightBrowserLogin = { idToken, startedAt: now, promise };
+
+        // A failed attempt must stay retryable, so the rejection is not pinned.
+        promise.catch(() => {
+            if (this._inFlightBrowserLogin?.idToken === idToken) {
+                this._inFlightBrowserLogin = null;
+            }
+        });
+
+        return promise;
+    }
+
     // current session (null when signed out)
     getSession(): Promise<IJWTResponse | null> {
         return loadSession();
@@ -71,14 +118,18 @@ class AuthService {
     // private methods
     // ###############################################################
 
-    // Triggers the OS native account picker and resolves with the ID token.
-    // Requires a dev/production build - Expo Go has no RNGoogleSignin module.
-    private async _signInWithGoogle(): Promise<string> {
+    // Attempts the native Google account picker. Every non-success outcome is
+    // converted into a result so the caller can fall back to the browser flow.
+    private async _tryNativeGoogleSignIn(): Promise<
+        { ok: true; idToken: string } | { ok: false; cancelled: boolean; reason: string }
+    > {
         const googleSignin = getGoogleSignin();
         if (!googleSignin) {
-            throw new Error(
-                "Native Google Sign-In is unavailable in this build. Use a development build (npx expo prebuild / eas build), not Expo Go."
-            );
+            return {
+                ok: false,
+                cancelled: false,
+                reason: "'RNGoogleSignin' native module is not in this build - use a development build (npx expo prebuild / eas build), not Expo Go",
+            };
         }
 
         const { GoogleSignin, isSuccessResponse, statusCodes } = googleSignin;
@@ -86,7 +137,11 @@ class AuthService {
         try {
             await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
         } catch (error: any) {
-            throw new Error(`Google Play Services unavailable (${error?.code || "unknown"}). Please update Google Play Services and try again.`);
+            return {
+                ok: false,
+                cancelled: false,
+                reason: `Google Play Services unavailable (${error?.code || "unknown"})`,
+            };
         }
 
         let response;
@@ -94,24 +149,24 @@ class AuthService {
             response = await GoogleSignin.signIn();
         } catch (error: any) {
             if (error?.code === statusCodes.SIGN_IN_CANCELLED) {
-                const cancelled = new Error("Google sign-in was cancelled");
-                cancelled.name = "SignInCancelledError";
-                throw cancelled;
+                return { ok: false, cancelled: true, reason: "cancelled" };
             }
-            throw new Error(`Google sign-in failed (${error?.code || "unknown"}): ${error?.message || error}`);
+            return {
+                ok: false,
+                cancelled: false,
+                reason: `Google sign-in failed (${error?.code || "unknown"}): ${error?.message || error}`,
+            };
         }
 
         if (response.type === "cancelled") {
-            const cancelled = new Error("Google sign-in was cancelled");
-            cancelled.name = "SignInCancelledError";
-            throw cancelled;
+            return { ok: false, cancelled: true, reason: "cancelled" };
         }
 
         if (!isSuccessResponse(response) || !response.data.idToken) {
-            throw new Error("Google did not return an ID token");
+            return { ok: false, cancelled: false, reason: "Google did not return an ID token" };
         }
 
-        return response.data.idToken;
+        return { ok: true, idToken: response.data.idToken };
     }
 }
 
