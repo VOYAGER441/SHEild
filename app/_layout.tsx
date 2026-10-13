@@ -1,6 +1,8 @@
 'use client';
 import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
+// ThemeProvider/DefaultTheme come from expo-router's own react-navigation
+// fork — importing @react-navigation/native directly is banned as of SDK 56.
+import { Stack, ThemeProvider, DefaultTheme } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
@@ -30,9 +32,9 @@ import {
   Inter_600SemiBold,
   Inter_700Bold,
 } from '@expo-google-fonts/inter';
-import { useColorScheme } from '@/components/useColorScheme';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
+import { StatusBar } from 'expo-status-bar';
 
 export { ErrorBoundary } from 'expo-router';
 
@@ -61,23 +63,30 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
-  const colorScheme = useColorScheme();
-
+  // App is light-only by design (app.json userInterfaceStyle: "light").
+  // Following the system dark-mode toggle broke the mixed theming (Gluestack
+  // dark + custom Colors.ts + hardcoded bg-white classes), so the provider is
+  // pinned to light until a real dark theme is designed.
   return (
-    <GluestackUIProvider mode={colorScheme === 'dark' ? 'dark' : 'light'}>
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="index" />
-        <Stack.Screen name="login/index" />
-        <Stack.Screen name="sign_up/index" />
-        <Stack.Screen name="(tabs)" />
-        <Stack.Screen
-          name="modal"
-          options={{
-            presentation: 'modal',
-            headerShown: true,
-          }}
-        />
-      </Stack>
+    <GluestackUIProvider mode="light">
+      {/* react-navigation has its own theme that follows the system scheme —
+          pin it to DefaultTheme (light) so screens/headers stay light. */}
+      <ThemeProvider value={DefaultTheme}>
+        <StatusBar style="dark" />
+        <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="index" />
+          <Stack.Screen name="login/index" />
+          <Stack.Screen name="sign_up/index" />
+          <Stack.Screen name="(tabs)" />
+          <Stack.Screen
+            name="modal"
+            options={{
+              presentation: 'modal',
+              headerShown: true,
+            }}
+          />
+        </Stack>
+      </ThemeProvider>
     </GluestackUIProvider>
   );
 }

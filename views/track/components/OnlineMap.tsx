@@ -5,9 +5,9 @@ import {
   ActivityIndicator,
   Alert,
   StyleSheet,
-  useColorScheme,
   View
 } from "react-native";
+import { useColorScheme } from "@/components/useColorScheme";
 import MapView, {
   Marker,
   Polyline,

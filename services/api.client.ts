@@ -24,3 +24,10 @@ export async function apiPost<T>(path: string, body: unknown, config?: AxiosRequ
     const response = await api.post<T>(url, body, config);
     return response.data;
 }
+
+// PATCH helper - same base-URL and auth behaviour as apiPost.
+export async function apiPatch<T>(path: string, body: unknown, config?: AxiosRequestConfig): Promise<T> {
+    const url = `${getBackendBaseUrl()}${path}`;
+    const response = await api.patch<T>(url, body, config);
+    return response.data;
+}

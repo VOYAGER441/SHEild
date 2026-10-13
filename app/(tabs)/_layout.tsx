@@ -28,10 +28,23 @@ import { Image } from "@/components/ui/image";
 // Global components
 import SOSFloatingButton from "@/views/global.Components/SOSFloatingButton";
 
+// Role-based tabs
+import { loadSession } from "@/services/token.storage";
+import { FULL_TAB_SET, tabsForRole } from "@/utils/constants/appConstant";
+
 export default function TabLayout() {
   const colorScheme = useColorScheme();
   const theme = Colors[colorScheme ?? `light`];
   const insets = useSafeAreaInsets();
+
+  // Role determines which tabs exist. Defaults to the full set so existing
+  // users (role "user") see everything they saw before.
+  const [allowedTabs, setAllowedTabs] = useState<string[]>(FULL_TAB_SET);
+  useEffect(() => {
+    loadSession().then((session) => {
+      setAllowedTabs(tabsForRole(session?.user?.role));
+    });
+  }, []);
 
   // 👇 Fix: re-render when app resumes (prevents bar shifting)
   const [key, setKey] = useState(0);
@@ -158,7 +171,8 @@ export default function TabLayout() {
           }}
         />
 
-        {/* Map */}
+        {/* Map - parent & women only */}
+        {allowedTabs.includes("track") && (
         <Tabs.Screen
           name="track"
           options={{
@@ -188,6 +202,7 @@ export default function TabLayout() {
             ),
           }}
         />
+        )}
 
         {/* SOS */}
         <Tabs.Screen
@@ -228,7 +243,8 @@ export default function TabLayout() {
           }}
         />
 
-        {/* Community */}
+        {/* Community - women only */}
+        {allowedTabs.includes("community") && (
         <Tabs.Screen
           name="community"
           options={{
@@ -267,6 +283,7 @@ export default function TabLayout() {
             )
           }}
         />
+        )}
 
         {/* Profile */}
         <Tabs.Screen

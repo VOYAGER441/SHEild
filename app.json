@@ -6,7 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/images/favicon.png",
     "scheme": "sheild",
-    "userInterfaceStyle": "automatic",
+    "userInterfaceStyle": "light",
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.sheild.app"

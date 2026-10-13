@@ -1,4 +1,5 @@
-import { View, Text, useColorScheme } from 'react-native'
+import { View, Text } from 'react-native'
+import { useColorScheme } from '@/components/useColorScheme'
 import React from 'react'
 import Colors from '@/utils/constants/Colors';
 

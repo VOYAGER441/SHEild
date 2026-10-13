@@ -1,4 +1,5 @@
-import { View, Text, Animated, Easing, useColorScheme, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, Animated, Easing, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import { useColorScheme } from '@/components/useColorScheme';
 import React, { useEffect, useRef, useState } from 'react';
 import { Box } from '@/components/ui/box';
 import { ButtonText, Button } from '@/components/ui/button';

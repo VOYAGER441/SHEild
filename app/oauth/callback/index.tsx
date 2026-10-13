@@ -2,6 +2,7 @@ import { View, Text, ActivityIndicator } from "react-native";
 import { useEffect } from "react";
 import { RelativePathString, useLocalSearchParams, useRouter } from "expo-router";
 import authService from "@/services/auth.service";
+import utils from "@/utils";
 
 // Deep-link target of the browser OAuth fallback: the backend bridge page
 // (GET /v1/auth/google/callback) forwards the Google id_token here. When the
@@ -27,8 +28,15 @@ export default function OAuthCallbackScreen() {
             }
 
             try {
-                await authService.completeBrowserLogin(String(idToken));
-                if (active) router.replace("/(tabs)" as RelativePathString);
+                const session = await authService.completeBrowserLogin(String(idToken));
+                if (!active) return;
+                // New accounts still have the default "user" role - send them
+                // to the role picker first.
+                if (utils.appConstant.needsRoleSelection(session?.user?.role)) {
+                    router.replace("/role" as RelativePathString);
+                } else {
+                    router.replace("/(tabs)" as RelativePathString);
+                }
             } catch (exchangeError) {
                 console.warn("OAuth callback exchange failed:", exchangeError);
                 if (active) router.replace("/login" as RelativePathString);

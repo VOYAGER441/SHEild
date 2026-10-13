@@ -25,9 +25,14 @@ export default function LoginScreen() {
 
       if (provider === utils.appConstant.authProvider.GOOGLE) {
         // call auth service to add google login
-        await authService.login(provider);
-        // Navigate to main app after successful login
-        router.replace('/(tabs)' as RelativePathString);
+        const session = await authService.login(provider);
+        // New accounts still have the default "user" role - send them to the
+        // role picker first; everyone else goes straight to the tabs.
+        if (utils.appConstant.needsRoleSelection(session?.user?.role)) {
+          router.replace('/role' as RelativePathString);
+        } else {
+          router.replace('/(tabs)' as RelativePathString);
+        }
       }
       else if (provider === utils.appConstant.authProvider.FACEBOOK) {
         // TODO: Implement Facebook login
